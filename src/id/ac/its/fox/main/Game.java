@@ -12,10 +12,5 @@ public class Game {
 		window.setTitle("Wandering Fox Adventures");
 		window.pack();
 		window.setVisible(true);
-		
-		
-		
-
 	}
-
 }
