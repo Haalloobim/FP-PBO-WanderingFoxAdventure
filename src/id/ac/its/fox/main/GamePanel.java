@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import id.ac.its.fox.gamestate.GameStateManager;
+
 public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
@@ -19,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// thread 
 	private Thread thread;
 	private boolean running;
-	public boolean pause = false;
+	protected static boolean pause = false; // testing using static variable to modify it through other class
 	private int FPS = 60;
 	private long targetTime = 1000 / FPS;
 	
@@ -30,6 +32,9 @@ public class GamePanel extends JPanel implements Runnable{
 	// image 
 	private BufferedImage image; 
 	private Graphics2D g; 
+
+	//Game State Manager
+	protected static GameStateManager gsm;
 	
 	//constructor
 	public GamePanel() {
