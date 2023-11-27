@@ -14,5 +14,19 @@ public class Tile {
 		this.type = type;
 	}
 
+    public BufferedImage getImage() { 
+        return this.image; 
+    }
     
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+	public int getType() { 
+        return this.type; 
+    }
+    
+    public void setType(int type) {
+        this.type = type;
+    }   
 }
