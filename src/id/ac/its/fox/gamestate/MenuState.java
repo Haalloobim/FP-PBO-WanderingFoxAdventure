@@ -8,10 +8,10 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import id.ac.its.fox.audio.AudioPlayer;
-import id.ac.its.fox.tilemap.Backgorund;
+import id.ac.its.fox.tilemap.Background;
 
 public class MenuState extends GameState {
-    private Backgorund bg;
+    private Background bg;
 	private BufferedImage gameTitle;
 	private AudioPlayer bgMusic;
 	/**
