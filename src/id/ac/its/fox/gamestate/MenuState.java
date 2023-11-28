@@ -14,7 +14,10 @@ public class MenuState extends GameState {
     private Backgorund bg;
 	private BufferedImage gameTitle;
 	private AudioPlayer bgMusic;
-	// private HashMap<String, AudioPlayer> sfx;
+	/**
+	 *
+	 */
+	private HashMap<String, AudioPlayer> sfx;
 	
 	private int currentChoice = 0;
 	private String[] options = {
@@ -50,10 +53,25 @@ public class MenuState extends GameState {
     }
 
     public void update() {
+        bg.update();
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     public void draw(Graphics2D g) {
+        bg.draw(g);
+        g.drawImage(gameTitle, 0, 30,gameTitle.getWidth()/4, gameTitle.getHeight()/4, null); 
+
+        g.setFont(font);
+		for(int i = 0; i < options.length; i++) {
+			if(i == currentChoice) 
+			{
+				g.setColor(Color.RED);
+			}
+			else {
+				g.setColor(Color.LIGHT_GRAY);
+			}
+			g.drawString(options[i], 145, 160 + i * 15);
+		}
         throw new UnsupportedOperationException("Unimplemented method 'draw'");
     }
 
