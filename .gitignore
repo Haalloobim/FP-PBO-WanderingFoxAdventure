@@ -1,2 +1,4 @@
 *.dat
 /.vscode
+/bin/
+.project
