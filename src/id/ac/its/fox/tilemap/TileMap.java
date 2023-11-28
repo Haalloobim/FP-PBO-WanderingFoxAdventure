@@ -36,14 +36,14 @@ public class TileMap {
     private int numRowsToDraw;
     private int numColsToDraw;
 
-    private TileMap(int tileSize) {
+    public TileMap(int tileSize) {
         this.tileSize = tileSize;
         numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
         numColsToDraw = GamePanel.WIDTH / tileSize + 2;
         tween = 0.07;
     }
 
-    public void loadTIles(String s) {
+    public void loadTiles(String s) {
         try {
             tileset = ImageIO.read(getClass().getResourceAsStream(s));
             numTilesAcross = tileset.getWidth() / tileSize;
