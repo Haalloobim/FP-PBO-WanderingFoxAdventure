@@ -1,13 +1,13 @@
 package id.ac.its.fox.gamestate;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.tilemap.Background;
 
 public class MenuState extends GameState {
     private Background bg;
