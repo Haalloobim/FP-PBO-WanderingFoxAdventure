@@ -15,7 +15,7 @@ public class Tile {
 	}
 
     public BufferedImage getImage() { 
-        return this.image; 
+        return image; 
     }
     
     public void setImage(BufferedImage image) {
