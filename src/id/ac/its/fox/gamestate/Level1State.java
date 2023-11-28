@@ -14,7 +14,7 @@ public class Level1State extends GameState{
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
         try {
-            bgLevel1 = new Background("/Background/back.png", 3);
+            bgLevel1 = new Background("/Background/bg_level1.png", 3);
             bgLevel1.setVector(0, 0);
         } 
         catch (Exception e) {
