@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import id.ac.its.fox.gamestate.GameStateManager;
+import id.ac.its.fox.gamestate.*;
 
 public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;

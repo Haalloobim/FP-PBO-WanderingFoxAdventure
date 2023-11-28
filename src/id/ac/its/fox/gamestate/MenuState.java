@@ -7,10 +7,13 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-public class MenuState extends GameState{
-    // private Background bg;
+import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.tilemap.Backgorund;
+
+public class MenuState extends GameState {
+    private Backgorund bg;
 	private BufferedImage gameTitle;
-	// private AudioPlayer bgMusic;
+	private AudioPlayer bgMusic;
 	// private HashMap<String, AudioPlayer> sfx;
 	
 	private int currentChoice = 0;
@@ -22,7 +25,27 @@ public class MenuState extends GameState{
 	};
 	
 	private Font font;
+
+    public MenuState(GameStateManager gsm) {
+        this.gsm = gsm;
+
+        try {
+            gameTitle = ImageIO.read(
+                getClass().getResourceAsStream("ISI TITLE NAK KENE JER")
+            );
+
+            font = new Font("Arial", Font.PLAIN, 12);
+
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void init() {
+        bgMusic = new AudioPlayer("/Resource/Music/bgMenuHotel.mp3");
+        bgMusic.bgplay();
         throw new UnsupportedOperationException("Unimplemented method 'init'");
     }
 
