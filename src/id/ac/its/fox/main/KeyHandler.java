@@ -10,14 +10,22 @@ public class KeyHandler implements KeyListener{
 		
 	}
 
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(KeyEvent keyEvent) {
+		GamePanel.gsm.keyPressed(keyEvent.getKeyCode());
+		int keyCode = keyEvent.getKeyCode();
+		boolean pause = GamePanel.pause;
+		if(keyCode == KeyEvent.VK_ESCAPE) {
+			if(!pause)
+				pause = true;
+			else
+				pause = false;
+		}
+		if(keyCode == KeyEvent.VK_ENTER && pause)
+			pause = false;
 	}
 
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void keyReleased(KeyEvent keyEvent) {
+		GamePanel.gsm.keyReleased(keyEvent.getKeyCode());
 	}
 
 }

@@ -1,6 +1,6 @@
 package id.ac.its.fox.gamestate;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class GameStateManager {
     private GameState[] gameStates;
