@@ -2,8 +2,6 @@ package id.ac.its.fox.gamestate;
 
 import java.util.ArrayList;
 
-import id.ac.its.fox.main.Game;
-
 public class GameStateManager {
     private ArrayList<GameState> gameStates;
     private int currentState;
@@ -13,7 +11,7 @@ public class GameStateManager {
 
     public GameStateManager() {
         gameStates = new ArrayList<GameState>();
-        currentState = 0;
+        currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
     }
 
