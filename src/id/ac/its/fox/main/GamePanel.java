@@ -6,6 +6,8 @@ import java.awt.event.*;
 
 import javax.swing.JPanel;
 
+import id.ac.its.fox.gamestate.GameStateManager;
+
 public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 240;
@@ -18,6 +20,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private BufferedImage image;
     private Graphics2D g;
+
+    private GameStateManager gsm;
 
     public GamePanel() {
         super();
@@ -39,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) g;
         running = true;
+
+        gsm = new GameStateManager();
     }
 
     public void run() {
@@ -65,9 +71,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     private void update() {
+        gsm.update();
     }
 
     private void draw() {
+        gsm.draw(g);
     }
 
     private void drawToScreen() {
@@ -80,8 +88,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void keyPressed(KeyEvent key) {
+        gsm.keyPressed(key.getKeyCode());
     }
 
     public void keyReleased(KeyEvent key) {
+        gsm.keyReleased(key.getKeyCode());
     }
 }
