@@ -13,21 +13,24 @@ public class Level1State extends GameState{
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
-        try {
-            bgLevel1 = new Background("/Background/bg_level1.png", 3);
-            bgLevel1.setVector(0, 0);
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     bgLevel1 = new Background("/Background/bg_level1.png", 3);
+        //     bgLevel1.setVector(0, 0);
+        // } 
+        // catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+        init(); 
     }
 
     @Override
     public void init() {
-        tilemap = new TileMap(30);
-        tilemap.loadTiles("soon");
-        tilemap.loadMap("soon");
-        tilemap.setPosition(0, 0);
+        // tilemap = new TileMap(30);
+        // tilemap.loadTiles("soon");
+        // tilemap.loadMap("soon");
+        // tilemap.setPosition(0, 0);
+        bgLevel1 = new Background("/Background/bg_level1.png", 3);
+        bgLevel1.setVector(0, 0);
 
     }
 
@@ -42,7 +45,7 @@ public class Level1State extends GameState{
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
-        tilemap.draw(g);
+        // tilemap.draw(g);
         bgLevel1.draw(g);
     }
 
