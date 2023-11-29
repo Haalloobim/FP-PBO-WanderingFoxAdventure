@@ -5,10 +5,12 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.tilemap.Background;
 
 public class MenuState extends GameState{
 
+    private AudioPlayer bgMusic;
     private Background bg;
 
     private int currentChoice = 0;
@@ -39,10 +41,13 @@ public class MenuState extends GameState{
         catch (Exception e) {
             e.printStackTrace();
         }
+        init();
     }
 
     @Override
     public void init() {
+        bgMusic = new AudioPlayer("/Music/bgMenuHotel.wav");
+        bgMusic.bgplay();
     }
 
     @Override
