@@ -20,7 +20,7 @@ public class Level1State extends GameState{
     public void init() {
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
-        tilemap.loadMap("/Maps/level1-1.map");
+        tilemap.loadMap("/Maps/temp.map");
         tilemap.setPosition(0, 0);
         bgLevel1 = new Background("/Background/bg_level1.png", 3);
         bgLevel1.setVector(0, 0);
