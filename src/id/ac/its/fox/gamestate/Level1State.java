@@ -1,5 +1,6 @@
 package id.ac.its.fox.gamestate;
 
+import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
@@ -7,7 +8,7 @@ import id.ac.its.fox.tilemap.TileMap;
 import java.awt.*; 
 
 public class Level1State extends GameState{
-
+    private AudioPlayer bgMusic;
     private Background bgLevel1;
     private TileMap tilemap; 
 
@@ -18,6 +19,8 @@ public class Level1State extends GameState{
 
     @Override
     public void init() {
+        // bgMusic = new AudioPlayer("/Music/hurryBG.wav");
+        // bgMusic.bgplay();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/temp.map");
