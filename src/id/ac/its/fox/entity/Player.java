@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 
 import id.ac.its.fox.tilemap.TileMap;
 
-public class Player extends MapObject{
-    
+public class Player extends MapObject {
+
     private int health;
     private int maxHealth;
     private int claw;
@@ -23,7 +23,7 @@ public class Player extends MapObject{
     private boolean clawing;
     private int clawCost;
     private int clawDamage;
-    private ArrayList<Claw> claws;
+    // private ArrayList<Claw> claws;
 
     private boolean scratching;
     private int scratchDamage;
@@ -31,7 +31,6 @@ public class Player extends MapObject{
 
     private boolean jumping;
     private boolean gliding;
-    private boolean falling;
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
@@ -48,10 +47,10 @@ public class Player extends MapObject{
 
     public Player(TileMap tm) {
         super(tm);
-        width = 30;
-        height = 30;
-        cwidth = 20;
-        cheight = 20;
+        width = 24;
+        height = 24;
+        cwidth = 22;
+        cheight = 22;
 
         moveSpeed = 0.3;
         maxSpeed = 1.6;
@@ -74,30 +73,25 @@ public class Player extends MapObject{
         scratchRange = 40;
 
         try {
-            BufferedImage spritesheet = ImageIO.read(
-                getClass()
-                .getResourceAsStream("")
-                );
+            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/player.png"));
+            sprites = new ArrayList<BufferedImage[]>();
             for (int i = 0; i < 7; i++) {
                 BufferedImage[] bi = new BufferedImage[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    if(i != 6){
+                    if (i != 6) {
                         bi[j] = spritesheet.getSubimage(
-                            j * width,
-                            i * height,
-                            width,
-                            height
-                        );
-                    }
-                    else{
+                                j * width,
+                                i * height,
+                                width,
+                                height);
+                    } else {
                         bi[j] = spritesheet.getSubimage(
-                            j * width,
-                            i * height,
-                            width,
-                            height
-                        );
+                                j * width,
+                                i * height,
+                                width,
+                                height);
                     }
-                    
+
                 }
                 sprites.add(bi);
             }
@@ -105,6 +99,10 @@ public class Player extends MapObject{
         } catch (Exception e) {
             // TODO: handle exception
         }
+        animation = new Animation();
+        currentAction = IDLE;
+        animation.setFrames(sprites.get(IDLE));
+        animation.setDelay(400);
     }
 
     public int getHealth() {
@@ -113,11 +111,11 @@ public class Player extends MapObject{
 
     public int getMaxHealth() {
         return maxHealth;
-    }   
+    }
 
     public int getClaw() {
         return claw;
-    }   
+    }
 
     public int getMaxClaw() {
         return maxClaw;
@@ -135,120 +133,110 @@ public class Player extends MapObject{
         gliding = b;
     }
 
-    public void getNextPosition(){
-        if(left){
+    public void getNextPosition() {
+        if (left) {
             dx -= moveSpeed;
-            if(dx < -maxSpeed){
+            if (dx < -maxSpeed) {
                 dx = -maxSpeed;
-            } 
-        }
-        else if (right){
+            }
+        } else if (right) {
             dx += moveSpeed;
-            if(dx > maxSpeed){
+            if (dx > maxSpeed) {
                 dx = maxSpeed;
             }
-        }
-        else{
-            if(dx > 0){
+        } else {
+            if (dx > 0) {
                 dx -= stopSpeed;
-                if(dx < 0){
+                if (dx < 0) {
                     dx = 0;
                 }
-            }
-            else if(dx < 0){
+            } else if (dx < 0) {
                 dx += stopSpeed;
-                if(dx > 0){
+                if (dx > 0) {
                     dx = 0;
                 }
             }
         }
 
-        if(currentAction == SCRATCHING || currentAction == CLAWING){
-            if(!(jumping || falling)){
+        if (currentAction == SCRATCHING || currentAction == CLAWING) {
+            if (!(jumping || falling)) {
                 dx = 0;
             }
         }
 
-        if (jumping && !falling){
+        if (jumping && !falling) {
             dy = jumpStart;
             falling = true;
         }
 
-        if(falling){
-            if (dy > 0 && gliding){
+        if (falling) {
+            if (dy > 0 && gliding) {
                 dy += fallSpeed * 0.1;
-            }
-            else{
+            } else {
                 dy += fallSpeed;
             }
 
-            if(dy > 0){
+            if (dy > 0) {
                 jumping = false;
             }
-            if (dy < 0 && !jumping){
+            if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
             }
-            if (dy > maxFallSpeed){
+            if (dy > maxFallSpeed) {
                 dy = maxFallSpeed;
             }
         }
-    }   
+    }
 
-    public void update(){
+    public void update() {
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
 
-        if(scratching){
-            if(currentAction != SCRATCHING){
+        if (scratching) {
+            if (currentAction != SCRATCHING) {
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
                 animation.setDelay(50);
                 width = 60;
             }
-        }
-        else if (clawing){
-            if(currentAction != CLAWING){
+        } else if (clawing) {
+            if (currentAction != CLAWING) {
                 currentAction = CLAWING;
                 animation.setFrames(sprites.get(CLAWING));
                 animation.setDelay(100);
                 width = 30;
             }
-        }
-        else if(dy > 0){
-            if(gliding){
-                if(currentAction != GLIDING){
+        } else if (dy > 0) {
+            if (gliding) {
+                if (currentAction != GLIDING) {
                     currentAction = GLIDING;
                     animation.setFrames(sprites.get(GLIDING));
                     animation.setDelay(100);
                     width = 30;
                 }
-            }
-            else if(currentAction != FALLING){
+            } else if (currentAction != FALLING) {
                 currentAction = FALLING;
                 animation.setFrames(sprites.get(FALLING));
                 animation.setDelay(100);
                 width = 30;
             }
-        }
-        else if(dy < 0){
-            if(currentAction != JUMPING){
+        } else if (dy < 0) {
+            if (currentAction != JUMPING) {
                 currentAction = JUMPING;
                 animation.setFrames(sprites.get(JUMPING));
                 animation.setDelay(-1);
                 width = 30;
             }
-        }
-        else if(left || right){
-            if(currentAction != WALKING){
+        } else if (left || right) {
+            if (currentAction != WALKING) {
                 currentAction = WALKING;
                 animation.setFrames(sprites.get(WALKING));
                 animation.setDelay(40);
                 width = 30;
             }
-        }
-        else{
-            if(currentAction != IDLE){
+        } else {
+            if (currentAction != IDLE) {
                 currentAction = IDLE;
                 animation.setFrames(sprites.get(IDLE));
                 animation.setDelay(400);
@@ -257,50 +245,47 @@ public class Player extends MapObject{
         }
         animation.update();
 
-        if(currentAction != SCRATCHING && currentAction != CLAWING){
-            if(right) facingRight = true;
-            if(left) facingRight = false;
+        if (currentAction != SCRATCHING && currentAction != CLAWING) {
+            if (right)
+                facingRight = true;
+            if (left)
+                facingRight = false;
         }
     }
 
-    public void draw (Graphics2D g){
+    public void draw(Graphics2D g) {
         setMapPosition();
 
-        if(flinching){
+        if (flinching) {
             long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-            if(elapsed / 100 % 2 == 0){
+            if (elapsed / 100 % 2 == 0) {
                 return;
             }
         }
 
-        if(facingRight){
+        if (facingRight) {
             g.drawImage(
-                animation.getImage(),
-                (int)(x + xmap - width / 2),
-                (int)(y + ymap - height / 2),
-                null
-            );
-        }
-        else{
+                    animation.getImage(),
+                    (int) (x + xmap - width / 2),
+                    (int) (y + ymap - height / 2),
+                    null);
+        } else {
             g.drawImage(
-                animation.getImage(),
-                (int)(x + xmap - width / 2 + width),
-                (int)(y + ymap - height / 2),
-                -width,
-                height,
-                null
-            );
+                    animation.getImage(),
+                    (int) (x + xmap - width / 2 + width),
+                    (int) (y + ymap - height / 2),
+                    -width,
+                    height,
+                    null);
         }
 
         // draw claws
-        for (int i = 0; i < claws.size(); i++) {
-            claws.get(i).draw(g);
-        }
+        // for (int i = 0; i < claws.size(); i++) {
+        // claws.get(i).draw(g);
+        // }
 
         // draw player
-        super.draw(g);
+        // this.draw(g);
     }
-
-
 
 }

@@ -8,16 +8,16 @@ import java.awt.event.KeyEvent;
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.tilemap.Background;
 
-public class MenuState extends GameState{
+public class MenuState extends GameState {
 
     private AudioPlayer bgMusic;
     private Background bg;
 
     private int currentChoice = 0;
     private String[] options = {
-        "Start",
-        "Help",
-        "Quit"
+            "Start",
+            "Options",
+            "Quit"
     };
     private Color titleColor;
     private Font titleFont;
@@ -32,13 +32,12 @@ public class MenuState extends GameState{
 
             titleColor = new Color(128, 0, 0);
             titleFont = new Font(
-                "Century Gothic",
-                Font.PLAIN,
-                28);
+                    "Century Gothic",
+                    Font.PLAIN,
+                    28);
             titleFont = new Font("Arial", Font.PLAIN, 12);
 
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         init();
@@ -60,28 +59,31 @@ public class MenuState extends GameState{
         bg.draw(g);
         g.setColor(titleColor);
         g.setFont(titleFont);
-        g.drawString("Wandering Fox Adventure", 80, 70);
-        
+        g.drawString("Wandering Fox Adventure", 80, 100);
+
         g.setFont(font);
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLACK);
-            } 
-            else {
+            } else {
                 g.setColor(Color.RED);
             }
-            g.drawString(options[i], 145, 140 + i * 15);
+            if (options[i].equals("Options")) {
+                g.drawString(options[i], 137, 140 + i * 15);
+            } else {
+                g.drawString(options[i], 145, 140 + i * 15);
+            }
         }
 
     }
 
-    private void select(){
+    private void select() {
         if (currentChoice == 0) {
             bgMusic.close();
             gsm.setState(GameStateManager.LEVEL1STATE);
         }
         if (currentChoice == 1) {
-            
+
         }
         if (currentChoice == 2) {
             System.exit(0);
@@ -110,5 +112,5 @@ public class MenuState extends GameState{
     @Override
     public void keyReleased(int k) {
     }
-    
+
 }
