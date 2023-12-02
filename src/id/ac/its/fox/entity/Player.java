@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends MapObject{
+    public Player(TileMap tm) {
+        super(tm);
+    }
     private int health;
     private int maxHealth;
     private int claw;
