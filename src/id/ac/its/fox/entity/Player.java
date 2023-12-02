@@ -29,21 +29,20 @@ public class Player extends MapObject {
     private int scratchDamage;
     private int scratchRange;
 
-    private boolean jumping;
     private boolean gliding;
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            2, 8, 1, 2, 4, 2, 5
+            4, 6, 1, 1, 2, 2, 2
     };
 
     private static final int IDLE = 0;
     private static final int WALKING = 1;
     private static final int JUMPING = 2;
     private static final int FALLING = 3;
-    private static final int GLIDING = 4;
-    private static final int CLAWING = 5;
-    private static final int SCRATCHING = 6;
+    private static final int GLIDING = 2;
+    private static final int CLAWING = 4;
+    private static final int SCRATCHING = 4;
 
     public Player(TileMap tm) {
         super(tm);
@@ -193,19 +192,25 @@ public class Player extends MapObject {
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
 
+        if (currentAction == SCRATCHING) {
+            if (animation.hasPlayedOnce()) {
+                scratching = false;
+            }
+        }
+
         if (scratching) {
             if (currentAction != SCRATCHING) {
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
-                animation.setDelay(50);
-                width = 60;
+                animation.setDelay(100);
+                width = 24;
             }
         } else if (clawing) {
             if (currentAction != CLAWING) {
                 currentAction = CLAWING;
                 animation.setFrames(sprites.get(CLAWING));
                 animation.setDelay(100);
-                width = 30;
+                width = 24;
             }
         } else if (dy > 0) {
             if (gliding) {
@@ -213,34 +218,34 @@ public class Player extends MapObject {
                     currentAction = GLIDING;
                     animation.setFrames(sprites.get(GLIDING));
                     animation.setDelay(100);
-                    width = 30;
+                    width = 24;
                 }
             } else if (currentAction != FALLING) {
                 currentAction = FALLING;
                 animation.setFrames(sprites.get(FALLING));
                 animation.setDelay(100);
-                width = 30;
+                width = 24;
             }
         } else if (dy < 0) {
             if (currentAction != JUMPING) {
                 currentAction = JUMPING;
                 animation.setFrames(sprites.get(JUMPING));
-                animation.setDelay(-1);
-                width = 30;
+                animation.setDelay(40);
+                width = 24;
             }
         } else if (left || right) {
             if (currentAction != WALKING) {
                 currentAction = WALKING;
                 animation.setFrames(sprites.get(WALKING));
-                animation.setDelay(40);
-                width = 30;
+                animation.setDelay(100);
+                width = 24;
             }
         } else {
             if (currentAction != IDLE) {
                 currentAction = IDLE;
                 animation.setFrames(sprites.get(IDLE));
                 animation.setDelay(400);
-                width = 30;
+                width = 24;
             }
         }
         animation.update();
@@ -287,5 +292,4 @@ public class Player extends MapObject {
         // draw player
         // this.draw(g);
     }
-
 }

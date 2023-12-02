@@ -7,6 +7,7 @@ import id.ac.its.fox.tilemap.TileMap;
 import id.ac.its.fox.entity.Player;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Level1State extends GameState {
     private Player player;
@@ -30,7 +31,7 @@ public class Level1State extends GameState {
         bgLevel1 = new Background("/Background/bg_level1.png", 3);
         bgLevel1.setVector(0, 0);
         player = new Player(tilemap);
-        player.setPosition(80, 80);
+        player.setPosition(48, 144);
     }
 
     @Override
@@ -51,10 +52,35 @@ public class Level1State extends GameState {
 
     @Override
     public void keyPressed(int k) {
+        if (k == KeyEvent.VK_LEFT)
+            player.setLeft(true);
+        if (k == KeyEvent.VK_RIGHT)
+            player.setRight(true);
+        if (k == KeyEvent.VK_UP)
+            player.setUp(true);
+        if (k == KeyEvent.VK_DOWN)
+            player.setDown(true);
+        if (k == KeyEvent.VK_W)
+            player.setJumping(true);
+        if (k == KeyEvent.VK_E)
+            player.setGliding(true);
+        if (k == KeyEvent.VK_R)
+            player.setScratching();
     }
 
     @Override
     public void keyReleased(int k) {
+        if (k == KeyEvent.VK_LEFT)
+            player.setLeft(false);
+        if (k == KeyEvent.VK_RIGHT)
+            player.setRight(false);
+        if (k == KeyEvent.VK_UP)
+            player.setUp(false);
+        if (k == KeyEvent.VK_DOWN)
+            player.setDown(false);
+        if (k == KeyEvent.VK_W)
+            player.setJumping(false);
+        if (k == KeyEvent.VK_E)
+            player.setGliding(false);
     }
-
 }
