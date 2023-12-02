@@ -5,22 +5,22 @@ import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
 
-import java.awt.*; 
+import java.awt.*;
 
-public class Level1State extends GameState{
+public class Level1State extends GameState {
     private AudioPlayer bgMusic;
     private Background bgLevel1;
-    private TileMap tilemap; 
+    private TileMap tilemap;
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
-        init(); 
+        init();
     }
 
     @Override
     public void init() {
-        // bgMusic = new AudioPlayer("/Music/hurryBG.wav");
-        // bgMusic.bgplay();
+        bgMusic = new AudioPlayer("/Music/hurryBG.wav");
+        bgMusic.bgplay();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/temp.map");
@@ -51,5 +51,5 @@ public class Level1State extends GameState{
     @Override
     public void keyReleased(int k) {
     }
-    
+
 }
