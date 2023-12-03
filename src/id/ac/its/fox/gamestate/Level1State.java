@@ -38,6 +38,10 @@ public class Level1State extends GameState {
     @Override
     public void update() {
         player.update();
+        tilemap.setPosition(
+			GamePanel.WIDTH / 2 - player.getX(),
+			GamePanel.HEIGHT / 2 - player.getY()
+		);
     }
 
     @Override
