@@ -1,5 +1,6 @@
 package id.ac.its.fox.entity;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 
@@ -53,6 +54,57 @@ public class Claw extends MapObject{
             // TODO: handle exception
         }
 
+
+    }
+
+    public void setHit(){
+        if(hit){
+            return;
+        }
+        hit = true;
+        animation.setFrames(hitSprites);
+        animation.setDelay(70);
+        dx = 0;
+    }
+
+    public boolean shouldRemove(){
+        return remove;
+    }
+
+    public void update(){
+        checkTileMapCollision();
+        setPosition(xtemp, ytemp);
+
+        if(dx == 0 && !hit){
+            setHit();
+        }
+
+        animation.update();
+        if(hit && animation.hasPlayedOnce()){
+            remove = true;
+        }
+    }
+
+    public void draw (Graphics2D g){
+
+        setMapPosition();
+
+        if (facingRight) {
+            g.drawImage(
+                    animation.getImage(),
+                    (int) (x + xmap - width / 2),
+                    (int) (y + ymap - height / 2),
+                    null);
+        } 
+        else {
+            g.drawImage(
+                    animation.getImage(),
+                    (int) (x + xmap - width / 2 + width),
+                    (int) (y + ymap - height / 2),
+                    -width,
+                    height,
+                    null);
+        }
     }
 
 }

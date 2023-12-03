@@ -66,7 +66,7 @@ public class Player extends MapObject {
 
         clawCost = 200;
         clawDamage = 5;
-        // claws = new ArrayList<Claw>();
+        claws = new ArrayList<Claw>();
 
         scratchDamage = 8;
         scratchRange = 40;
@@ -204,6 +204,27 @@ public class Player extends MapObject {
             }
         }
 
+        claw += 1;
+        if(claw > maxClaw) {
+            claw = maxClaw;
+        }
+        if( clawing && currentAction != CLAWING) {
+            if(claw > clawCost) {
+                claw -= clawCost;
+                Claw c = new Claw(tileMap, facingRight);
+                c.setPosition(x, y);
+                claws.add(c);
+            }
+        }
+
+        for(int i = 0; i < claws.size(); i++) {
+            claws.get(i).update();
+            if(claws.get(i).shouldRemove()) {
+                claws.remove(i);
+                i--;
+            }
+        }
+
         if (scratching) {
             if (currentAction != SCRATCHING) {
                 currentAction = SCRATCHING;
@@ -266,6 +287,10 @@ public class Player extends MapObject {
 
     public void draw(Graphics2D g) {
         setMapPosition();
+
+        for (int i = 0; i < claws.size(); i++) {
+            claws.get(i).draw(g);
+        }
 
         if (flinching) {
             long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
