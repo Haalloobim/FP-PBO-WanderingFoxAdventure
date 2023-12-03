@@ -74,6 +74,11 @@ public class TileMap {
             width = numCols * tileSize;
             height = numRows * tileSize;
 
+            xmin = GamePanel.WIDTH - width;
+            xmax = 0;
+            ymin = GamePanel.HEIGHT - height;
+            ymax = 0;
+
             String delims = "\\s+";
             for (int i = 0; i < map.length; i++) {
                 String line = br.readLine();
@@ -127,14 +132,15 @@ public class TileMap {
             y = ymax;
     }
 
+    public void setTween(double d) {
+        tween = d;
+    }
+
     public void setPosition(double x, double y) {
         this.x += (x - this.x) * tween;
         this.y += (y - this.y) * tween;
 
         fixBounds();
-
-        colOffset = (int) -this.x / tileSize;
-        rowOffset = (int) -this.y / tileSize;
 
         colOffset = (int) -this.x / tileSize;
         rowOffset = (int) -this.y / tileSize;

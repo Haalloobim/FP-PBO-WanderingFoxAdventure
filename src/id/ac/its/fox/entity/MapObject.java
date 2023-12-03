@@ -1,5 +1,6 @@
 package id.ac.its.fox.entity;
 
+import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Tile;
 import id.ac.its.fox.tilemap.TileMap;
 import java.awt.Rectangle;
@@ -196,6 +197,9 @@ public abstract class MapObject {
     }
 
     public boolean notOnScreen() {
-        return x + xmap + width < 0 || x + xmap - width > 960 || y + ymap + height < 0 || y + ymap - height > 540;
+        return x + xmap + width < 0 ||
+        x + xmap - width > GamePanel.WIDTH || 
+        y + ymap + height < 0 ||
+        y + ymap - height > GamePanel.HEIGHT;
     }
 }
