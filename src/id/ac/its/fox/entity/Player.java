@@ -23,7 +23,7 @@ public class Player extends MapObject {
     private boolean clawing;
     private int clawCost;
     private int clawDamage;
-    // private ArrayList<Claw> claws;
+    private ArrayList<Claw> claws;
 
     private boolean scratching;
     private int scratchDamage;
@@ -195,6 +195,12 @@ public class Player extends MapObject {
         if (currentAction == SCRATCHING) {
             if (animation.hasPlayedOnce()) {
                 scratching = false;
+            }
+        }
+
+        if(currentAction == CLAWING) {
+            if(animation.hasPlayedOnce()) {
+                clawing = false;
             }
         }
 
