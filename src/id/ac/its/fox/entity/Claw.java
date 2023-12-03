@@ -27,15 +27,15 @@ public class Claw extends MapObject{
             dx = -moveSpeed;
         }
 
-        width = 30;
-        height = 30;    
-        cwidth = 14;
-        cheight = 14;
+        width = 24;
+        height = 24;    
+        cwidth = 22;
+        cheight = 22;
 
         try {
             BufferedImage spritesheet = ImageIO.read(
                 getClass().getResourceAsStream(
-                    "/Sprites/Player/claw.gif"
+                    "/Sprites/claw.png"
                     )
                 );
             sprites = new BufferedImage[3];

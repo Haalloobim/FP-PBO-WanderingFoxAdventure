@@ -23,7 +23,7 @@ public class Player extends MapObject {
     private boolean clawing;
     private int clawCost;
     private int clawDamage;
-    // private ArrayList<Claw> claws;
+    private ArrayList<Claw> claws;
 
     private boolean scratching;
     private int scratchDamage;
@@ -33,7 +33,7 @@ public class Player extends MapObject {
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            4, 6, 1, 1, 2, 2, 2
+            4, 6, 1, 1, 5, 2, 2
     };
 
     private static final int IDLE = 0;
@@ -41,7 +41,7 @@ public class Player extends MapObject {
     private static final int JUMPING = 2;
     private static final int FALLING = 3;
     private static final int GLIDING = 2;
-    private static final int CLAWING = 4;
+    private static final int CLAWING = 0;
     private static final int SCRATCHING = 4;
 
     public Player(TileMap tm) {
@@ -66,7 +66,7 @@ public class Player extends MapObject {
 
         clawCost = 200;
         clawDamage = 5;
-        // claws = new ArrayList<Claw>();
+        claws = new ArrayList<Claw>();
 
         scratchDamage = 8;
         scratchRange = 40;
@@ -77,7 +77,7 @@ public class Player extends MapObject {
             for (int i = 0; i < 7; i++) {
                 BufferedImage[] bi = new BufferedImage[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    if (i != 6) {
+                    if (i != 4) {
                         bi[j] = spritesheet.getSubimage(
                                 j * width,
                                 i * height,
@@ -85,9 +85,9 @@ public class Player extends MapObject {
                                 height);
                     } else {
                         bi[j] = spritesheet.getSubimage(
-                                j * width,
+                                j * width * 2,
                                 i * height,
-                                width,
+                                width * 2,
                                 height);
                     }
 
@@ -198,39 +198,39 @@ public class Player extends MapObject {
             }
         }
 
-        if(currentAction == CLAWING) {
-            if(animation.hasPlayedOnce()) {
+        if (currentAction == CLAWING) {
+            if (animation.hasPlayedOnce()) {
                 clawing = false;
             }
         }
 
         claw += 1;
-        if(claw > maxClaw) {
+        if (claw > maxClaw) {
             claw = maxClaw;
         }
-        if( clawing && currentAction != CLAWING) {
-            if(claw > clawCost) {
+        if (clawing && currentAction != CLAWING) {
+            if (claw > clawCost) {
                 claw -= clawCost;
                 Claw c = new Claw(tileMap, facingRight);
                 c.setPosition(x, y);
-                // claws.add(c);
+                claws.add(c);
             }
         }
 
-        // for(int i = 0; i < claws.size(); i++) {
-        //     claws.get(i).update();
-        //     if(claws.get(i).shouldRemove()) {
-        //         claws.remove(i);
-        //         i--;
-        //     }
-        // }
+        for (int i = 0; i < claws.size(); i++) {
+            claws.get(i).update();
+            if (claws.get(i).shouldRemove()) {
+                claws.remove(i);
+                i--;
+            }
+        }
 
         if (scratching) {
             if (currentAction != SCRATCHING) {
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
                 animation.setDelay(100);
-                width = 24;
+                width = 48;
             }
         } else if (clawing) {
             if (currentAction != CLAWING) {
@@ -288,9 +288,9 @@ public class Player extends MapObject {
     public void draw(Graphics2D g) {
         setMapPosition();
 
-        // for (int i = 0; i < claws.size(); i++) {
-        //     claws.get(i).draw(g);
-        // }
+        for (int i = 0; i < claws.size(); i++) {
+            claws.get(i).draw(g);
+        }
 
         if (flinching) {
             long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
@@ -316,9 +316,9 @@ public class Player extends MapObject {
         }
 
         // draw claws
-        // for (int i = 0; i < claws.size(); i++) {
-        // claws.get(i).draw(g);
-        // }
+        for (int i = 0; i < claws.size(); i++) {
+            claws.get(i).draw(g);
+        }
 
         // draw player
         // this.draw(g);

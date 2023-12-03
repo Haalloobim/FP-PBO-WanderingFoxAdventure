@@ -39,9 +39,8 @@ public class Level1State extends GameState {
     public void update() {
         player.update();
         tilemap.setPosition(
-			GamePanel.WIDTH / 2 - player.getX(),
-			GamePanel.HEIGHT / 2 - player.getY()
-		);
+                GamePanel.WIDTH / 2 - player.getX(),
+                GamePanel.HEIGHT / 2 - player.getY());
     }
 
     @Override
@@ -71,6 +70,8 @@ public class Level1State extends GameState {
             player.setGliding(true);
         if (k == KeyEvent.VK_R)
             player.setScratching();
+        if (k == KeyEvent.VK_F)
+            player.setClawing();
     }
 
     @Override
