@@ -33,7 +33,7 @@ public class Player extends MapObject {
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            4, 6, 1, 1, 5, 2, 2
+            4, 6, 1, 1, 5, 5, 2
     };
 
     private static final int IDLE = 0;
@@ -41,7 +41,7 @@ public class Player extends MapObject {
     private static final int JUMPING = 2;
     private static final int FALLING = 3;
     private static final int GLIDING = 2;
-    private static final int CLAWING = 0;
+    private static final int CLAWING = 5;
     private static final int SCRATCHING = 4;
 
     public Player(TileMap tm) {
