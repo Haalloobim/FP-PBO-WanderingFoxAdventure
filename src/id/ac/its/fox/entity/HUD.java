@@ -16,7 +16,7 @@ public class HUD {
         try {
             image = ImageIO.read(
                 getClass().getResourceAsStream(
-                    "/HUD/hud.gif"
+                    "/HUD/HUD.png"
                 )
             );  
             font = new Font("Arial", Font.PLAIN, 14);
