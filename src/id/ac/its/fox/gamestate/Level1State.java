@@ -5,6 +5,7 @@ import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
 import id.ac.its.fox.entity.Enemy;
+import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
 import id.ac.its.fox.entity.Enemies.Rat;
 
@@ -20,6 +21,7 @@ public class Level1State extends GameState {
     private TileMap tilemap;
 
     private ArrayList<Enemy> enemies;
+    private HUD hud; 
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
@@ -46,6 +48,8 @@ public class Level1State extends GameState {
         rat.setPosition(176, 100);
         enemies.add(rat);
 
+        hud = new HUD(player);
+
     }
 
     @Override
@@ -71,6 +75,8 @@ public class Level1State extends GameState {
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
         }
+
+        hud.draw(g);
     }
 
     @Override

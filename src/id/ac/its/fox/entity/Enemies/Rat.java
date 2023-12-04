@@ -76,7 +76,6 @@ public class Rat extends Enemy {
 
     public void update() {
         totalDistX += dx;
-        System.out.println(totalDistX);
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
@@ -87,6 +86,7 @@ public class Rat extends Enemy {
                 flinching = false;
             }
         }
+        //add range 
         if (right && totalDistX > 150) {
             right = false;
             left = true;
@@ -105,7 +105,8 @@ public class Rat extends Enemy {
             left = true;
             facingRight = false;
             totalDistX = 0;
-        } else if (left && isCollisionX) {
+        } 
+        else if (left && isCollisionX) {
             isCollisionX = false;
             right = true;
             left = false;
