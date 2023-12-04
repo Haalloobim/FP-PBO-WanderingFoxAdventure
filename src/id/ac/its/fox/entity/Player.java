@@ -299,28 +299,11 @@ public class Player extends MapObject {
             }
         }
 
-        if (facingRight) {
-            g.drawImage(
-                    animation.getImage(),
-                    (int) (x + xmap - width / 2),
-                    (int) (y + ymap - height / 2),
-                    null);
-        } else {
-            g.drawImage(
-                    animation.getImage(),
-                    (int) (x + xmap - width / 2 + width),
-                    (int) (y + ymap - height / 2),
-                    -width,
-                    height,
-                    null);
-        }
+        super.draw(g);
 
         // draw claws
         for (int i = 0; i < claws.size(); i++) {
             claws.get(i).draw(g);
         }
-
-        // draw player
-        // this.draw(g);
     }
 }

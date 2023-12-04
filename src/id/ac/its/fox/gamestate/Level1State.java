@@ -4,16 +4,21 @@ import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
+import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Level1State extends GameState {
     private Player player;
     private AudioPlayer bgMusic;
     private Background bgLevel1;
     private TileMap tilemap;
+
+    private ArrayList<Enemy> enemies;
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;

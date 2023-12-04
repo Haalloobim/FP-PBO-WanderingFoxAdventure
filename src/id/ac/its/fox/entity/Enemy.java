@@ -2,7 +2,7 @@ package id.ac.its.fox.entity;
 
 import id.ac.its.fox.tilemap.TileMap;
 
-public abstract class Enemy extends MapObject{
+public class Enemy extends MapObject{
 
     protected int health;
     protected int maxHealth;
@@ -33,6 +33,6 @@ public abstract class Enemy extends MapObject{
         flinchTimer = System.nanoTime();
     }
 
-    
+
     
 }
