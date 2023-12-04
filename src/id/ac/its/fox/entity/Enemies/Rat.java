@@ -10,20 +10,22 @@ import id.ac.its.fox.tilemap.TileMap;
 
 public class Rat extends Enemy {
 
+    private double totalDistX;
     private BufferedImage[] sprites;
 
     public Rat(TileMap tm) {
         super(tm);
-
+        isCollisionX = false;
+        totalDistX = 0;
         moveSpeed = 0.8;
         maxSpeed = 0.8;
         fallSpeed = 0.2;
         maxFallSpeed = 10.0;
 
-        width = 36; 
-        height= 28; 
+        width = 36;
+        height = 28;
         cwidth = 32;
-        cheight = 25;
+        cheight = 26;
 
         health = maxHealth = 2;
         damage = 1;
@@ -31,27 +33,24 @@ public class Rat extends Enemy {
         try {
             BufferedImage spritesheet = ImageIO.read(
                     getClass().getResourceAsStream(
-                            "SOON"
-                            )
-                    );
+                            "/Sprites/enemy1.png"));
             sprites = new BufferedImage[6];
             for (int i = 0; i < sprites.length; i++) {
                 sprites[i] = spritesheet.getSubimage(
                         i * width,
                         0,
                         width,
-                        height
-                        );
+                        height);
             }
 
             animation = new Animation();
             animation.setFrames(sprites);
             animation.setDelay(300);
 
-            right = true;
-            facingRight = true;
-        } 
-        catch (Exception e) {
+            right = false;
+            left = true;
+            facingRight = false;
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -63,42 +62,55 @@ public class Rat extends Enemy {
             if (dx < -maxSpeed) {
                 dx = -maxSpeed;
             }
-        } 
-        else if (right) {
+        } else if (right) {
             dx += moveSpeed;
             if (dx > maxSpeed) {
                 dx = maxSpeed;
             }
-        } 
+        }
 
-        if (falling){
+        if (falling) {
             dy += fallSpeed;
         }
     }
 
-    public void update(){
+    public void update() {
+        totalDistX += dx;
+        System.out.println(totalDistX);
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
 
-        if(flinching) {
-            long elapsed = 
-                    (System.nanoTime() - flinchTimer) / 1000000;
-            if(elapsed > 400) {
+        if (flinching) {
+            long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
+            if (elapsed > 400) {
                 flinching = false;
             }
         }
-
-        // hit wall -> reverse it
-        if(right && dx == 0) {
+        if (right && totalDistX > 150) {
             right = false;
             left = true;
             facingRight = false;
-        }
-        else if(left && dx == 0) {
+            totalDistX = 0;
+        } else if (left && totalDistX < -150) {
             right = true;
             left = false;
             facingRight = true;
+            totalDistX = 0;
+        }
+        // hit wall -> reverse it
+        if (right && isCollisionX) {
+            isCollisionX = false;
+            right = false;
+            left = true;
+            facingRight = false;
+            totalDistX = 0;
+        } else if (left && isCollisionX) {
+            isCollisionX = false;
+            right = true;
+            left = false;
+            facingRight = true;
+            totalDistX = 0;
         }
 
         // update animation
@@ -106,11 +118,12 @@ public class Rat extends Enemy {
     }
 
     public void draw(java.awt.Graphics2D g) {
-        if(notOnScreen()) return;
+        if (notOnScreen())
+            return;
 
         setMapPosition();
 
         super.draw(g);
     }
-    
+
 }

@@ -43,7 +43,7 @@ public class Level1State extends GameState {
         enemies = new ArrayList<Enemy>();
         Rat rat;
         rat = new Rat(tilemap);
-        rat.setPosition(100, 100);
+        rat.setPosition(176, 100);
         enemies.add(rat);
 
     }
@@ -54,7 +54,6 @@ public class Level1State extends GameState {
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
                 GamePanel.HEIGHT / 2 - player.getY());
-        bgLevel1.setPosition(tilemap.getx(), tilemap.gety());
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).update();
         }

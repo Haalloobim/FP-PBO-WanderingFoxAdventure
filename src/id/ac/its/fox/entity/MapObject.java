@@ -55,6 +55,7 @@ public abstract class MapObject {
     protected double jumpStart;
     protected double stopJumpSpeed;
 
+    protected boolean isCollisionX;
     public MapObject(TileMap tm) {
         tileMap = tm;
         tileSize = tm.getTileSize();
@@ -117,6 +118,7 @@ public abstract class MapObject {
         if(dx < 0){
             if(topLeft || bottomLeft){
                 dx = 0;
+                isCollisionX = true;
                 xtemp = currCol * tileSize + cwidth / 2;
             }else{
                 xtemp += dx;
@@ -125,6 +127,7 @@ public abstract class MapObject {
         if(dx > 0){
             if(topRight || bottomRight){
                 dx = 0;
+                isCollisionX = true;
                 xtemp = (currCol + 1) * tileSize - cwidth / 2;
             }else{
                 xtemp += dx;
