@@ -19,7 +19,7 @@ public class Player extends MapObject {
     private boolean dead;
     private boolean flinching;
     private long flinchTimer;
-
+    private int jumpCount;
     private boolean clawing;
     private int clawCost;
     private int clawDamage;
@@ -50,7 +50,7 @@ public class Player extends MapObject {
         height = 24;
         cwidth = 22;
         cheight = 22;
-
+        jumpCount = 0;
         moveSpeed = 0.3;
         maxSpeed = 1.6;
         stopSpeed = 0.4;
@@ -58,7 +58,7 @@ public class Player extends MapObject {
         maxFallSpeed = 4.0;
         jumpStart = -4.8;
         stopJumpSpeed = 0.3;
-
+        isCollisionY = false;
         facingRight = true;
 
         health = maxHealth = 5;
@@ -163,9 +163,15 @@ public class Player extends MapObject {
             }
         }
 
+        if (isCollisionY) {
+            jumpCount = 0;
+        }
+
         if (jumping && !falling) {
             dy = jumpStart;
+            isCollisionY = false;
             falling = true;
+            jumpCount++;
         }
 
         if (falling) {
@@ -175,9 +181,12 @@ public class Player extends MapObject {
                 dy += fallSpeed;
             }
 
-            if (dy > 0) {
+            if (dy > 0 && jumping && jumpCount == 1) {
+                dy = jumpStart;
                 jumping = false;
+                jumpCount = 0;
             }
+
             if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
             }
@@ -188,6 +197,7 @@ public class Player extends MapObject {
     }
 
     public void update() {
+        System.out.println(dy);
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);

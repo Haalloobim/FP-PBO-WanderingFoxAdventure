@@ -56,6 +56,8 @@ public abstract class MapObject {
     protected double stopJumpSpeed;
 
     protected boolean isCollisionX;
+    protected boolean isCollisionY;
+
     public MapObject(TileMap tm) {
         tileMap = tm;
         tileSize = tm.getTileSize();
@@ -86,7 +88,7 @@ public abstract class MapObject {
         bottomRight = br == Tile.BLOCKED;
     }
 
-    public void checkTileMapCollision(){
+    public void checkTileMapCollision() {
         currCol = (int) x / tileSize;
         currRow = (int) y / tileSize;
 
@@ -109,33 +111,34 @@ public abstract class MapObject {
             if (bottomLeft || bottomRight) {
                 dy = 0;
                 falling = false;
+                isCollisionY = true;
                 ytemp = (currRow + 1) * tileSize - cheight / 2;
             } else {
                 ytemp += dy;
             }
         }
-        calculateCorners(xdest, y );
-        if(dx < 0){
-            if(topLeft || bottomLeft){
+        calculateCorners(xdest, y);
+        if (dx < 0) {
+            if (topLeft || bottomLeft) {
                 dx = 0;
                 isCollisionX = true;
                 xtemp = currCol * tileSize + cwidth / 2;
-            }else{
+            } else {
                 xtemp += dx;
             }
         }
-        if(dx > 0){
-            if(topRight || bottomRight){
+        if (dx > 0) {
+            if (topRight || bottomRight) {
                 dx = 0;
                 isCollisionX = true;
                 xtemp = (currCol + 1) * tileSize - cwidth / 2;
-            }else{
+            } else {
                 xtemp += dx;
             }
         }
-        if(!falling){
+        if (!falling) {
             calculateCorners(x, ydest + 1);
-            if(!bottomLeft && !bottomRight){
+            if (!bottomLeft && !bottomRight) {
                 falling = true;
             }
         }
@@ -191,7 +194,7 @@ public abstract class MapObject {
 
     public void setUp(boolean b) {
         up = b;
-    }  
+    }
 
     public void setDown(boolean b) {
         down = b;
@@ -203,20 +206,19 @@ public abstract class MapObject {
 
     public boolean notOnScreen() {
         return x + xmap + width < 0 ||
-        x + xmap - width > GamePanel.WIDTH || 
-        y + ymap + height < 0 ||
-        y + ymap - height > GamePanel.HEIGHT;
+                x + xmap - width > GamePanel.WIDTH ||
+                y + ymap + height < 0 ||
+                y + ymap - height > GamePanel.HEIGHT;
     }
 
-    public void draw(Graphics2D g){
+    public void draw(Graphics2D g) {
         if (facingRight) {
             g.drawImage(
                     animation.getImage(),
                     (int) (x + xmap - width / 2),
                     (int) (y + ymap - height / 2),
                     null);
-        } 
-        else {
+        } else {
             g.drawImage(
                     animation.getImage(),
                     (int) (x + xmap - width / 2 + width),

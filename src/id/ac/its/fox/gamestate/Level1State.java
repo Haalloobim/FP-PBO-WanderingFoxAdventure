@@ -21,7 +21,7 @@ public class Level1State extends GameState {
     private TileMap tilemap;
 
     private ArrayList<Enemy> enemies;
-    private HUD hud; 
+    private HUD hud;
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
