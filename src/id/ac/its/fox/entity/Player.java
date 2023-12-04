@@ -24,11 +24,10 @@ public class Player extends MapObject {
     private int clawCost;
     private int clawDamage;
     private ArrayList<Claw> claws;
-
+    private int jumpTemp;
     private boolean scratching;
     private int scratchDamage;
     private int scratchRange;
-
     private boolean gliding;
 
     private ArrayList<BufferedImage[]> sprites;
@@ -46,6 +45,7 @@ public class Player extends MapObject {
 
     public Player(TileMap tm) {
         super(tm);
+        jumpTemp = 0;
         width = 24;
         height = 24;
         cwidth = 22;
@@ -60,7 +60,6 @@ public class Player extends MapObject {
         stopJumpSpeed = 0.3;
         isCollisionY = false;
         facingRight = true;
-
         health = maxHealth = 5;
         claw = maxClaw = 2500;
 
@@ -182,11 +181,15 @@ public class Player extends MapObject {
             }
 
             if (dy > 0 && jumping && jumpCount == 1) {
-                dy = jumpStart;
+                dy = 1.25 * jumpStart;
                 jumping = false;
-                jumpCount = 0;
+                jumpCount++;
             }
 
+            else if (dy > 0) {
+                jumping = false;
+            }
+            
             if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
             }
@@ -197,7 +200,7 @@ public class Player extends MapObject {
     }
 
     public void update() {
-        System.out.println(dy);
+        // System.out.println(jumpCount + " " + jumping + " " + falling + " " + dy);
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
