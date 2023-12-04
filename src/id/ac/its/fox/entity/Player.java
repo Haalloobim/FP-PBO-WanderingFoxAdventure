@@ -33,7 +33,7 @@ public class Player extends MapObject {
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            4, 6, 1, 1, 5, 5, 2
+            4, 6, 1, 1, 5, 4, 4
     };
 
     private static final int IDLE = 0;
@@ -43,6 +43,7 @@ public class Player extends MapObject {
     private static final int GLIDING = 2;
     private static final int CLAWING = 5;
     private static final int SCRATCHING = 4;
+    private static final int DOUBLE_JUMP = 6;
 
     public Player(TileMap tm) {
         super(tm);
@@ -57,7 +58,7 @@ public class Player extends MapObject {
         stopSpeed = 0.4;
         fallSpeed = 0.15;
         maxFallSpeed = 4.0;
-        jumpStart = -4.8;
+        jumpStart = -3.7;
         stopJumpSpeed = 0.3;
         isCollisionY = false;
         facingRight = true;
@@ -190,7 +191,7 @@ public class Player extends MapObject {
                 jumpCount++;
                 dy = 0.8 * jumpStart;
             }
-            
+
             if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
             }
@@ -266,11 +267,18 @@ public class Player extends MapObject {
                 animation.setDelay(100);
                 width = 24;
             }
-        } else if (dy < 0) {
+        } else if (dy < 0 && jumpCount == 1) {
             if (currentAction != JUMPING) {
                 currentAction = JUMPING;
                 animation.setFrames(sprites.get(JUMPING));
                 animation.setDelay(40);
+                width = 24;
+            }
+        } else if (dy < 0 && jumpCount == 2) {
+            if (currentAction != DOUBLE_JUMP) {
+                currentAction = DOUBLE_JUMP;
+                animation.setFrames(sprites.get(DOUBLE_JUMP));
+                animation.setDelay(100);
                 width = 24;
             }
         } else if (left || right) {
