@@ -6,6 +6,7 @@ import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
 import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Player;
+import id.ac.its.fox.entity.Enemies.Rat;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -38,6 +39,13 @@ public class Level1State extends GameState {
         bgLevel1.setVector(0, 0);
         player = new Player(tilemap);
         player.setPosition(48, 144);
+
+        enemies = new ArrayList<Enemy>();
+        Rat rat;
+        rat = new Rat(tilemap);
+        rat.setPosition(100, 100);
+        enemies.add(rat);
+
     }
 
     @Override
@@ -46,6 +54,10 @@ public class Level1State extends GameState {
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
                 GamePanel.HEIGHT / 2 - player.getY());
+        bgLevel1.setPosition(tilemap.getx(), tilemap.gety());
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).update();
+        }
     }
 
     @Override
@@ -57,6 +69,9 @@ public class Level1State extends GameState {
         bgLevel1.draw(g);
         tilemap.draw(g);
         player.draw(g);
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).draw(g);
+        }
     }
 
     @Override
