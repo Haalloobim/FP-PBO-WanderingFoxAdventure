@@ -5,6 +5,7 @@ import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
 import id.ac.its.fox.entity.Enemy;
+import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
 import id.ac.its.fox.entity.Enemies.Rat;
@@ -21,6 +22,8 @@ public class Level1State extends GameState {
     private TileMap tilemap;
 
     private ArrayList<Enemy> enemies;
+    private ArrayList<Explosion> explosions;
+
     private HUD hud;
 
     public Level1State(GameStateManager gsm) {
@@ -53,6 +56,8 @@ public class Level1State extends GameState {
         
         enemies.add(rat);
 
+        explosions = new ArrayList<Explosion>();
+
         hud = new HUD(player);
 
     }
@@ -67,9 +72,24 @@ public class Level1State extends GameState {
         player.checkAttack(enemies);
 
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).update();
-            if (enemies.get(i).isDead()) {
+            Enemy e = enemies.get(i);
+            e.update();
+            if (e.isDead()) {
                 enemies.remove(i);
+                i--;
+                explosions.add(
+                    new Explosion(
+                        e.getX(), e.getY()
+                    )
+                );
+            }
+        }
+
+        for(int i = 0; i < explosions.size(); i++){
+            Explosion exp = explosions.get(i);
+            exp.update();
+            if(exp.shouldRemove()){
+                explosions.remove(i);
                 i--;
             }
         }
@@ -86,6 +106,15 @@ public class Level1State extends GameState {
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
+        }
+
+        for (int i = 0; i < explosions.size(); i++) {
+            Explosion exp = explosions.get(i);
+            exp.setMapPosition(
+                    (int) tilemap.getx(),
+                    (int) tilemap.gety()
+            );
+            exp.draw(g);
         }
 
         hud.draw(g);
