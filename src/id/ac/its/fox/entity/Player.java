@@ -71,7 +71,7 @@ public class Player extends MapObject {
         claws = new ArrayList<Claw>();
 
         scratchDamage = 8;
-        scratchRange = 40;
+        scratchRange = 30;
 
         try {
             BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/player.png"));
@@ -136,6 +136,58 @@ public class Player extends MapObject {
 
     public void setGliding(boolean b) {
         gliding = b;
+    }
+
+    public void checkAttack(ArrayList<Enemy> enemies) {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            if (scratching) {
+                if (facingRight) {
+                    if (e.getX() > x &&
+                        e.getX() < x + scratchRange && 
+                        e.getY() > y - height / 2 && 
+                        e.getY() < y + height / 2
+                        ){
+                        e.hit(scratchDamage);
+                    }
+                } 
+                else {
+                    if (e.getX() < x && 
+                        e.getX() > x - scratchRange && 
+                        e.getY() > y - height / 2 &&
+                        e.getY() < y + height / 2) {
+                        e.hit(scratchDamage);
+                    }
+                }
+            }
+
+            for (int j = 0; j < claws.size(); j++) {
+                if (claws.get(j).intersects(e)) {
+                    e.hit(clawDamage);
+                    claws.get(j).setHit();
+                    break;
+                }
+            }
+
+            if (intersects(e)) {
+                hit(e.getDamage());
+            }
+        }
+    }
+
+    public void hit(int damage) {
+        if (flinching) {
+            return;
+        }
+        health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
+        if (health == 0) {
+            dead = true;
+        }
+        flinching = true;
+        flinchTimer = System.nanoTime();
     }
 
     public void getNextPosition() {

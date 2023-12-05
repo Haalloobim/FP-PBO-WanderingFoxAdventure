@@ -24,8 +24,8 @@ public class Rat extends Enemy {
 
         width = 36;
         height = 28;
-        cwidth = 32;
-        cheight = 26;
+        cwidth = 30;
+        cheight = 20;
 
         health = maxHealth = 2;
         damage = 1;
@@ -119,8 +119,8 @@ public class Rat extends Enemy {
     }
 
     public void draw(java.awt.Graphics2D g) {
-        if (notOnScreen())
-            return;
+        // if (notOnScreen())
+        //     return;
 
         setMapPosition();
 
