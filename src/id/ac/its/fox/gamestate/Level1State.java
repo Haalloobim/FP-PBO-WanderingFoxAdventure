@@ -35,7 +35,7 @@ public class Level1State extends GameState {
     public void init() {
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
         bgMusic.bgplay();
-
+        bgMusic.volumeDown();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/temp.map");

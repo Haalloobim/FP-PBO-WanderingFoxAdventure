@@ -55,7 +55,7 @@ public class TileMap {
                 tiles[0][i] = new Tile(subimage, Tile.NORMAL);
                 subimage = tileset.getSubimage(i * tileSize, tileSize, tileSize, tileSize);
                 tiles[1][i] = new Tile(subimage, Tile.BLOCKED);
-
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
