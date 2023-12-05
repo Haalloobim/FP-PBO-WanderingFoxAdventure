@@ -32,20 +32,25 @@ public class Level1State extends GameState {
     public void init() {
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
         bgMusic.bgplay();
+
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/temp.map");
         tilemap.setPosition(0, 0);
         tilemap.setTween(0.15);
+
         bgLevel1 = new Background("/Background/bg_level1.png", 3);
         bgLevel1.setVector(0, 0);
+
         player = new Player(tilemap);
         player.setPosition(48, 144);
 
         enemies = new ArrayList<Enemy>();
+
         Rat rat;
         rat = new Rat(tilemap);
         rat.setPosition(176, 100);
+        
         enemies.add(rat);
 
         hud = new HUD(player);

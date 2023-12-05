@@ -63,7 +63,7 @@ public class Player extends MapObject {
         isCollisionY = false;
         facingRight = true;
         health = maxHealth = 5;
-        claw = maxClaw = 2500;
+        claw = maxClaw = 2500000;
         lastJumpTime = 0;
 
         clawCost = 200;
@@ -222,6 +222,7 @@ public class Player extends MapObject {
         if (claw > maxClaw) {
             claw = maxClaw;
         }
+
         if (clawing && currentAction != CLAWING) {
             if (claw > clawCost) {
                 claw -= clawCost;

@@ -39,20 +39,23 @@ public class Claw extends MapObject{
                     "/Sprites/claw.png"
                     )
                 );
+
             sprites = new BufferedImage[3];
             for(int i = 0; i < sprites.length; i++){
-                sprites[i] = spritesheet.getSubimage(i*width, 0, width, height);
+                sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
             }
+
             hitSprites = new BufferedImage[3];
             for(int i = 0; i < hitSprites.length; i++){
                 hitSprites[i] = spritesheet.getSubimage(i*width, height, width, height);
             }
+
             animation = new Animation();
             animation.setFrames(sprites);
             animation.setDelay(70);
         }
         catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
 
