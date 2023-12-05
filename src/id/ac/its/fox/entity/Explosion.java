@@ -22,13 +22,13 @@ public class Explosion {
         this.x = x;
         this.y = y;
 
-        width = 30;
-        height = 30;
+        width = 36;
+        height = 28;
 
         try {
             BufferedImage spritesheet = ImageIO.read(
                     getClass().getResourceAsStream(
-                            "/Sprites/Explosion/explosion.gif"
+                            "/Sprites/death.png"
                             )
                     );  
             sprites = new BufferedImage[3];
@@ -45,7 +45,7 @@ public class Explosion {
         }
         animation = new Animation();
         animation.setFrames(sprites);
-        animation.setDelay(10);
+        animation.setDelay(50);
     }
 
     public void update() {
