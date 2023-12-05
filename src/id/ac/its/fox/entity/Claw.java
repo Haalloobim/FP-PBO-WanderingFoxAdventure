@@ -30,8 +30,8 @@ public class Claw extends MapObject{
 
         width = 24;
         height = 24;    
-        cwidth = 22;
-        cheight = 22;
+        cwidth = 18;
+        cheight = 18;
 
         try {
             BufferedImage spritesheet = ImageIO.read(
