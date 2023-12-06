@@ -24,12 +24,10 @@ public class Player extends MapObject {
     private int clawCost;
     private int clawDamage;
     private ArrayList<Claw> claws;
-    private int jumpTemp;
     private boolean scratching;
     private int scratchDamage;
     private int scratchRange;
     private boolean gliding;
-    private long lastJumpTime;
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
@@ -47,7 +45,6 @@ public class Player extends MapObject {
 
     public Player(TileMap tm) {
         super(tm);
-        jumpTemp = 0;
         width = 24;
         height = 24;
         cwidth = 22;
@@ -64,7 +61,6 @@ public class Player extends MapObject {
         facingRight = true;
         health = maxHealth = 5;
         claw = maxClaw = 2500000;
-        lastJumpTime = 0;
 
         clawCost = 200;
         clawDamage = 5;
@@ -104,10 +100,6 @@ public class Player extends MapObject {
         currentAction = IDLE;
         animation.setFrames(sprites.get(IDLE));
         animation.setDelay(400);
-    }
-
-    public long getLastJumpTime() {
-        return lastJumpTime;
     }
 
     public int getHealth() {

@@ -25,7 +25,7 @@ public class Rat extends Enemy {
         width = 36;
         height = 28;
         cwidth = 30;
-        cheight = 20;
+        cheight = 24;
 
         health = maxHealth = 2;
         damage = 1;
