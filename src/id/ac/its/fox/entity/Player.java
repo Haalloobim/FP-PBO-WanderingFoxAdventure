@@ -19,7 +19,6 @@ public class Player extends MapObject {
     private boolean dead;
     private boolean flinching;
     private long flinchTimer;
-    private int jumpCount;
     private boolean clawing;
     private int clawCost;
     private int clawDamage;
@@ -28,6 +27,8 @@ public class Player extends MapObject {
     private int scratchDamage;
     private int scratchRange;
     private boolean gliding;
+    private boolean doubleJump;
+    private boolean alreadyDoubleJump;
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
@@ -49,7 +50,6 @@ public class Player extends MapObject {
         height = 24;
         cwidth = 22;
         cheight = 22;
-        jumpCount = 0;
         moveSpeed = 0.3;
         maxSpeed = 1.6;
         stopSpeed = 0.4;
@@ -61,7 +61,8 @@ public class Player extends MapObject {
         facingRight = true;
         health = maxHealth = 5;
         claw = maxClaw = 2500000;
-
+        doubleJump = false;
+        alreadyDoubleJump = false;
         clawCost = 200;
         clawDamage = 5;
         claws = new ArrayList<Claw>();
@@ -130,24 +131,29 @@ public class Player extends MapObject {
         gliding = b;
     }
 
+    public void setJumping(boolean b) {
+        if (b && !jumping && falling && !alreadyDoubleJump) {
+            doubleJump = true;
+        }
+        jumping = b;
+    }
+
     public void checkAttack(ArrayList<Enemy> enemies) {
         for (int i = 0; i < enemies.size(); i++) {
             Enemy e = enemies.get(i);
             if (scratching) {
                 if (facingRight) {
                     if (e.getX() > x &&
-                        e.getX() < x + scratchRange && 
-                        e.getY() > y - height / 2 && 
-                        e.getY() < y + height / 2
-                        ){
+                            e.getX() < x + scratchRange &&
+                            e.getY() > y - height / 2 &&
+                            e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
                     }
-                } 
-                else {
-                    if (e.getX() < x && 
-                        e.getX() > x - scratchRange && 
-                        e.getY() > y - height / 2 &&
-                        e.getY() < y + height / 2) {
+                } else {
+                    if (e.getX() < x &&
+                            e.getX() > x - scratchRange &&
+                            e.getY() > y - height / 2 &&
+                            e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
                     }
                 }
@@ -214,14 +220,22 @@ public class Player extends MapObject {
         }
 
         if (isCollisionY) {
-            jumpCount = 0;
+            doubleJump = false;
+            alreadyDoubleJump = false;
         }
-
+        if (doubleJump) {
+            dy = 0.8 * jumpStart;
+            alreadyDoubleJump = true;
+            doubleJump = false;
+        }
         if (jumping && !falling) {
             dy = jumpStart;
             isCollisionY = false;
             falling = true;
-            jumpCount++;
+        }
+
+        if (!falling) {
+            alreadyDoubleJump = false;
         }
 
         if (falling) {
@@ -231,10 +245,10 @@ public class Player extends MapObject {
                 dy += fallSpeed;
             }
 
-            if (dy > 0 && jumpCount == 1 && jumping) {
-                jumpCount++;
-                dy = 0.8 * jumpStart;
-            }
+            // if (dy > 0 && jumpCount == 1 && jumping) {
+            // jumpCount++;
+            // dy = 0.8 * jumpStart;
+            // }
 
             if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
@@ -284,9 +298,9 @@ public class Player extends MapObject {
             }
         }
 
-        if(flinching){
+        if (flinching) {
             long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
-            if(elapsed > 1000){
+            if (elapsed > 1000) {
                 flinching = false;
             }
         }
@@ -319,14 +333,14 @@ public class Player extends MapObject {
                 animation.setDelay(100);
                 width = 24;
             }
-        } else if (dy < 0 && jumpCount == 1) {
+        } else if (dy < 0 && !alreadyDoubleJump) {
             if (currentAction != JUMPING) {
                 currentAction = JUMPING;
                 animation.setFrames(sprites.get(JUMPING));
                 animation.setDelay(40);
                 width = 24;
             }
-        } else if (dy < 0 && jumpCount == 2) {
+        } else if (dy < 0 && alreadyDoubleJump) {
             if (currentAction != DOUBLE_JUMP) {
                 currentAction = DOUBLE_JUMP;
                 animation.setFrames(sprites.get(DOUBLE_JUMP));
