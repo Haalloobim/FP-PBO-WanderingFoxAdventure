@@ -267,7 +267,7 @@ public class Player extends MapObject {
             claw = maxClaw;
         }
 
-        if (clawing && currentAction != CLAWING) {
+        if (clawing && currentAction != CLAWING && !scratching) {
             if (claw > clawCost) {
                 claw -= clawCost;
                 Claw c = new Claw(tileMap, facingRight);
