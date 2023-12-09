@@ -5,9 +5,11 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.tilemap.TileMap;
 
 public class Player extends MapObject {
@@ -44,6 +46,8 @@ public class Player extends MapObject {
     private static final int SCRATCHING = 4;
     private static final int DOUBLE_JUMP = 6;
 
+    private HashMap<String, AudioPlayer> sfx;
+
     public Player(TileMap tm) {
         super(tm);
         width = 24;
@@ -66,6 +70,8 @@ public class Player extends MapObject {
         clawCost = 200;
         clawDamage = 5;
         claws = new ArrayList<Claw>();
+
+        
 
         scratchDamage = 8;
         scratchRange = 30;
@@ -101,6 +107,9 @@ public class Player extends MapObject {
         currentAction = IDLE;
         animation.setFrames(sprites.get(IDLE));
         animation.setDelay(400);
+
+        sfx = new HashMap<String, AudioPlayer>();
+        sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
     }
 
     public int getHealth() {

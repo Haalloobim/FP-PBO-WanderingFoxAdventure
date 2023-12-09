@@ -45,7 +45,7 @@ public class Explosion {
         }
         animation = new Animation();
         animation.setFrames(sprites);
-        animation.setDelay(50);
+        animation.setDelay(100);
     }
 
     public void update() {
