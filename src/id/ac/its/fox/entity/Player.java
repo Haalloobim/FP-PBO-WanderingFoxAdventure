@@ -109,7 +109,8 @@ public class Player extends MapObject {
         animation.setDelay(400);
 
         sfx = new HashMap<String, AudioPlayer>();
-        sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
+        sfx.put("jump", new AudioPlayer("/SFX/jump.wav"));
+        sfx.put("scratch", new AudioPlayer("/SFX/scratch.wav"));
     }
 
     public int getHealth() {
@@ -316,6 +317,7 @@ public class Player extends MapObject {
 
         if (scratching) {
             if (currentAction != SCRATCHING) {
+                sfx.get("scratch").clipPlay();
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
                 animation.setDelay(100);
@@ -344,6 +346,7 @@ public class Player extends MapObject {
             }
         } else if (dy < 0 && !alreadyDoubleJump) {
             if (currentAction != JUMPING) {
+                sfx.get("jump").clipPlay();
                 currentAction = JUMPING;
                 animation.setFrames(sprites.get(JUMPING));
                 animation.setDelay(40);
@@ -351,6 +354,7 @@ public class Player extends MapObject {
             }
         } else if (dy < 0 && alreadyDoubleJump) {
             if (currentAction != DOUBLE_JUMP) {
+                sfx.get("jump").clipPlay();
                 currentAction = DOUBLE_JUMP;
                 animation.setFrames(sprites.get(DOUBLE_JUMP));
                 animation.setDelay(100);
