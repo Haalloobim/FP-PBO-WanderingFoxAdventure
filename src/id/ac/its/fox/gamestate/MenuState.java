@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.tilemap.Background;
@@ -24,6 +25,7 @@ public class MenuState extends GameState {
 
     private Font font;
 
+    private HashMap<String, AudioPlayer> sfx;
     public MenuState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
@@ -40,6 +42,8 @@ public class MenuState extends GameState {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        sfx = new HashMap<String, AudioPlayer>();
+        sfx.put("choose", new AudioPlayer("/SFX/chooseOpt.wav"));
         init();
     }
 
@@ -97,11 +101,13 @@ public class MenuState extends GameState {
         }
         if (k == KeyEvent.VK_UP) {
             currentChoice--;
+            sfx.get("choose").clipPlay();
             if (currentChoice == -1) {
                 currentChoice = options.length - 1;
             }
         }
         if (k == KeyEvent.VK_DOWN) {
+            sfx.get("choose").clipPlay();
             currentChoice++;
             if (currentChoice == options.length) {
                 currentChoice = 0;
