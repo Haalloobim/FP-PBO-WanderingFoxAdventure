@@ -44,6 +44,7 @@ public class MenuState extends GameState {
         }
         sfx = new HashMap<String, AudioPlayer>();
         sfx.put("choose", new AudioPlayer("/SFX/chooseOpt.wav"));
+        sfx.put("select", new AudioPlayer("/SFX/select.wav"));
         init();
     }
 
@@ -97,6 +98,7 @@ public class MenuState extends GameState {
     @Override
     public void keyPressed(int k) {
         if (k == KeyEvent.VK_ENTER) {
+            sfx.get("select").clipPlay();
             select();
         }
         if (k == KeyEvent.VK_UP) {
