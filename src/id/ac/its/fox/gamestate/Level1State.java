@@ -27,6 +27,10 @@ public class Level1State extends GameState {
 
     private HUD hud;
 
+    private boolean eventStart;
+    private int eventCount = 0;
+    private ArrayList<Rectangle> RectScreens;
+
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
         init();
@@ -66,6 +70,10 @@ public class Level1State extends GameState {
 
         hud = new HUD(player);
 
+        eventStart = true;
+        RectScreens = new ArrayList<Rectangle>();
+        eventStart();
+
     }
 
     @Override
@@ -96,6 +104,10 @@ public class Level1State extends GameState {
                 i--;
             }
         }
+
+        if(eventStart){
+            eventStart();
+        }
     }
 
     @Override
@@ -120,6 +132,11 @@ public class Level1State extends GameState {
         }
 
         hud.draw(g);
+
+        g.setColor(java.awt.Color.BLACK);
+		for(int i = 0; i < RectScreens.size(); i++) {
+			g.fill(RectScreens.get(i));
+		}
     }
 
     @Override
@@ -156,5 +173,27 @@ public class Level1State extends GameState {
             player.setJumping(false);
         if (k == KeyEvent.VK_E)
             player.setGliding(false);
+    }
+
+    private void eventStart() {
+        eventCount++;
+        if(eventCount == 1) {
+			RectScreens.clear();
+			RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
+			RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
+			RectScreens.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
+			RectScreens.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
+		}
+		if(eventCount > 1 && eventCount < 60) {
+			RectScreens.get(0).height -= 4;
+			RectScreens.get(1).width -= 6;
+			RectScreens.get(2).y += 4;
+			RectScreens.get(3).x += 6;
+		}
+		if(eventCount == 60) {
+			eventStart = false;
+			eventCount = 0;
+			RectScreens.clear();
+		}
     }
 }
