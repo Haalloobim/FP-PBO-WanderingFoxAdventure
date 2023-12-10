@@ -52,9 +52,8 @@ public class Level1State extends GameState {
 
         Rat rat;
         rat = new Rat(tilemap);
-        rat.setPosition(176, 100);
-        
-        // enemies.add(rat);
+        rat.setPosition(1100, 50);
+        enemies.add(rat);
 
         explosions = new ArrayList<Explosion>();
 
