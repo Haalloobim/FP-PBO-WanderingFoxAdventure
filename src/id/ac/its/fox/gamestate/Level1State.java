@@ -28,7 +28,13 @@ public class Level1State extends GameState {
     private HUD hud;
 
     private boolean eventStart;
+    private boolean eventDead;
     private int eventCount = 0;
+    public static final int STARTEVENTBEGIN = 1;
+    public static final int STARTEVENTEND = 60;
+    public static final int DEADEVENTBEGIN = 1;
+    public static final int DEADEVENTMID = 60;
+    public static final int DEADEVENTEND = 120;
     private ArrayList<Rectangle> RectScreens;
 
     public Level1State(GameStateManager gsm) {
@@ -105,7 +111,11 @@ public class Level1State extends GameState {
             }
         }
 
-        if(eventStart){
+        if (player.getHealth() == 0) {
+            eventDead = true;
+        }
+
+        if (eventStart) {
             eventStart();
         }
     }
@@ -134,9 +144,9 @@ public class Level1State extends GameState {
         hud.draw(g);
 
         g.setColor(java.awt.Color.BLACK);
-		for(int i = 0; i < RectScreens.size(); i++) {
-			g.fill(RectScreens.get(i));
-		}
+        for (int i = 0; i < RectScreens.size(); i++) {
+            g.fill(RectScreens.get(i));
+        }
     }
 
     @Override
@@ -175,25 +185,34 @@ public class Level1State extends GameState {
             player.setGliding(false);
     }
 
+    private void reset() {
+        player.PlayerReset();
+        player.setPosition(48, 144);
+        eventStart = true;
+        eventStart();
+    }
+
     private void eventStart() {
         eventCount++;
-        if(eventCount == 1) {
-			RectScreens.clear();
-			RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
-			RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
-			RectScreens.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
-			RectScreens.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
-		}
-		if(eventCount > 1 && eventCount < 60) {
-			RectScreens.get(0).height -= 4;
-			RectScreens.get(1).width -= 6;
-			RectScreens.get(2).y += 4;
-			RectScreens.get(3).x += 6;
-		}
-		if(eventCount == 60) {
-			eventStart = false;
-			eventCount = 0;
-			RectScreens.clear();
-		}
+        if (eventCount == STARTEVENTBEGIN) {
+            RectScreens.clear();
+            RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
+            RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
+            RectScreens.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
+            RectScreens.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
+        }
+
+        if (eventCount > STARTEVENTBEGIN && eventCount < STARTEVENTEND) {
+            RectScreens.get(0).height -= 4; // mid to top
+            RectScreens.get(1).width -= 6; // mid to left
+            RectScreens.get(2).y += 4; // mid to bottom
+            RectScreens.get(3).x += 6; // mid to right
+        }
+
+        if (eventCount == STARTEVENTEND) {
+            eventStart = false;
+            eventCount = 0;
+            RectScreens.clear();
+        }
     }
 }

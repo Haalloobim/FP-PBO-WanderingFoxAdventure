@@ -199,6 +199,24 @@ public class Player extends MapObject {
         flinchTimer = System.nanoTime();
     }
 
+    public void gameStop(){
+        left = right = up = down = flinching = 
+			clawing = jumping = gliding = scratching = false;
+    }
+
+    public void setDead (){
+        this.health = 0;
+        this.dead = true;
+        this.gameStop();
+    }
+
+    public void PlayerReset(){
+        this.health = maxHealth;
+        this.dead = false;
+        currentAction = -1; 
+        this.gameStop();
+    }
+
     public void getNextPosition() {
         if (left) {
             dx -= moveSpeed;
