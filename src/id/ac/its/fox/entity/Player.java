@@ -111,6 +111,7 @@ public class Player extends MapObject {
         sfx = new HashMap<String, AudioPlayer>();
         sfx.put("jump", new AudioPlayer("/SFX/jump.wav"));
         sfx.put("scratch", new AudioPlayer("/SFX/scratch.wav"));
+        sfx.put("claw", new AudioPlayer("/SFX/claw.wav"));
     }
 
     public int getHealth() {
@@ -318,6 +319,7 @@ public class Player extends MapObject {
         if (scratching) {
             if (currentAction != SCRATCHING) {
                 sfx.get("scratch").clipPlay();
+                sfx.get("scratch").volumeDown();
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
                 animation.setDelay(100);
@@ -325,6 +327,7 @@ public class Player extends MapObject {
             }
         } else if (clawing) {
             if (currentAction != CLAWING) {
+                sfx.get("claw").clipPlay();
                 currentAction = CLAWING;
                 animation.setFrames(sprites.get(CLAWING));
                 animation.setDelay(100);
