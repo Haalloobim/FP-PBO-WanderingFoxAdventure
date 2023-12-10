@@ -73,7 +73,7 @@ public class Level1State extends GameState {
         player.update();
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
-                Math.min(GamePanel.HEIGHT / 2 - player.getY(), -(2 * tilemap.getTileSize())));
+                GamePanel.HEIGHT / 2 - player.getY());
         player.checkAttack(enemies);
 
         for (int i = 0; i < enemies.size(); i++) {
