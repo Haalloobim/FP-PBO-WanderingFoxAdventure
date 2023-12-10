@@ -1,6 +1,7 @@
 package id.ac.its.fox.gamestate;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.main.Game;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
@@ -72,8 +73,7 @@ public class Level1State extends GameState {
         player.update();
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
-                GamePanel.HEIGHT / 2 - player.getY());
-
+                Math.min(GamePanel.HEIGHT / 2 - player.getY(), -(2 * tilemap.getTileSize())));
         player.checkAttack(enemies);
 
         for (int i = 0; i < enemies.size(); i++) {
@@ -83,17 +83,15 @@ public class Level1State extends GameState {
                 enemies.remove(i);
                 i--;
                 explosions.add(
-                    new Explosion(
-                        e.getX(), e.getY()
-                    )
-                );
+                        new Explosion(
+                                e.getX(), e.getY()));
             }
         }
 
-        for(int i = 0; i < explosions.size(); i++){
+        for (int i = 0; i < explosions.size(); i++) {
             Explosion exp = explosions.get(i);
             exp.update();
-            if(exp.shouldRemove()){
+            if (exp.shouldRemove()) {
                 explosions.remove(i);
                 i--;
             }
@@ -117,8 +115,7 @@ public class Level1State extends GameState {
             Explosion exp = explosions.get(i);
             exp.setMapPosition(
                     (int) tilemap.getx(),
-                    (int) tilemap.gety()
-            );
+                    (int) tilemap.gety());
             exp.draw(g);
         }
 
