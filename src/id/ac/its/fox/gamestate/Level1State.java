@@ -29,6 +29,7 @@ public class Level1State extends GameState {
 
     private boolean eventStart;
     private boolean eventDead;
+    private boolean blockedInput; 
     private int eventCount = 0;
     public static final int STARTEVENTBEGIN = 1;
     public static final int STARTEVENTEND = 60;
@@ -64,12 +65,6 @@ public class Level1State extends GameState {
         Rat rat;
         rat = new Rat(tilemap);
         rat.setPosition(1100, 50);
-        enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1120, 50);
-        enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1140, 50);
         enemies.add(rat);
 
         explosions = new ArrayList<Explosion>();
@@ -117,6 +112,9 @@ public class Level1State extends GameState {
 
         if (eventStart) {
             eventStart();
+        }
+        if (eventDead) {
+            eventDead();
         }
     }
 
@@ -211,8 +209,32 @@ public class Level1State extends GameState {
 
         if (eventCount == STARTEVENTEND) {
             eventStart = false;
+            blockedInput = false; 
             eventCount = 0;
             RectScreens.clear();
         }
     }
+
+    private void eventDead() {
+		eventCount++;
+		if(eventCount == 1) {
+			player.setDead();
+			player.gameStop();
+		}
+		if(eventCount == 60) {
+			RectScreens.clear();
+			RectScreens.add(new Rectangle(
+				0, 0, GamePanel.WIDTH, 0));
+		}
+		else if(eventCount > 60 && eventCount < 90) {
+			RectScreens.get(0).height += 16;
+		}
+		if(eventCount >= 120) {
+
+				eventDead = blockedInput = false;
+				eventCount = 0;
+				reset();
+		}
+		
+	}
 }
