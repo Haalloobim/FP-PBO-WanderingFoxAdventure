@@ -192,7 +192,7 @@ public class Level1State extends GameState {
 
     private void reset() {
         player.PlayerReset();
-        player.setPosition(48, 144);
+        player.setPosition(32, 144);
         eventStart = true;
         eventStart();
     }

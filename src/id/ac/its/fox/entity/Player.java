@@ -2,8 +2,6 @@ package id.ac.its.fox.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,7 +51,10 @@ public class Player extends MapObject {
         super(tm);
         width = 24;
         height = 24;
-        cwidth = 14;
+        cwidth = 16
+        
+        
+        ;
         cheight = 22;
         moveSpeed = 0.3;
         maxSpeed = 1.6;
@@ -153,15 +154,15 @@ public class Player extends MapObject {
             Enemy e = enemies.get(i);
             if (scratching) {
                 if (facingRight) {
-                    if (e.getX() > x &&
-                            e.getX() < x + scratchRange &&
+                    if (e.x > x &&
+                            e.x < x + scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
                     }
                 } else {
-                    if (e.getX() < x &&
-                            e.getX() > x - scratchRange &&
+                    if (e.x < x &&
+                            e.x > x - scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
@@ -422,7 +423,6 @@ public class Player extends MapObject {
                 return;
             }
         }
-
         super.draw(g);
 
         // draw claws
