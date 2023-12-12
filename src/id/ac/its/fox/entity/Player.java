@@ -71,8 +71,6 @@ public class Player extends MapObject {
         clawDamage = 5;
         claws = new ArrayList<Claw>();
 
-        
-
         scratchDamage = 8;
         scratchRange = 30;
 
@@ -199,21 +197,20 @@ public class Player extends MapObject {
         flinchTimer = System.nanoTime();
     }
 
-    public void gameStop(){
-        left = right = up = down = flinching = 
-			clawing = jumping = gliding = scratching = false;
+    public void gameStop() {
+        left = right = up = down = flinching = clawing = jumping = gliding = scratching = false;
     }
 
-    public void setDead (){
+    public void setDead() {
         this.health = 0;
         this.dead = true;
         this.gameStop();
     }
 
-    public void PlayerReset(){
+    public void PlayerReset() {
         this.health = maxHealth;
         this.dead = false;
-        currentAction = -1; 
+        currentAction = -1;
         this.gameStop();
     }
 
@@ -289,6 +286,7 @@ public class Player extends MapObject {
     }
 
     public void update() {
+        System.out.println(getX());
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
