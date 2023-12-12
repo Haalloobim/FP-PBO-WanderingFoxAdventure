@@ -34,7 +34,7 @@ public class Player extends MapObject {
 
     private ArrayList<BufferedImage[]> sprites;
     private final int[] numFrames = {
-            4, 6, 1, 1, 5, 4, 4
+            4, 6, 1, 1, 5, 4, 4, 2
     };
 
     private static final int IDLE = 0;
@@ -45,6 +45,7 @@ public class Player extends MapObject {
     private static final int CLAWING = 5;
     private static final int SCRATCHING = 4;
     private static final int DOUBLE_JUMP = 6;
+    private static final int DEAD = 7;
 
     private HashMap<String, AudioPlayer> sfx;
 
@@ -77,7 +78,7 @@ public class Player extends MapObject {
         try {
             BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/player.png"));
             sprites = new ArrayList<BufferedImage[]>();
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 8; i++) {
                 BufferedImage[] bi = new BufferedImage[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
                     if (i != 4) {
@@ -271,11 +272,6 @@ public class Player extends MapObject {
                 dy += fallSpeed;
             }
 
-            // if (dy > 0 && jumpCount == 1 && jumping) {
-            // jumpCount++;
-            // dy = 0.8 * jumpStart;
-            // }
-
             if (dy < 0 && !jumping) {
                 dy += stopJumpSpeed;
             }
@@ -286,7 +282,6 @@ public class Player extends MapObject {
     }
 
     public void update() {
-        System.out.println(getX());
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
@@ -331,8 +326,15 @@ public class Player extends MapObject {
                 flinching = false;
             }
         }
-
-        if (scratching) {
+        if(dead){
+            if(currentAction != DEAD){
+                currentAction = DEAD;
+                animation.setFrames(sprites.get(DEAD));
+                animation.setDelay(400);
+                width = 24;
+            }
+        }
+        else if (scratching) {
             if (currentAction != SCRATCHING) {
                 sfx.get("scratch").clipPlay();
                 sfx.get("scratch").volumeDown();
