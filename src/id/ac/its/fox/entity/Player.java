@@ -2,8 +2,6 @@ package id.ac.its.fox.entity;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,7 +51,10 @@ public class Player extends MapObject {
         super(tm);
         width = 24;
         height = 24;
-        cwidth = 14;
+        cwidth = 16
+        
+        
+        ;
         cheight = 22;
         moveSpeed = 0.3;
         maxSpeed = 1.6;
@@ -153,15 +154,15 @@ public class Player extends MapObject {
             Enemy e = enemies.get(i);
             if (scratching) {
                 if (facingRight) {
-                    if (e.getX() > x &&
-                            e.getX() < x + scratchRange &&
+                    if (e.x > x &&
+                            e.x < x + scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
                     }
                 } else {
-                    if (e.getX() < x &&
-                            e.getX() > x - scratchRange &&
+                    if (e.x < x &&
+                            e.x > x - scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
@@ -266,7 +267,7 @@ public class Player extends MapObject {
         }
 
         if (falling) {
-            if (dy > 0 && gliding) {
+            if (dy > 0 && gliding && !isCollisionX) {
                 dy += fallSpeed * 0.1;
             } else {
                 dy += fallSpeed;
@@ -282,9 +283,13 @@ public class Player extends MapObject {
     }
 
     public void update() {
-        getNextPosition();
-        checkTileMapCollision();
-        setPosition(xtemp, ytemp);
+        try {
+            getNextPosition();
+            checkTileMapCollision();
+            setPosition(xtemp, ytemp);
+        } catch (IndexOutOfBoundsException e) {
+            this.setDead();
+        }
 
         if (currentAction == SCRATCHING) {
             if (animation.hasPlayedOnce()) {
@@ -326,15 +331,14 @@ public class Player extends MapObject {
                 flinching = false;
             }
         }
-        if(dead){
-            if(currentAction != DEAD){
+        if (dead) {
+            if (currentAction != DEAD) {
                 currentAction = DEAD;
                 animation.setFrames(sprites.get(DEAD));
-                animation.setDelay(400);
+                animation.setDelay(50);
                 width = 24;
             }
-        }
-        else if (scratching) {
+        } else if (scratching) {
             if (currentAction != SCRATCHING) {
                 sfx.get("scratch").clipPlay();
                 sfx.get("scratch").volumeDown();
@@ -352,7 +356,7 @@ public class Player extends MapObject {
                 width = 24;
             }
         } else if (dy > 0) {
-            if (gliding) {
+            if (gliding && !isCollisionX) {
                 if (currentAction != GLIDING) {
                     currentAction = GLIDING;
                     animation.setFrames(sprites.get(GLIDING));
@@ -419,7 +423,6 @@ public class Player extends MapObject {
                 return;
             }
         }
-
         super.draw(g);
 
         // draw claws

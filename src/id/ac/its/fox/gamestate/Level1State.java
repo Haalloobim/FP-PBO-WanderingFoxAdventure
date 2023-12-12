@@ -27,7 +27,7 @@ public class Level1State extends GameState {
 
     private boolean eventStart;
     private boolean eventDead;
-    private boolean blockedInput; 
+    private boolean blockedInput;
     private int eventCount = 0;
     public static final int STARTEVENTBEGIN = 1;
     public static final int STARTEVENTEND = 60;
@@ -155,7 +155,8 @@ public class Level1State extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if(blockedInput || player.getHealth() == 0) return;
+        if (blockedInput || player.getHealth() == 0)
+            return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(true);
         if (k == KeyEvent.VK_RIGHT)
@@ -176,7 +177,8 @@ public class Level1State extends GameState {
 
     @Override
     public void keyReleased(int k) {
-        if(blockedInput || player.getHealth() == 0) return;
+        if (blockedInput || player.getHealth() == 0)
+            return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(false);
         if (k == KeyEvent.VK_RIGHT)
@@ -193,7 +195,7 @@ public class Level1State extends GameState {
 
     private void reset() {
         player.PlayerReset();
-        player.setPosition(48, 144);
+        player.setPosition(32, 144);
         eventStart = true;
         eventStart();
     }
@@ -218,7 +220,7 @@ public class Level1State extends GameState {
 
         if (eventCount == STARTEVENTEND) {
             eventStart = false;
-            blockedInput = false; 
+            blockedInput = false;
             eventCount = 0;
             RectScreens.clear();
         }
@@ -226,19 +228,20 @@ public class Level1State extends GameState {
 
     private void eventDead() {
 		eventCount++;
-		if(eventCount == 1) {
+		if (eventCount == 1) {
 			player.setDead();
 			player.gameStop();
 		}
-		if(eventCount == 60) {
+		if (eventCount == 60) {
 			RectScreens.clear();
 			RectScreens.add(new Rectangle(
 				0, 0, GamePanel.WIDTH, 0));
 		}
-		else if(eventCount > 60 && eventCount < 90) {
+		else if (eventCount > 60 && eventCount < 90) {
 			RectScreens.get(0).height += 16;
 		}
-		if(eventCount >= 120) {
+		if (eventCount >= 120) {
+
 				eventDead = blockedInput = false;
 				eventCount = 0;
 				reset();
