@@ -72,6 +72,8 @@ public abstract class MapObject {
     }
 
     public void calculateCorners(double x, double y) {
+        isCollisionX = false;
+        isCollisionY = false;
         int leftTile = (int) (x - cwidth / 2) / tileSize;
         int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
         int topTile = (int) (y - cheight / 2) / tileSize;

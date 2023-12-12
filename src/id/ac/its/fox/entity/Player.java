@@ -266,7 +266,7 @@ public class Player extends MapObject {
         }
 
         if (falling) {
-            if (dy > 0 && gliding) {
+            if (dy > 0 && gliding && !isCollisionX) {
                 dy += fallSpeed * 0.1;
             } else {
                 dy += fallSpeed;
@@ -355,7 +355,7 @@ public class Player extends MapObject {
                 width = 24;
             }
         } else if (dy > 0) {
-            if (gliding) {
+            if (gliding && !isCollisionX) {
                 if (currentAction != GLIDING) {
                     currentAction = GLIDING;
                     animation.setFrames(sprites.get(GLIDING));
