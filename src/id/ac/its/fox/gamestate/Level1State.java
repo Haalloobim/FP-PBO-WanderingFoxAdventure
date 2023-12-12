@@ -152,6 +152,7 @@ public class Level1State extends GameState {
 
     @Override
     public void keyPressed(int k) {
+        if(blockedInput || player.getHealth() == 0) return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(true);
         if (k == KeyEvent.VK_RIGHT)
@@ -172,6 +173,7 @@ public class Level1State extends GameState {
 
     @Override
     public void keyReleased(int k) {
+        if(blockedInput || player.getHealth() == 0) return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(false);
         if (k == KeyEvent.VK_RIGHT)
