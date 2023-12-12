@@ -1,7 +1,6 @@
 package id.ac.its.fox.gamestate;
 
 import id.ac.its.fox.audio.AudioPlayer;
-import id.ac.its.fox.main.Game;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
@@ -13,7 +12,6 @@ import id.ac.its.fox.entity.Enemies.Rat;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Level1State extends GameState {
@@ -82,7 +80,12 @@ public class Level1State extends GameState {
 
     @Override
     public void update() {
-        player.update();
+        try {
+            player.update();
+        } catch (Exception e) {
+            eventDead = true;
+        }
+        
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
                 GamePanel.HEIGHT / 2 - player.getY());
@@ -109,7 +112,7 @@ public class Level1State extends GameState {
             }
         }
 
-        if (player.getHealth() == 0) {
+        if (player.getHealth() == 0 ) {
             eventDead = true;
         }
 
@@ -198,6 +201,7 @@ public class Level1State extends GameState {
     private void eventStart() {
         eventCount++;
         if (eventCount == STARTEVENTBEGIN) {
+            blockedInput = true;
             RectScreens.clear();
             RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
             RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
@@ -235,7 +239,6 @@ public class Level1State extends GameState {
 			RectScreens.get(0).height += 16;
 		}
 		if(eventCount >= 120) {
-
 				eventDead = blockedInput = false;
 				eventCount = 0;
 				reset();

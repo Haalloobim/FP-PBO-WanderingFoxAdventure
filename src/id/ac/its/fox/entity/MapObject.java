@@ -89,6 +89,7 @@ public abstract class MapObject {
     }
 
     public void checkTileMapCollision() {
+        
         currCol = (int) x / tileSize;
         currRow = (int) y / tileSize;
 
@@ -131,7 +132,7 @@ public abstract class MapObject {
             if (topRight || bottomRight) {
                 dx = 0;
                 isCollisionX = true;
-                xtemp = (currCol + 1) * tileSize - cwidth / 2;
+                xtemp = (currCol + 2) * tileSize - cwidth / 2;
             } else {
                 xtemp += dx;
             }
