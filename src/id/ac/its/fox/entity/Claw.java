@@ -7,59 +7,56 @@ import javax.imageio.ImageIO;
 
 import id.ac.its.fox.tilemap.TileMap;
 
-public class Claw extends MapObject{
+public class Claw extends MapObject {
 
     private boolean hit;
     private boolean remove;
     private BufferedImage[] sprites;
     private BufferedImage[] hitSprites;
+    private double totalDistX;
 
     public Claw(TileMap tm, Boolean right) {
         super(tm);
         facingRight = right;
         moveSpeed = 3.8;
-        if(right){
+        totalDistX = 0;
+        if (right) {
             dx = moveSpeed;
-        }
-        else{
+        } else {
             dx = -moveSpeed;
         }
 
         width = 24;
-        height = 24;    
+        height = 24;
         cwidth = 18;
         cheight = 18;
 
         try {
             BufferedImage spritesheet = ImageIO.read(
-                getClass().getResourceAsStream(
-                    "/Sprites/claw.png"
-                    )
-                );
+                    getClass().getResourceAsStream(
+                            "/Sprites/claw.png"));
 
             sprites = new BufferedImage[3];
-            for(int i = 0; i < sprites.length; i++){
+            for (int i = 0; i < sprites.length; i++) {
                 sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
             }
 
             hitSprites = new BufferedImage[3];
-            for(int i = 0; i < hitSprites.length; i++){
-                hitSprites[i] = spritesheet.getSubimage(i*width, height, width, height);
+            for (int i = 0; i < hitSprites.length; i++) {
+                hitSprites[i] = spritesheet.getSubimage(i * width, height, width, height);
             }
 
             animation = new Animation();
             animation.setFrames(sprites);
             animation.setDelay(70);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-
     }
 
-    public void setHit(){
-        if(hit){
+    public void setHit() {
+        if (hit) {
             return;
         }
         hit = true;
@@ -68,25 +65,26 @@ public class Claw extends MapObject{
         dx = 0;
     }
 
-    public boolean shouldRemove(){
+    public boolean shouldRemove() {
         return remove;
     }
 
-    public void update(){
+    public void update() {
+        totalDistX += dx;
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
 
-        if(dx == 0 && !hit){
+        if (dx == 0 && !hit || totalDistX > 100 || totalDistX < -100) {
             setHit();
         }
 
         animation.update();
-        if(hit && animation.hasPlayedOnce()){
+        if (hit && animation.hasPlayedOnce()) {
             remove = true;
         }
     }
 
-    public void draw (Graphics2D g){
+    public void draw(Graphics2D g) {
 
         setMapPosition();
 

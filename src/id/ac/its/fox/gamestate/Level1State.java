@@ -85,7 +85,7 @@ public class Level1State extends GameState {
         } catch (Exception e) {
             eventDead = true;
         }
-        
+
         tilemap.setPosition(
                 GamePanel.WIDTH / 2 - player.getX(),
                 GamePanel.HEIGHT / 2 - player.getY());
@@ -112,7 +112,7 @@ public class Level1State extends GameState {
             }
         }
 
-        if (player.getHealth() == 0 ) {
+        if (player.getHealth() == 0) {
             eventDead = true;
         }
 
@@ -227,25 +227,23 @@ public class Level1State extends GameState {
     }
 
     private void eventDead() {
-		eventCount++;
-		if (eventCount == 1) {
-			player.setDead();
-			player.gameStop();
-		}
-		if (eventCount == 60) {
-			RectScreens.clear();
-			RectScreens.add(new Rectangle(
-				0, 0, GamePanel.WIDTH, 0));
-		}
-		else if (eventCount > 60 && eventCount < 90) {
-			RectScreens.get(0).height += 16;
-		}
-		if (eventCount >= 120) {
+        eventCount++;
+        if (eventCount == 1) {
+            player.setDead();
+            player.gameStop();
+        }
+        if (eventCount == 60) {
+            RectScreens.clear();
+            RectScreens.add(new Rectangle(
+                    0, 0, GamePanel.WIDTH, 0));
+        } else if (eventCount > 60 && eventCount < 90) {
+            RectScreens.get(0).height += 16;
+        }
+        if (eventCount >= 120) {
+            eventDead = blockedInput = false;
+            eventCount = 0;
+            reset();
+        }
 
-				eventDead = blockedInput = false;
-				eventCount = 0;
-				reset();
-		}
-		
-	}
+    }
 }

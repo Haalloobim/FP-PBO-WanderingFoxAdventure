@@ -52,8 +52,7 @@ public class Player extends MapObject {
         width = 24;
         height = 24;
         cwidth = 16
-        
-        
+
         ;
         cheight = 22;
         moveSpeed = 0.3;
@@ -154,15 +153,15 @@ public class Player extends MapObject {
             Enemy e = enemies.get(i);
             if (scratching) {
                 if (facingRight) {
-                    if (e.x > x &&
-                            e.x < x + scratchRange &&
+                    if (e.getX() > x &&
+                            e.getX() < x + scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
                     }
                 } else {
-                    if (e.x < x &&
-                            e.x > x - scratchRange &&
+                    if (e.getX() < x &&
+                            e.getX() > x - scratchRange &&
                             e.getY() > y - height / 2 &&
                             e.getY() < y + height / 2) {
                         e.hit(scratchDamage);
@@ -425,9 +424,5 @@ public class Player extends MapObject {
         }
         super.draw(g);
 
-        // draw claws
-        for (int i = 0; i < claws.size(); i++) {
-            claws.get(i).draw(g);
-        }
     }
 }
