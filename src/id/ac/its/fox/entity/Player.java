@@ -282,9 +282,13 @@ public class Player extends MapObject {
     }
 
     public void update() {
-        getNextPosition();
-        checkTileMapCollision();
-        setPosition(xtemp, ytemp);
+        try {
+            getNextPosition();
+            checkTileMapCollision();
+            setPosition(xtemp, ytemp);
+        } catch (IndexOutOfBoundsException e) {
+            this.setDead();
+        }
 
         if (currentAction == SCRATCHING) {
             if (animation.hasPlayedOnce()) {
@@ -326,15 +330,14 @@ public class Player extends MapObject {
                 flinching = false;
             }
         }
-        if(dead){
-            if(currentAction != DEAD){
+        if (dead) {
+            if (currentAction != DEAD) {
                 currentAction = DEAD;
                 animation.setFrames(sprites.get(DEAD));
-                animation.setDelay(400);
+                animation.setDelay(50);
                 width = 24;
             }
-        }
-        else if (scratching) {
+        } else if (scratching) {
             if (currentAction != SCRATCHING) {
                 sfx.get("scratch").clipPlay();
                 sfx.get("scratch").volumeDown();
