@@ -211,6 +211,7 @@ public class Level1State extends GameState {
     private void reset() {
         player.PlayerReset();
         player.setPosition(32, 144);
+        clock.resetTimer();
         eventStart = true;
         eventStart();
     }

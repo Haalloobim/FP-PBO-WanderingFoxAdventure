@@ -11,6 +11,7 @@ public class Clock {
 	private Timer clock;
 	private BufferedImage image;
 	private int second, minute;
+    private int baseSecond, baseMinute;
 	private Font font;
 	private StringBuilder string;
 	private boolean flinching = false;
@@ -35,8 +36,11 @@ public class Clock {
 		);
 		
 		try {
-			
-			
+			image = ImageIO.read(
+				getClass().getResourceAsStream(
+					"/Props/clock.png"
+				)
+			);
 			font = new Font("Arial", Font.PLAIN, 14);
 		}
 		
@@ -72,6 +76,8 @@ public class Clock {
 			string.append(second);
 		
 		g.drawString(string.toString(), 280, 25);
+        g.drawImage(image, 260, 12,
+                image.getWidth(null) / 14, image.getHeight(null) / 14, null);
 	}
 	
 	public void increaseTime(int time) {
@@ -111,7 +117,14 @@ public class Clock {
     }
     public void setTimer(int minute, int second){
         this.minute = minute;
-        this.second = second;   
+        this.second = second;
+        this.baseMinute = minute;
+        this.baseSecond = second;
+    }
+
+    public void resetTimer(){
+        this.minute = baseMinute;
+        this.second = baseSecond;
     }
 }
 
