@@ -69,10 +69,10 @@ public class AboutUsState extends GameState {
         for (int i = 0; i < about.length; i++) {
             if (i != about.length - 1) {
                 g.setColor(Color.WHITE);
-                g.drawString(about[i], 15, 15 + i * 15);
+                g.drawString(about[i], 15, 30 + i * 15);
             } else {
                 g.setColor(Color.RED);
-                g.drawString(about[i], 145, 220);
+                g.drawString(about[i], 145, 215);
             }
         }
     }
