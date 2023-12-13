@@ -20,6 +20,7 @@ public class Level1State extends GameState {
     private AudioPlayer bgMusic;
     private Background bgLevel1;
     private TileMap tilemap;
+    private PauseState pauseState;
 
     private ArrayList<Enemy> enemies;
     private ArrayList<Explosion> explosions;
@@ -29,7 +30,7 @@ public class Level1State extends GameState {
 
     private boolean eventStart;
     private boolean eventDead;
-    private boolean blockedInput;
+    private boolean blockedInput = false;
     private int eventCount = 0;
     public static final int STARTEVENTBEGIN = 1;
     public static final int STARTEVENTEND = 50;
@@ -37,6 +38,8 @@ public class Level1State extends GameState {
     public static final int DEADEVENTMID = 60;
     public static final int DEADEVENTEND = 120;
     private ArrayList<Rectangle> RectScreens;
+
+    private static boolean pause = false;
 
     public Level1State(GameStateManager gsm) {
         this.gsm = gsm;
@@ -56,6 +59,8 @@ public class Level1State extends GameState {
 
         bgLevel1 = new Background("/Background/bg_level1.png", 3);
         bgLevel1.setVector(0, 0);
+
+        pauseState = new PauseState();
 
         player = new Player(tilemap);
         player.setPosition(48, 144);
@@ -160,6 +165,10 @@ public class Level1State extends GameState {
 
         clock.draw(g);
 
+        if(pause){
+            pauseState.drawPause(g);
+        }
+
         g.setColor(java.awt.Color.BLACK);
         for (int i = 0; i < RectScreens.size(); i++) {
             g.fill(RectScreens.get(i));
@@ -168,7 +177,18 @@ public class Level1State extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if (blockedInput || player.getHealth() == 0)
+        if (k == KeyEvent.VK_ESCAPE) {
+            if(!pause) {
+				pause = true;
+				clock.stop();
+			}
+			else {
+                
+				pause = false;
+				clock.start();
+			}
+        }
+        if ((blockedInput || player.getHealth() == 0) || pause)
             return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(true);
@@ -186,6 +206,7 @@ public class Level1State extends GameState {
             player.setScratching();
         if (k == KeyEvent.VK_F)
             player.setClawing();
+        
     }
 
     @Override
