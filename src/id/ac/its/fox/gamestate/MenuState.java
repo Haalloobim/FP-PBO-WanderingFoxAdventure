@@ -3,8 +3,11 @@ package id.ac.its.fox.gamestate;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+
+import javax.swing.ImageIcon;
 
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.tilemap.Background;
@@ -12,7 +15,8 @@ import id.ac.its.fox.tilemap.Background;
 public class MenuState extends GameState {
 
     private AudioPlayer bgMusic;
-    private Background bg;
+    private Image bg;
+    private Background title;
 
     private int currentChoice = 0;
     private String[] options = {
@@ -26,18 +30,18 @@ public class MenuState extends GameState {
     private Font font;
 
     private HashMap<String, AudioPlayer> sfx;
+
     public MenuState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
-            bg = new Background("/Background/bg_menu.png", 1);
-            bg.setVector(0, 0);
+            title = new Background("/Background/Title.gif", 1);
+            bg = new ImageIcon(getClass().getResource("/Background/bg1.gif")).getImage();
 
             titleColor = new Color(128, 0, 0);
             titleFont = new Font(
                     "Century Gothic",
                     Font.PLAIN,
-                    28);
-            titleFont = new Font("Arial", Font.PLAIN, 12);
+                    12);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,27 +60,28 @@ public class MenuState extends GameState {
 
     @Override
     public void update() {
-        bg.update();
+        title.update();
     }
 
     @Override
     public void draw(Graphics2D g) {
-        bg.draw(g);
+        g.drawImage(bg, null, null);
+        title.draw(g);
         g.setColor(titleColor);
         g.setFont(titleFont);
-        g.drawString("Wandering Fox Adventure", 80, 100);
+        // g.drawString("Wandering Fox Adventure", 80, 100);
 
         g.setFont(font);
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
                 g.setColor(Color.BLACK);
             } else {
-                g.setColor(Color.RED);
+                g.setColor(Color.WHITE);
             }
             if (options[i].equals("Options")) {
-                g.drawString(options[i], 137, 140 + i * 15);
+                g.drawString(options[i], 137, 170 + i * 15);
             } else {
-                g.drawString(options[i], 145, 140 + i * 15);
+                g.drawString(options[i], 145, 170 + i * 15);
             }
         }
 
