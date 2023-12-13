@@ -13,7 +13,7 @@ public class PauseState {
 			"Paused",
 			"Press ESC to resume",
 			"or",
-			"Press ENTER to back to level selection"
+			"Press ENTER to back to menu"
 	};
 	private Font font1, font2;
 	
@@ -39,7 +39,8 @@ public class PauseState {
 			if(i == 2)
 				g.drawString(notification[i], 155, 140 + (i-1) * 15);
 			else
-				g.drawString(notification[i], 108 - (i-1) * 20, 140 + (i-1) * 15);
+				g.drawString(notification[i], 108 - (i-1) * 10, 140 + (i-1) * 15);
+
 		}
 	}
 }

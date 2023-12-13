@@ -90,12 +90,13 @@ public class Level1State extends GameState {
         eventStart();
         clock = new Clock();
         clock.setTimer(2, 0);
-		clock.start();
+        clock.start();
     }
 
     @Override
     public void update() {
-        if(pause)return;
+        if (pause)
+            return;
         try {
             player.update();
         } catch (Exception e) {
@@ -166,7 +167,7 @@ public class Level1State extends GameState {
 
         clock.draw(g);
 
-        if(pause){
+        if (pause) {
             pauseState.drawPause(g);
         }
 
@@ -178,16 +179,20 @@ public class Level1State extends GameState {
 
     @Override
     public void keyPressed(int k) {
+        if (k == KeyEvent.VK_ENTER) {
+            gsm.setState(GameStateManager.MENUSTATE);
+            bgMusic.close();
+            pause = false;
+        }
         if (k == KeyEvent.VK_ESCAPE) {
-            if(!pause) {
-				pause = true;
-				clock.stop();
-			}
-			else {
-                
-				pause = false;
-				clock.start();
-			}
+            if (!pause) {
+                pause = true;
+                clock.stop();
+            } else {
+
+                pause = false;
+                clock.start();
+            }
         }
         if ((blockedInput || player.getHealth() == 0) || pause)
             return;
@@ -207,7 +212,7 @@ public class Level1State extends GameState {
             player.setScratching();
         if (k == KeyEvent.VK_F)
             player.setClawing();
-        
+
     }
 
     @Override
