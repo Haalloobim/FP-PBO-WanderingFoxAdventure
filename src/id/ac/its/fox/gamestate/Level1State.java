@@ -122,10 +122,8 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-        System.out.println(clock.getMinute() + " " + clock.getSecond());
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
-            System.out.println("p");
             eventDead = true;
         }
 

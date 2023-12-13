@@ -125,6 +125,7 @@ public class Clock {
     public void resetTimer(){
         this.minute = baseMinute;
         this.second = baseSecond;
+        start();
     }
 }
 
