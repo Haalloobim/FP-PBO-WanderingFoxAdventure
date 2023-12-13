@@ -1,13 +1,9 @@
 package id.ac.its.fox.entity;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
-
-import id.ac.its.fox.tilemap.Tile;
 
 public class HUD {
     private Player player;

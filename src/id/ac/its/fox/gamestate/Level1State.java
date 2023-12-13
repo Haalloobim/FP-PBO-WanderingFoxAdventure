@@ -95,6 +95,7 @@ public class Level1State extends GameState {
 
     @Override
     public void update() {
+        if(pause)return;
         try {
             player.update();
         } catch (Exception e) {
