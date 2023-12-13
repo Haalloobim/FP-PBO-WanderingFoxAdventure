@@ -4,6 +4,7 @@ import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.TileMap;
+import id.ac.its.fox.entity.Clock;
 import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
@@ -24,6 +25,7 @@ public class Level1State extends GameState {
     private ArrayList<Explosion> explosions;
 
     private HUD hud;
+    private Clock clock;
 
     private boolean eventStart;
     private boolean eventDead;
@@ -81,7 +83,9 @@ public class Level1State extends GameState {
         eventStart = true;
         RectScreens = new ArrayList<Rectangle>();
         eventStart();
-
+        clock = new Clock();
+        clock.setTimer(0, 5);
+		clock.start();
     }
 
     @Override
@@ -101,6 +105,7 @@ public class Level1State extends GameState {
             Enemy e = enemies.get(i);
             e.update();
             if (e.isDead()) {
+                clock.increaseTime(5);
                 enemies.remove(i);
                 i--;
                 explosions.add(
@@ -117,8 +122,10 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-
-        if (player.getHealth() == 0) {
+        System.out.println(clock.getMinute() + " " + clock.getSecond());
+        if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
+            clock.stop();
+            System.out.println("p");
             eventDead = true;
         }
 
@@ -152,6 +159,8 @@ public class Level1State extends GameState {
         }
 
         hud.draw(g);
+
+        clock.draw(g);
 
         g.setColor(java.awt.Color.BLACK);
         for (int i = 0; i < RectScreens.size(); i++) {

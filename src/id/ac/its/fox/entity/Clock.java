@@ -17,17 +17,19 @@ public class Clock {
 	private long flinchTimer;
 	
 	public Clock() {
-		second = 30;
-        minute = 1;
 		clock = new Timer(1000, new ActionListener(){
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					second--;
-					if(second == 0) {
-						second = 59;
-						minute--;
-					}
+					if(second < 0) {
+                        second = 59;
+                        minute--;
+                        if(minute < 0){
+                            minute = second = 0;
+                            clock.stop();
+                        }
+                    }
 				}
 			}
 		);
@@ -70,8 +72,6 @@ public class Clock {
 			string.append(second);
 		
 		g.drawString(string.toString(), 280, 25);
-		g.drawImage(image, 260, 12,
-                image.getWidth(null) / 14, image.getHeight(null) / 14, null);
 	}
 	
 	public void increaseTime(int time) {
@@ -108,6 +108,10 @@ public class Clock {
 
     public int getMinute() {
         return minute;
+    }
+    public void setTimer(int minute, int second){
+        this.minute = minute;
+        this.second = second;   
     }
 }
 
