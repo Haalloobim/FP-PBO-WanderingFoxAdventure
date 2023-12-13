@@ -22,6 +22,7 @@ public class MenuState extends GameState {
     private String[] options = {
             "Start",
             "Options",
+            "About Us",
             "Quit"
     };
     private Color titleColor;
@@ -80,8 +81,15 @@ public class MenuState extends GameState {
             }
             if (options[i].equals("Options")) {
                 g.drawString(options[i], 137, 170 + i * 15);
-            } else {
-                g.drawString(options[i], 145, 170 + i * 15);
+            } 
+            else if (options[i].equals("About Us")){
+                g.drawString(options[i], 134, 170 + i * 15);
+            }
+            else if (options[i].equals("Quit")){
+                g.drawString(options[i], 147, 170 + i * 15);
+            }
+            else {
+                g.drawString(options[i], 147, 170 + i * 15);
             }
         }
 
@@ -94,6 +102,9 @@ public class MenuState extends GameState {
         }
         if (currentChoice == 1) {
 
+        }
+        if (currentChoice == 2) {
+            
         }
         if (currentChoice == 2) {
             System.exit(0);
