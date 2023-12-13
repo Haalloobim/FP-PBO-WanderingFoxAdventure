@@ -104,9 +104,10 @@ public class MenuState extends GameState {
 
         }
         if (currentChoice == 2) {
-            
+            bgMusic.close();
+            gsm.setState(GameStateManager.ABOUTSTATE);
         }
-        if (currentChoice == 2) {
+        if (currentChoice == 3) {
             System.exit(0);
         }
     }
