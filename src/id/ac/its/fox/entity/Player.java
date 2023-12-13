@@ -111,6 +111,7 @@ public class Player extends MapObject {
         sfx.put("jump", new AudioPlayer("/SFX/jump.wav"));
         sfx.put("scratch", new AudioPlayer("/SFX/scratch.wav"));
         sfx.put("claw", new AudioPlayer("/SFX/claw.wav"));
+        sfx.put("hit", new AudioPlayer("/SFX/hit.wav"));
     }
 
     public int getHealth() {
@@ -187,6 +188,7 @@ public class Player extends MapObject {
         if (flinching) {
             return;
         }
+        sfx.get("hit").clipPlay();
         health -= damage;
         if (health < 0) {
             health = 0;
