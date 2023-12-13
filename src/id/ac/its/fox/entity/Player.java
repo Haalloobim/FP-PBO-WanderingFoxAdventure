@@ -100,7 +100,7 @@ public class Player extends MapObject {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         animation = new Animation();
         currentAction = IDLE;

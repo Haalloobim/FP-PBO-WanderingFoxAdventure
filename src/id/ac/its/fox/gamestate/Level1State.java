@@ -30,7 +30,7 @@ public class Level1State extends GameState {
     private boolean blockedInput;
     private int eventCount = 0;
     public static final int STARTEVENTBEGIN = 1;
-    public static final int STARTEVENTEND = 60;
+    public static final int STARTEVENTEND = 50;
     public static final int DEADEVENTBEGIN = 1;
     public static final int DEADEVENTMID = 60;
     public static final int DEADEVENTEND = 120;
@@ -48,7 +48,7 @@ public class Level1State extends GameState {
         bgMusic.volumeDown();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
-        tilemap.loadMap("/Maps/temp.map");
+        tilemap.loadMap("/Maps/Level_1.map");
         tilemap.setPosition(0, 0);
         tilemap.setTween(0.15);
 
@@ -66,6 +66,12 @@ public class Level1State extends GameState {
         enemies.add(rat);
         rat = new Rat(tilemap);
         rat.setPosition(1120, 50);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(1420, 50);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(1600, 10);
         enemies.add(rat);
 
         explosions = new ArrayList<Explosion>();
