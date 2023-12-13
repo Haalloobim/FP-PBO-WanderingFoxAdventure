@@ -84,7 +84,7 @@ public class Level1State extends GameState {
         RectScreens = new ArrayList<Rectangle>();
         eventStart();
         clock = new Clock();
-        clock.setTimer(0, 5);
+        clock.setTimer(2, 0);
 		clock.start();
     }
 
