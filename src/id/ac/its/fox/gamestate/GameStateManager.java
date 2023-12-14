@@ -8,9 +8,11 @@ public class GameStateManager {
     public static final int MENUSTATE = 0;
     public static final int LEVEL1STATE = 1;
     public static final int ABOUTSTATE = 2;
+    public static final int LEVEL1FINISHSTATE = 3;
+    public static final int LEVEL2STATE = 4;
 
     public GameStateManager() {
-        gameStates = new GameState[5];
+        gameStates = new GameState[10];
         currentState = MENUSTATE;
         setState(MENUSTATE);
     }
@@ -26,6 +28,8 @@ public class GameStateManager {
             gameStates[state] = new Level1State(this);
         if (state == ABOUTSTATE)
             gameStates[state] = new AboutUsState(this);
+        if (state == LEVEL1FINISHSTATE)
+            gameStates[state] = new Level1FinishState(this);
     }
 
     public void setState(int state) {
