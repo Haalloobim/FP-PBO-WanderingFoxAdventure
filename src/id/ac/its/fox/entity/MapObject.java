@@ -72,8 +72,6 @@ public abstract class MapObject {
     }
 
     public void calculateCorners(double x, double y) {
-        isCollisionX = false;
-        isCollisionY = false;
         int leftTile = (int) (x - cwidth / 2) / tileSize;
         int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
         int topTile = (int) (y - cheight / 2) / tileSize;
@@ -107,6 +105,7 @@ public abstract class MapObject {
                 ytemp = currRow * tileSize + cheight / 2;
             } else {
                 ytemp += dy;
+                isCollisionY = false;
             }
         }
         if (dy > 0) {
@@ -114,8 +113,9 @@ public abstract class MapObject {
                 dy = 0;
                 falling = false;
                 isCollisionY = true;
-                ytemp = (currRow + 1) * tileSize - cheight / 2;
+                ytemp = (currRow + 1) * tileSize - cheight / 2 + 0.8;
             } else {
+                isCollisionY = false;
                 ytemp += dy;
             }
         }
@@ -126,6 +126,7 @@ public abstract class MapObject {
                 isCollisionX = true;
                 xtemp = currCol * tileSize + cwidth / 2;
             } else {
+                isCollisionX = false;
                 xtemp += dx;
             }
         }
@@ -135,6 +136,7 @@ public abstract class MapObject {
                 isCollisionX = true;
                 xtemp = (currCol + 1) * tileSize - cwidth / 2 + 0.8;
             } else {
+                isCollisionX = false;
                 xtemp += dx;
             }
         }

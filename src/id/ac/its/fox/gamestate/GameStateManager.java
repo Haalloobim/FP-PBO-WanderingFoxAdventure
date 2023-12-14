@@ -1,6 +1,5 @@
 package id.ac.its.fox.gamestate;
 
-
 public class GameStateManager {
     private GameState[] gameStates;
     private int currentState;
@@ -61,10 +60,18 @@ public class GameStateManager {
     }
 
     public void keyPressed(int k) {
-        gameStates[currentState].keyPressed(k);
+        try {
+            gameStates[currentState].keyPressed(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void keyReleased(int k) {
-        gameStates[currentState].keyReleased(k);
+        try {
+            gameStates[currentState].keyReleased(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
