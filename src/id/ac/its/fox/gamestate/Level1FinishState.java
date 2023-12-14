@@ -8,10 +8,8 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import id.ac.its.fox.audio.AudioPlayer;
-import id.ac.its.fox.tilemap.Background;
 
 public class Level1FinishState extends GameState{
     private AudioPlayer bgMusic;

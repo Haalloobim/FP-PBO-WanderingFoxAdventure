@@ -30,6 +30,8 @@ public class GameStateManager {
             gameStates[state] = new AboutUsState(this);
         if (state == LEVEL1FINISHSTATE)
             gameStates[state] = new Level1FinishState(this);
+        if (state == LEVEL2STATE)
+            gameStates[state] = new Level2State(this);
     }
 
     public void setState(int state) {
