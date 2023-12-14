@@ -30,10 +30,11 @@ public class Level1State extends GameState {
 
     private boolean eventStart;
     private boolean eventDead;
+    private boolean eventFinish = false;
     private boolean blockedInput = false;
     private int eventCount = 0;
-    public static final int STARTEVENTBEGIN = 1;
-    public static final int STARTEVENTEND = 50;
+    public static final int COMEVENTBEGIN = 1;
+    public static final int COMEVENTEND = 50;
     public static final int DEADEVENTBEGIN = 1;
     public static final int DEADEVENTMID = 60;
     public static final int DEADEVENTEND = 120;
@@ -86,6 +87,8 @@ public class Level1State extends GameState {
         hud = new HUD(player);
 
         eventStart = true;
+        eventDead = false;
+        eventFinish = false;
         RectScreens = new ArrayList<Rectangle>();
         eventStart();
         clock = new Clock();
@@ -129,6 +132,11 @@ public class Level1State extends GameState {
                 i--;
             }
         }
+
+        if(player.getX() > 1675) {
+			eventFinish = true;
+		}
+
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
             eventDead = true;
@@ -137,6 +145,11 @@ public class Level1State extends GameState {
         if (eventStart) {
             eventStart();
         }
+
+        if (eventFinish) {
+            eventFinish();
+        }
+
         if (eventDead) {
             eventDead();
         }
@@ -243,7 +256,7 @@ public class Level1State extends GameState {
 
     private void eventStart() {
         eventCount++;
-        if (eventCount == STARTEVENTBEGIN) {
+        if (eventCount == COMEVENTBEGIN) {
             blockedInput = true;
             RectScreens.clear();
             RectScreens.add(new Rectangle(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
@@ -252,16 +265,16 @@ public class Level1State extends GameState {
             RectScreens.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
         }
 
-        if (eventCount > STARTEVENTBEGIN && eventCount < STARTEVENTEND) {
+        if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
+            if(eventCount == 30) blockedInput = false;
             RectScreens.get(0).height -= 4; // mid to top
             RectScreens.get(1).width -= 6; // mid to left
             RectScreens.get(2).y += 4; // mid to bottom
             RectScreens.get(3).x += 6; // mid to right
         }
 
-        if (eventCount == STARTEVENTEND) {
+        if (eventCount == COMEVENTEND) {
             eventStart = false;
-            blockedInput = false;
             eventCount = 0;
             RectScreens.clear();
         }
@@ -285,6 +298,27 @@ public class Level1State extends GameState {
             eventCount = 0;
             reset();
         }
+    }
 
+    private void eventFinish(){
+        eventCount++;
+        if (eventCount == COMEVENTBEGIN) {
+            blockedInput = true;
+            RectScreens.clear();
+            RectScreens.add(new Rectangle(
+                    0, 0, GamePanel.WIDTH, 0));
+        }
+
+        if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
+            RectScreens.get(0).height += 8;
+        }
+
+		if(eventCount == 50) {
+            player.setDead();
+			player.gameStop();
+			clock.stop();
+			gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
+			bgMusic.close();
+		}
     }
 }
