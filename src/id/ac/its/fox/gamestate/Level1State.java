@@ -3,6 +3,7 @@ package id.ac.its.fox.gamestate;
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
+import id.ac.its.fox.tilemap.Prop;
 import id.ac.its.fox.tilemap.TileMap;
 import id.ac.its.fox.entity.Clock;
 import id.ac.its.fox.entity.Enemy;
@@ -28,6 +29,7 @@ public class Level1State extends GameState {
     private HUD hud;
     private Clock clock;
 
+    private Prop cave;
     private boolean eventStart;
     private boolean eventDead;
     private boolean eventFinish = false;
@@ -49,6 +51,7 @@ public class Level1State extends GameState {
 
     @Override
     public void init() {
+        cave = new Prop("/Props/cave.png", 1620, 117);
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
         bgMusic.bgplay();
         bgMusic.volumeDown();
@@ -162,6 +165,7 @@ public class Level1State extends GameState {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         bgLevel1.draw(g);
+        cave.draw(g, (int)tilemap.getx(), (int)tilemap.gety());
         tilemap.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
