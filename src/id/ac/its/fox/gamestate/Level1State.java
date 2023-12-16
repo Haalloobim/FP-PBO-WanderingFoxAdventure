@@ -34,6 +34,7 @@ public class Level1State extends GameState {
     private boolean eventDead;
     private boolean eventFinish = false;
     private boolean blockedInput = false;
+    private boolean screenStop = false;
     private int eventCount = 0;
     public static final int COMEVENTBEGIN = 1;
     public static final int COMEVENTEND = 50;
@@ -101,7 +102,11 @@ public class Level1State extends GameState {
 
     @Override
     public void update() {
-        if (pause)
+        if (eventFinish) {
+            eventFinish();
+        }
+        
+        if (pause || screenStop)
             return;
         try {
             player.update();
@@ -136,7 +141,9 @@ public class Level1State extends GameState {
             }
         }
 
-        if(player.getX() > 1660 && player.getY() > 78) {
+        if(player.getX() > 1644 && player.getY() > 149) {
+            blockedInput = true;
+            screenStop = true;
 			eventFinish = true;
 		}
 
@@ -149,9 +156,7 @@ public class Level1State extends GameState {
             eventStart();
         }
 
-        if (eventFinish) {
-            eventFinish();
-        }
+        
 
         if (eventDead) {
             eventDead();
