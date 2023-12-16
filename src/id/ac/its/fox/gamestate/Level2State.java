@@ -12,6 +12,7 @@ import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
+import id.ac.its.fox.entity.SavedStats;
 import id.ac.its.fox.entity.Enemies.Rat;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
@@ -68,6 +69,8 @@ public class Level2State extends GameState {
 
         player = new Player(tilemap);
         player.setPosition(48, 32);
+        player.setHealth(SavedStats.getHealth());
+		player.setLives(SavedStats.getLives());
 
         enemies = new ArrayList<Enemy>();
 
@@ -248,7 +251,7 @@ public class Level2State extends GameState {
 
     private void reset() {
         player.PlayerReset();
-        player.setPosition(32, 144);
+        player.setPosition(48, 32);
         clock.resetTimer();
         eventStart = true;
         eventStart();

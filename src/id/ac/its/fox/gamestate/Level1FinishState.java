@@ -105,7 +105,7 @@ public class Level1FinishState extends GameState{
         }
         if(currentChoice == 1){
             bgMusic.close();
-            gsm.setState(GameStateManager.MENUSTATE);
+            gsm.setState(GameStateManager.LEVEL2STATE);
         }
     }
 
