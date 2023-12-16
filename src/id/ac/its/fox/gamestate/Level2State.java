@@ -61,7 +61,7 @@ public class Level2State extends GameState {
         tilemap.setPosition(0, 0);
         tilemap.setTween(0.15);
 
-        bgLevel1 = new Background("/Background/bg_level1.png", 3);
+        bgLevel1 = new Background("/Background/bglvl2.png", 3);
         bgLevel1.setVector(0, 0);
 
         pauseState = new PauseState();
@@ -71,19 +71,19 @@ public class Level2State extends GameState {
 
         enemies = new ArrayList<Enemy>();
 
-        Rat rat;
-        rat = new Rat(tilemap);
-        rat.setPosition(1100, 50);
-        enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1120, 50);
-        enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1420, 50);
-        enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1600, 10);
-        enemies.add(rat);
+        // Rat rat;
+        // rat = new Rat(tilemap);
+        // rat.setPosition(1100, 50);
+        // enemies.add(rat);
+        // rat = new Rat(tilemap);
+        // rat.setPosition(1120, 50);
+        // enemies.add(rat);
+        // rat = new Rat(tilemap);
+        // rat.setPosition(1420, 50);
+        // enemies.add(rat);
+        // rat = new Rat(tilemap);
+        // rat.setPosition(1600, 10);
+        // enemies.add(rat);
 
         explosions = new ArrayList<Explosion>();
 
@@ -101,7 +101,7 @@ public class Level2State extends GameState {
 
     @Override
     public void update() {
-    if (pause)
+        if (pause)
             return;
         try {
             player.update();
