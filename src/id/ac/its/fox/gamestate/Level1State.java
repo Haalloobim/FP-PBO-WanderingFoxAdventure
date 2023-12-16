@@ -298,9 +298,16 @@ public class Level1State extends GameState {
             RectScreens.get(0).height += 16;
         }
         if (eventCount >= 120) {
-            eventDead = blockedInput = false;
-            eventCount = 0;
-            reset();
+            if (player.getLives() == 0) {
+                gsm.setState(GameStateManager.MENUSTATE);
+                bgMusic.close();
+            } 
+            else {
+                eventDead = blockedInput = false;
+                eventCount = 0;
+                player.loseLife();
+                reset();
+            }
         }
     }
 

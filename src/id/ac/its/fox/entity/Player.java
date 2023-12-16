@@ -14,6 +14,7 @@ public class Player extends MapObject {
 
     private int health;
     private int maxHealth;
+    private int lives; 
     private int claw;
     private int maxClaw;
     private boolean dead;
@@ -62,7 +63,9 @@ public class Player extends MapObject {
         stopJumpSpeed = 0.3;
         isCollisionY = false;
         facingRight = true;
+
         health = maxHealth = 5;
+        lives = 3;
         claw = maxClaw = 2500000;
         doubleJump = false;
         alreadyDoubleJump = false;
@@ -116,8 +119,24 @@ public class Player extends MapObject {
         return health;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void loseLife() {
+        lives--;
     }
 
     public int getClaw() {
