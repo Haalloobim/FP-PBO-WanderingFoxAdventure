@@ -22,18 +22,6 @@ public class Spike extends Enemy {
         try {
             spikebottom = ImageIO.read(
                     getClass().getResourceAsStream("/Sprites/spike.png"));
-            sprites = new BufferedImage[1];
-            for (int i = 0; i < sprites.length; i++) {
-                sprites[i] = spikebottom.getSubimage(
-                        i * width,
-                        0,
-                        width,
-                        height);
-            }
-            animation = new Animation();
-            animation.setFrames(sprites);
-            animation.setDelay(300);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

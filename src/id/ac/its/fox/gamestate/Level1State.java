@@ -10,6 +10,7 @@ import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
+import id.ac.its.fox.entity.Spike;
 import id.ac.its.fox.entity.Enemies.Rat;
 
 import java.awt.*;
@@ -83,9 +84,23 @@ public class Level1State extends GameState {
         rat = new Rat(tilemap);
         rat.setPosition(1420, 50);
         enemies.add(rat);
-        rat = new Rat(tilemap);
-        rat.setPosition(1600, 10);
-        enemies.add(rat);
+        // rat = new Rat(tilemap);
+        // rat.setPosition(1600, 10);
+        // enemies.add(rat);
+        Spike spike;
+        spike = new Spike(tilemap);
+        spike.setPosition(360, 216);
+        enemies.add(spike);
+        spike = new Spike(tilemap);
+        spike.setPosition(376, 216);
+        enemies.add(spike);
+        spike = new Spike(tilemap);
+        spike.setPosition(1560, 153);
+        enemies.add(spike);
+        spike = new Spike(tilemap);
+        spike.setPosition(1576, 153);
+        enemies.add(spike);
+
 
         explosions = new ArrayList<Explosion>();
 
@@ -141,7 +156,7 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-
+        System.out.println(player.getX() + " " + player.getY());
         if(player.getX() > 1644 && player.getY() > 149) {
             blockedInput = true;
             screenStop = true;
