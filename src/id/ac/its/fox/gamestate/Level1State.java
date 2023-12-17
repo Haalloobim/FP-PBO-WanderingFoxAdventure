@@ -72,8 +72,24 @@ public class Level1State extends GameState {
         player = new Player(tilemap);
         player.setPosition(48, 144);
 
-        enemies = new ArrayList<Enemy>();
+        this.enemySpawned();
 
+        explosions = new ArrayList<Explosion>();
+
+        hud = new HUD(player);
+
+        eventStart = true;
+        eventDead = false;
+        eventFinish = false;
+        RectScreens = new ArrayList<Rectangle>();
+        eventStart();
+        clock = new Clock();
+        clock.setTimer(2, 0);
+        clock.start();
+    }
+
+    private void enemySpawned() {
+        enemies = new ArrayList<Enemy>();
         Rat rat;
         rat = new Rat(tilemap);
         rat.setPosition(1100, 50);
@@ -103,20 +119,6 @@ public class Level1State extends GameState {
         spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
         spike.setPosition(519, 137);
         enemies.add(spike);
-
-
-        explosions = new ArrayList<Explosion>();
-
-        hud = new HUD(player);
-
-        eventStart = true;
-        eventDead = false;
-        eventFinish = false;
-        RectScreens = new ArrayList<Rectangle>();
-        eventStart();
-        clock = new Clock();
-        clock.setTimer(2, 0);
-        clock.start();
     }
 
     @Override
@@ -124,7 +126,7 @@ public class Level1State extends GameState {
         if (eventFinish) {
             eventFinish();
         }
-        
+
         if (pause || screenStop)
             return;
         try {
@@ -159,12 +161,12 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-        
-        if(player.getX() > 1644 && player.getY() > 149) {
+
+        if (player.getX() > 1644 && player.getY() > 149) {
             blockedInput = true;
             screenStop = true;
-			eventFinish = true;
-		}
+            eventFinish = true;
+        }
 
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
@@ -174,8 +176,6 @@ public class Level1State extends GameState {
         if (eventStart) {
             eventStart();
         }
-
-        
 
         if (eventDead) {
             eventDead();
@@ -194,13 +194,12 @@ public class Level1State extends GameState {
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
             Enemy e = enemies.get(i);
-            if (e.getClass() == Spike.class){
-                ((Spike)e).draw(g);
-            }
-            else if (e.getClass() == Rat.class){
+            if (e.getClass() == Spike.class) {
+                ((Spike) e).draw(g);
+            } else if (e.getClass() == Rat.class) {
                 e.draw(g);
             }
-                
+
         }
 
         for (int i = 0; i < explosions.size(); i++) {
@@ -301,7 +300,8 @@ public class Level1State extends GameState {
         }
 
         if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
-            if(eventCount == 30) blockedInput = false;
+            if (eventCount == 30)
+                blockedInput = false;
             RectScreens.get(0).height -= 4; // mid to top
             RectScreens.get(1).width -= 6; // mid to left
             RectScreens.get(2).y += 4; // mid to bottom
@@ -332,8 +332,7 @@ public class Level1State extends GameState {
             if (player.getLives() == 0) {
                 gsm.setState(GameStateManager.MENUSTATE);
                 bgMusic.close();
-            } 
-            else {
+            } else {
                 eventDead = blockedInput = false;
                 eventCount = 0;
                 player.loseLife();
@@ -342,7 +341,7 @@ public class Level1State extends GameState {
         }
     }
 
-    private void eventFinish(){
+    private void eventFinish() {
         eventCount++;
         if (eventCount == COMEVENTBEGIN) {
             blockedInput = true;
@@ -355,12 +354,12 @@ public class Level1State extends GameState {
             RectScreens.get(0).height += 8;
         }
 
-		if(eventCount == 50) {
+        if (eventCount == 50) {
             player.setDead();
-			player.gameStop();
-			clock.stop();
-			gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
-			bgMusic.close();
-		}
+            player.gameStop();
+            clock.stop();
+            gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
+            bgMusic.close();
+        }
     }
 }

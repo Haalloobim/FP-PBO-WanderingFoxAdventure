@@ -139,10 +139,6 @@ public class Level2State extends GameState {
             }
         }
 
-        if(player.getX() > 1675) {
-			eventFinish = true;
-		}
-
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
             eventDead = true;
