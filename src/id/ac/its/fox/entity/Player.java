@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.entity.Enemies.Rat;
 import id.ac.its.fox.tilemap.TileMap;
 
 public class Player extends MapObject {
@@ -189,7 +190,7 @@ public class Player extends MapObject {
             }
 
             for (int j = 0; j < claws.size(); j++) {
-                if (claws.get(j).intersects(e)) {
+                if (claws.get(j).intersects(e) && e.getClass() == Rat.class) {
                     e.hit(clawDamage);
                     claws.get(j).setHit();
                     break;
@@ -287,7 +288,7 @@ public class Player extends MapObject {
 
         if (falling) {
             if (dy > 0 && gliding && !isCollisionX) {
-                dy += fallSpeed * 0.1;
+                dy += fallSpeed * 0.4;
             } else {
                 dy += fallSpeed;
             }

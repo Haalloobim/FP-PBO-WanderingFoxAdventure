@@ -70,23 +70,9 @@ public class Level2State extends GameState {
         player = new Player(tilemap);
         player.setPosition(48, 32);
         player.setHealth(SavedStats.getHealth());
-		player.setLives(SavedStats.getLives());
+        player.setLives(SavedStats.getLives());
 
         enemies = new ArrayList<Enemy>();
-
-        // Rat rat;
-        // rat = new Rat(tilemap);
-        // rat.setPosition(1100, 50);
-        // enemies.add(rat);
-        // rat = new Rat(tilemap);
-        // rat.setPosition(1120, 50);
-        // enemies.add(rat);
-        // rat = new Rat(tilemap);
-        // rat.setPosition(1420, 50);
-        // enemies.add(rat);
-        // rat = new Rat(tilemap);
-        // rat.setPosition(1600, 10);
-        // enemies.add(rat);
 
         explosions = new ArrayList<Explosion>();
 
@@ -143,6 +129,8 @@ public class Level2State extends GameState {
             clock.stop();
             eventDead = true;
         }
+
+        System.out.println(player.getHealth() + " " + player.getLives());
 
         if (eventStart) {
             eventStart();
@@ -265,7 +253,8 @@ public class Level2State extends GameState {
         }
 
         if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
-            if(eventCount == 30) blockedInput = false;
+            if (eventCount == 30)
+                blockedInput = false;
             RectScreens.get(0).height -= 4; // mid to top
             RectScreens.get(1).width -= 6; // mid to left
             RectScreens.get(2).y += 4; // mid to bottom
@@ -295,11 +284,17 @@ public class Level2State extends GameState {
         if (eventCount >= 120) {
             eventDead = blockedInput = false;
             eventCount = 0;
+            player.loseLife();
+
+            if (player.getLives() == 0) {
+                gsm.setState(GameStateManager.MENUSTATE);
+                bgMusic.close();
+            }
             reset();
         }
     }
 
-    private void eventFinish(){
+    private void eventFinish() {
         eventCount++;
         if (eventCount == COMEVENTBEGIN) {
             blockedInput = true;
@@ -312,12 +307,14 @@ public class Level2State extends GameState {
             RectScreens.get(0).height += 8;
         }
 
-		if(eventCount == 50) {
+        if (eventCount == 50) {
             player.setDead();
-			player.gameStop();
-			clock.stop();
-			gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
-			bgMusic.close();
-		}
+            player.gameStop();
+            clock.stop();
+            player.setHealth(SavedStats.getHealth());
+            player.setLives(SavedStats.getLives());
+            gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
+            bgMusic.close();
+        }
     }
 }
