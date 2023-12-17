@@ -10,6 +10,7 @@ import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
+import id.ac.its.fox.entity.SavedStats;
 import id.ac.its.fox.entity.Spike;
 import id.ac.its.fox.entity.Enemies.Rat;
 
@@ -71,6 +72,8 @@ public class Level1State extends GameState {
         cave.setPosition(1620, 117);
         player = new Player(tilemap);
         player.setPosition(48, 144);
+        player.setHealth(SavedStats.getHealth());
+        player.setLives(SavedStats.getLives());
 
         this.enemySpawned();
 
@@ -329,15 +332,15 @@ public class Level1State extends GameState {
             RectScreens.get(0).height += 16;
         }
         if (eventCount >= 120) {
+            eventDead = blockedInput = false;
+            eventCount = 0;
+            player.loseLife();
+            
             if (player.getLives() == 0) {
                 gsm.setState(GameStateManager.MENUSTATE);
                 bgMusic.close();
-            } else {
-                eventDead = blockedInput = false;
-                eventCount = 0;
-                player.loseLife();
-                reset();
             }
+            reset();
         }
     }
 
@@ -358,6 +361,8 @@ public class Level1State extends GameState {
             player.setDead();
             player.gameStop();
             clock.stop();
+            player.setHealth(SavedStats.getHealth());
+            player.setLives(SavedStats.getLives());
             gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
             bgMusic.close();
         }
