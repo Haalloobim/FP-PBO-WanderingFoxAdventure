@@ -162,7 +162,7 @@ public class Level1State extends GameState {
             }
         }
 
-        if (player.getX() > 1644 && player.getY() > 149) {
+        if (player.getX() > 1644 && player.getX() < 1650 && player.getY() > 149 && player.getY() < 165) {
             blockedInput = true;
             screenStop = true;
             eventFinish = true;
