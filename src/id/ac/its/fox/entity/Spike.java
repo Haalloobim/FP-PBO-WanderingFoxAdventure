@@ -20,7 +20,7 @@ public class Spike extends Enemy {
         width = 16;
         height = 16;
         cwidth = 16;
-        cheight = 10;
+        cheight = 8;
         this.type = type;
 
         try {

@@ -87,7 +87,7 @@ public class Level1State extends GameState {
         RectScreens = new ArrayList<Rectangle>();
         eventStart();
         clock = new Clock();
-        clock.setTimer(2, 0);
+        clock.setTimer(1, 0);
         clock.start();
     }
 
@@ -147,7 +147,7 @@ public class Level1State extends GameState {
             Enemy e = enemies.get(i);
             e.update();
             if (e.isDead()) {
-                clock.increaseTime(5);
+                clock.increaseTime(1);
                 enemies.remove(i);
                 i--;
                 explosions.add(
@@ -175,8 +175,6 @@ public class Level1State extends GameState {
             clock.stop();
             eventDead = true;
         }
-
-        System.out.println(player.getHealth() + " " + player.getLives());
 
         if (eventStart) {
             eventStart();
@@ -364,7 +362,6 @@ public class Level1State extends GameState {
             clock.stop();
             SavedStats.setHealth(player.getHealth());
             SavedStats.setLives(player.getLives());
-            System.out.println(SavedStats.getHealth() + " " + SavedStats.getLives());
             gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
             bgMusic.close();
         }

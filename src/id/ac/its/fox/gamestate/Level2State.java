@@ -13,9 +13,11 @@ import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
 import id.ac.its.fox.entity.SavedStats;
+import id.ac.its.fox.entity.Spike;
 import id.ac.its.fox.entity.Enemies.Rat;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
+import id.ac.its.fox.tilemap.Prop;
 import id.ac.its.fox.tilemap.TileMap;
 
 @SuppressWarnings("unused")
@@ -31,11 +33,13 @@ public class Level2State extends GameState {
 
     private HUD hud;
     private Clock clock;
+    private Prop cave;
 
     private boolean eventStart;
     private boolean eventDead;
     private boolean eventFinish = false;
     private boolean blockedInput = false;
+    private boolean screenStop = false;
     private int eventCount = 0;
     public static final int COMEVENTBEGIN = 1;
     public static final int COMEVENTEND = 50;
@@ -67,12 +71,15 @@ public class Level2State extends GameState {
 
         pauseState = new PauseState();
 
+        cave = new Prop(tilemap, "/Props/cave.png");
+        cave.setPosition(1841, 240);
+
         player = new Player(tilemap);
         player.setPosition(48, 32);
         player.setHealth(SavedStats.getHealth());
         player.setLives(SavedStats.getLives());
 
-        enemies = new ArrayList<Enemy>();
+        this.enemySpawned();
 
         explosions = new ArrayList<Explosion>();
 
@@ -84,13 +91,58 @@ public class Level2State extends GameState {
         RectScreens = new ArrayList<Rectangle>();
         eventStart();
         clock = new Clock();
-        clock.setTimer(2, 0);
+        clock.setTimer(1, 30);
         clock.start();
+    }
+
+    private void enemySpawned() {
+        enemies = new ArrayList<Enemy>();
+        Rat rat;
+        Spike spike;
+        
+        rat = new Rat(tilemap);
+        rat.setPosition(190, 147);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(888, 130);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(960, 175);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(1415, 67);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(1406, 212);
+        enemies.add(rat);
+        rat = new Rat(tilemap);
+        rat.setPosition(1415, 292);
+        enemies.add(rat);
+        createSpike(Spike.SPIKEBOTTOM, 345, 217, 3);
+        createSpike(Spike.SPIKEBOTTOM, 120, 217, 3);
+        createSpike(Spike.SPIKETOP, 474, 138, 2);
+        createSpike(Spike.SPIKEBOTTOM, 504, 280, 14);
+        createSpike(Spike.SPIKETOP, 1082, 265, 3);
+        createSpike(Spike.SPIKEBOTTOM, 1320, 152, 5);
+        createSpike(Spike.SPIKEBOTTOM, 1496, 247, 2);
+    }
+
+    public void createSpike( int type, int x, int y, int total) {
+        for (int i = 0; i < total; i++) {
+            Spike spike; 
+            spike = new Spike(tilemap, type);
+            spike.setPosition(x + i * 16, y);
+            enemies.add(spike);
+        }
     }
 
     @Override
     public void update() {
-        if (pause)
+        if (eventFinish) {
+            eventFinish();
+        }
+
+        if (pause || screenStop)
             return;
         try {
             player.update();
@@ -107,7 +159,7 @@ public class Level2State extends GameState {
             Enemy e = enemies.get(i);
             e.update();
             if (e.isDead()) {
-                clock.increaseTime(5);
+                clock.increaseTime(1);
                 enemies.remove(i);
                 i--;
                 explosions.add(
@@ -125,12 +177,17 @@ public class Level2State extends GameState {
             }
         }
 
+        if (player.getX() > 1865 && player.getX() < 1890 && player.getY() > 267 && player.getY() < 278) {
+            blockedInput = true;
+            screenStop = true;
+            eventFinish = true;
+        }
+
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
             eventDead = true;
         }
 
-        System.out.println(player.getHealth() + " " + player.getLives());
 
         if (eventStart) {
             eventStart();
@@ -151,6 +208,7 @@ public class Level2State extends GameState {
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         bgLevel1.draw(g);
         tilemap.draw(g);
+        cave.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
