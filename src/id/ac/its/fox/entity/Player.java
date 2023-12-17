@@ -67,15 +67,15 @@ public class Player extends MapObject {
 
         health = maxHealth = 5;
         lives = 3;
-        claw = maxClaw = 2500000;
+        claw = maxClaw = 5;
         doubleJump = false;
         alreadyDoubleJump = false;
-        clawCost = 200;
+        clawCost = 1;
         clawDamage = 5;
         claws = new ArrayList<Claw>();
 
-        scratchDamage = 8;
-        scratchRange = 30;
+        scratchDamage = 15;
+        scratchRange = 33;
 
         try {
             BufferedImage spritesheet = ImageIO.read(
@@ -323,13 +323,8 @@ public class Player extends MapObject {
             }
         }
 
-        claw += 1;
-        if (claw > maxClaw) {
-            claw = maxClaw;
-        }
-
         if (clawing && currentAction != CLAWING && !scratching) {
-            if (claw > clawCost) {
+            if (claw >= clawCost) {
                 claw -= clawCost;
                 Claw c = new Claw(tileMap, facingRight);
                 c.setPosition(x, y);
