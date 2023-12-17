@@ -52,7 +52,6 @@ public class Level1State extends GameState {
 
     @Override
     public void init() {
-        cave = new Prop("/Props/cave.png", 1620, 117);
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
         bgMusic.bgplay();
         bgMusic.volumeDown();
@@ -67,8 +66,10 @@ public class Level1State extends GameState {
 
         pauseState = new PauseState();
 
+        cave = new Prop(tilemap, "/Props/cave.png");
+        cave.setPosition(1620, 117);
         player = new Player(tilemap);
-        player.setPosition(48, 144);
+        player.setPosition(1640, 100);
 
         enemies = new ArrayList<Enemy>();
 
@@ -170,7 +171,7 @@ public class Level1State extends GameState {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         bgLevel1.draw(g);
-        cave.draw(g, (int)tilemap.getx(), (int)tilemap.gety());
+        cave.draw(g);
         tilemap.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
