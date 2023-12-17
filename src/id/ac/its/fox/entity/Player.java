@@ -14,7 +14,7 @@ public class Player extends MapObject {
 
     private int health;
     private int maxHealth;
-    private int lives; 
+    private int lives;
     private int claw;
     private int maxClaw;
     private boolean dead;
@@ -77,7 +77,8 @@ public class Player extends MapObject {
         scratchRange = 30;
 
         try {
-            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/player.png"));
+            BufferedImage spritesheet = ImageIO.read(
+                    getClass().getResourceAsStream("/Sprites/player.png"));
             sprites = new ArrayList<BufferedImage[]>();
             for (int i = 0; i < 8; i++) {
                 BufferedImage[] bi = new BufferedImage[numFrames[i]];

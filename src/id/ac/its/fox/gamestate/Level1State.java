@@ -10,6 +10,7 @@ import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
 import id.ac.its.fox.entity.HUD;
 import id.ac.its.fox.entity.Player;
+import id.ac.its.fox.entity.Spike;
 import id.ac.its.fox.entity.Enemies.Rat;
 
 import java.awt.*;
@@ -85,6 +86,13 @@ public class Level1State extends GameState {
         rat = new Rat(tilemap);
         rat.setPosition(1600, 10);
         enemies.add(rat);
+        Spike spike;
+        spike = new Spike(tilemap);
+        spike.setPosition(360, 216);
+        enemies.add(spike);
+        spike = new Spike(tilemap);
+        spike.setPosition(376, 216);
+        enemies.add(spike);
 
         explosions = new ArrayList<Explosion>();
 
@@ -105,7 +113,7 @@ public class Level1State extends GameState {
         if (eventFinish) {
             eventFinish();
         }
-        
+
         if (pause || screenStop)
             return;
         try {
@@ -140,12 +148,12 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-
-        if(player.getX() > 1644 && player.getY() > 149) {
+        System.out.println(player.getX() + " " + player.getY());
+        if (player.getX() > 1644 && player.getY() > 149) {
             blockedInput = true;
             screenStop = true;
-			eventFinish = true;
-		}
+            eventFinish = true;
+        }
 
         if (player.getHealth() == 0 || (clock.getMinute() == 0 && clock.getSecond() == 0)) {
             clock.stop();
@@ -155,8 +163,6 @@ public class Level1State extends GameState {
         if (eventStart) {
             eventStart();
         }
-
-        
 
         if (eventDead) {
             eventDead();
@@ -170,7 +176,7 @@ public class Level1State extends GameState {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         bgLevel1.draw(g);
-        cave.draw(g, (int)tilemap.getx(), (int)tilemap.gety());
+        cave.draw(g, (int) tilemap.getx(), (int) tilemap.gety());
         tilemap.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
@@ -275,7 +281,8 @@ public class Level1State extends GameState {
         }
 
         if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
-            if(eventCount == 30) blockedInput = false;
+            if (eventCount == 30)
+                blockedInput = false;
             RectScreens.get(0).height -= 4; // mid to top
             RectScreens.get(1).width -= 6; // mid to left
             RectScreens.get(2).y += 4; // mid to bottom
@@ -306,8 +313,7 @@ public class Level1State extends GameState {
             if (player.getLives() == 0) {
                 gsm.setState(GameStateManager.MENUSTATE);
                 bgMusic.close();
-            } 
-            else {
+            } else {
                 eventDead = blockedInput = false;
                 eventCount = 0;
                 player.loseLife();
@@ -316,7 +322,7 @@ public class Level1State extends GameState {
         }
     }
 
-    private void eventFinish(){
+    private void eventFinish() {
         eventCount++;
         if (eventCount == COMEVENTBEGIN) {
             blockedInput = true;
@@ -329,12 +335,12 @@ public class Level1State extends GameState {
             RectScreens.get(0).height += 8;
         }
 
-		if(eventCount == 50) {
+        if (eventCount == 50) {
             player.setDead();
-			player.gameStop();
-			clock.stop();
-			gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
-			bgMusic.close();
-		}
+            player.gameStop();
+            clock.stop();
+            gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
+            bgMusic.close();
+        }
     }
 }
