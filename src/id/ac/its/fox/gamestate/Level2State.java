@@ -193,10 +193,6 @@ public class Level2State extends GameState {
             eventStart();
         }
 
-        if (eventFinish) {
-            eventFinish();
-        }
-
         if (eventDead) {
             eventDead();
         }
@@ -371,7 +367,7 @@ public class Level2State extends GameState {
             clock.stop();
             player.setHealth(SavedStats.getHealth());
             player.setLives(SavedStats.getLives());
-            gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
+            gsm.setState(GameStateManager.LEVEL2FINISHSTATE);
             bgMusic.close();
         }
     }
