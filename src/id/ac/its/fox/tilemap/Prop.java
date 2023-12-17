@@ -20,7 +20,7 @@ public class Prop extends MapObject {
     
     public void draw(Graphics2D g) {
         setMapPosition();
-        g.drawImage(br, (int) (x + xmap - width / 2 + width),
-                (int) (y + ymap - height / 2), null);
+        g.drawImage(br, (int) (x + xmap),
+                (int) (y + ymap), null);
     }
 }
