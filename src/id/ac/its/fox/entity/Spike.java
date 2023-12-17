@@ -56,7 +56,7 @@ public class Spike extends Enemy {
     }
 
     public void hit(int damage) {
-        return; 
+        return;
     }
 
 }
