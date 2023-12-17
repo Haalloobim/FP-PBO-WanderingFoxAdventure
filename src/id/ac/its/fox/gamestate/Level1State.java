@@ -176,6 +176,8 @@ public class Level1State extends GameState {
             eventDead = true;
         }
 
+        System.out.println(player.getHealth() + " " + player.getLives());
+
         if (eventStart) {
             eventStart();
         }
@@ -358,11 +360,11 @@ public class Level1State extends GameState {
         }
 
         if (eventCount == 50) {
-            player.setDead();
             player.gameStop();
             clock.stop();
-            player.setHealth(SavedStats.getHealth());
-            player.setLives(SavedStats.getLives());
+            SavedStats.setHealth(player.getHealth());
+            SavedStats.setLives(player.getLives());
+            System.out.println(SavedStats.getHealth() + " " + SavedStats.getLives());
             gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
             bgMusic.close();
         }

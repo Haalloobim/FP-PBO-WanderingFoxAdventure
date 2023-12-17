@@ -130,6 +130,8 @@ public class Level2State extends GameState {
             eventDead = true;
         }
 
+        System.out.println(player.getHealth() + " " + player.getLives());
+
         if (eventStart) {
             eventStart();
         }
