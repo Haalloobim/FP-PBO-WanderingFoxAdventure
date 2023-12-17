@@ -8,20 +8,26 @@ import id.ac.its.fox.tilemap.TileMap;
 public class Spike extends Enemy {
     private int width;
     private int height;
-    private BufferedImage spikebottom;
-    private BufferedImage[] sprites;
-
-    public Spike(TileMap tm) {
+    private BufferedImage spikeBottom;
+    private BufferedImage spikeTop;
+    private int type; 
+    public static final int SPIKEBOTTOM = 0;    
+    public static final int SPIKETOP = 1;    
+    
+    public Spike(TileMap tm, int type) {
         super(tm);
         damage = 1;
         width = 16;
         height = 16;
         cwidth = 16;
         cheight = 10;
+        this.type = type;
 
         try {
-            spikebottom = ImageIO.read(
+            spikeBottom = ImageIO.read(
                     getClass().getResourceAsStream("/Sprites/spike.png"));
+            spikeTop = ImageIO.read(
+                    getClass().getResourceAsStream("/Sprites/spikes-top.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,16 +41,28 @@ public class Spike extends Enemy {
 
     public void draw(java.awt.Graphics2D g) {
         setMapPosition();
-        // super.draw(g);
-        g.drawImage(
-                spikebottom,
+        if (this.type == SPIKEBOTTOM){
+            g.drawImage(
+                spikeBottom,
                 (int) (x + xmap - width / 2),
                 (int) (y + ymap - height / 2),
                 null);
+        }
+        else if (this.type == SPIKETOP){
+            g.drawImage(
+                spikeTop,
+                (int) (x + xmap - width / 2),
+                (int) (y + ymap - height / 2),
+                null);
+        }
+        
     }
 
     public void hit(int damage) {
         return;
     }
 
+    public int getType() {
+        return type;
+    }
 }

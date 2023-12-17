@@ -70,7 +70,7 @@ public class Level1State extends GameState {
         cave = new Prop(tilemap, "/Props/cave.png");
         cave.setPosition(1620, 117);
         player = new Player(tilemap);
-        player.setPosition(1640, 100);
+        player.setPosition(48, 144);
 
         enemies = new ArrayList<Enemy>();
 
@@ -84,21 +84,24 @@ public class Level1State extends GameState {
         rat = new Rat(tilemap);
         rat.setPosition(1420, 50);
         enemies.add(rat);
-        // rat = new Rat(tilemap);
-        // rat.setPosition(1600, 10);
-        // enemies.add(rat);
         Spike spike;
-        spike = new Spike(tilemap);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
         spike.setPosition(360, 216);
         enemies.add(spike);
-        spike = new Spike(tilemap);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
         spike.setPosition(376, 216);
         enemies.add(spike);
-        spike = new Spike(tilemap);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
         spike.setPosition(1560, 153);
         enemies.add(spike);
-        spike = new Spike(tilemap);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
         spike.setPosition(1576, 153);
+        enemies.add(spike);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
+        spike.setPosition(503, 137);
+        enemies.add(spike);
+        spike = new Spike(tilemap, Spike.SPIKEBOTTOM);
+        spike.setPosition(519, 137);
         enemies.add(spike);
 
 
@@ -156,7 +159,7 @@ public class Level1State extends GameState {
                 i--;
             }
         }
-        System.out.println(player.getX() + " " + player.getY());
+        
         if(player.getX() > 1644 && player.getY() > 149) {
             blockedInput = true;
             screenStop = true;
@@ -190,7 +193,14 @@ public class Level1State extends GameState {
         tilemap.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).draw(g);
+            Enemy e = enemies.get(i);
+            if (e.getClass() == Spike.class){
+                ((Spike)e).draw(g);
+            }
+            else if (e.getClass() == Rat.class){
+                e.draw(g);
+            }
+                
         }
 
         for (int i = 0; i < explosions.size(); i++) {
