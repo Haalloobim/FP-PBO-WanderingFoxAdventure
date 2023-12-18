@@ -17,9 +17,10 @@ public class AboutUsState extends GameState {
     private Image bg;
     private AudioPlayer bgMusic, sfx;
     private Color titleColor;
-    private Font titleFont;
+    private String title = "About Us";
+    private Font titleFont, BigtitleFont;
     private String[] about = {
-            "ABOUT US",
+            " ",
             " ",
             "Welcome to the enchanting world of",
             "Wandering Fox Adventure!",
@@ -43,6 +44,10 @@ public class AboutUsState extends GameState {
                     "Century Gothic",
                     Font.BOLD,
                     12);
+            BigtitleFont = new Font(
+                    "Century Gothic",
+                    Font.BOLD,
+                    24);
         }
 
         catch (Exception e) {
@@ -69,17 +74,21 @@ public class AboutUsState extends GameState {
     @Override
     public void draw(Graphics2D g) {
         g.drawImage(bg, null, null);
-        g.setColor(titleColor);
-        g.setFont(titleFont);
         for (int i = 0; i < about.length; i++) {
             if (i != about.length - 1) {
+                g.setFont(titleFont);
                 g.setColor(Color.WHITE);
                 g.drawString(about[i], 15, 30 + i * 15);
             } else {
+                g.setFont(titleFont);
                 g.setColor(Color.RED);
                 g.drawString(about[i], 145, 215);
             }
         }
+
+        g.setFont(BigtitleFont);
+        g.setColor(Color.black);
+        g.drawString(title, 115, 30);
     }
 
     @Override
