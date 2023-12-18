@@ -75,10 +75,10 @@ public class Level2State extends GameState {
         pauseState = new PauseState();
 
         cave = new Prop(tilemap, "/Props/cave.png");
-        cave.setPosition(1841, 240);
+        cave.setPosition(1865, 267);
 
         player = new Player(tilemap);
-        player.setPosition(48, 32);
+        player.setPosition(1865, 32);
         player.setHealth(SavedStats.getHealth());
         player.setLives(SavedStats.getLives());
 

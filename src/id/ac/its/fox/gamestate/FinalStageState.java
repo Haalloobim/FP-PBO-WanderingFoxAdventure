@@ -4,11 +4,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints.Key;
+import java.awt.color.ICC_ColorSpace;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.button.Button;
+import id.ac.its.fox.button.DownButton;
+import id.ac.its.fox.button.UpButton;
 import id.ac.its.fox.entity.Clock;
 import id.ac.its.fox.entity.Enemy;
 import id.ac.its.fox.entity.Explosion;
@@ -24,15 +33,21 @@ import id.ac.its.fox.tilemap.TileMap;
 
 @SuppressWarnings("unused")
 public class FinalStageState extends GameState {
+    private BufferedImage chall, bgBlack, digits;
     private Player player;
     private AudioPlayer bgMusic;
     private Background bgLevel1;
     private TileMap tilemap;
     private PauseState pauseState;
-    private boolean onReading;
+    private boolean onReading, onCracking;
     private ArrayList<Enemy> enemies;
     private ArrayList<Explosion> explosions;
 
+    private UpButton[] upButtons;
+    private DownButton[] downButtons;
+    private BufferedImage[] pads;
+    private BufferedImage[][] digit;
+    private int[] idxDigit;
     private HUD hud;
     private Clock clock;
     private Prop cave;
@@ -64,6 +79,8 @@ public class FinalStageState extends GameState {
     public FinalStageState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
+            chall = ImageIO.read(getClass().getResourceAsStream("/Chall/chall.png"));
+            bgBlack = ImageIO.read(getClass().getResourceAsStream("/Background/pause.png"));
             titleFont = new Font(
                     "Century Gothic",
                     Font.BOLD,
@@ -90,6 +107,38 @@ public class FinalStageState extends GameState {
         }
         bgMusic.bgplay();
         bgMusic.volumeDown();
+        upButtons = new UpButton[12];
+        downButtons = new DownButton[12];
+        pads = new BufferedImage[12];
+        for (int i = 0; i < upButtons.length; i++) {
+            upButtons[i] = new UpButton(50 * (i % 4) + 24 * (i % 4) + 68, 48 * (int) (i / 4) + 50, 16, 16);
+        }
+        for (int i = 0; i < downButtons.length; i++) {
+            downButtons[i] = new DownButton(50 * (i % 4) + 24 * (i % 4) + 68, 48 * (int) (i / 4) + 16 + 50, 16, 16);
+        }
+        for (int i = 0; i < pads.length; i++) {
+            try {
+                pads[i] = ImageIO.read(getClass().getResourceAsStream("/Button/FinalChall.png")).getSubimage(0, 0, 48,
+                        48);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        idxDigit = new int[12];
+        for (int i = 0; i < idxDigit.length; i++) {
+            idxDigit[i] = 0;
+        }
+        try {
+            digits = ImageIO.read(getClass().getResourceAsStream("/Button/digit.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        digit = new BufferedImage[12][10];
+        for (int i = 0; i < digit.length; i++) {
+            for (int j = 0; j < digit[i].length; j++) {
+                digit[i][j] = digits.getSubimage(j * 16, 0, 16, 16);
+            }
+        }
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/FinalStage.map");
@@ -97,6 +146,7 @@ public class FinalStageState extends GameState {
         tilemap.setTween(0.15);
 
         onReading = false;
+        onCracking = false;
 
         bgLevel1 = new Background("/Background/bglevel2.png", 3);
         bgLevel1.setVector(0, 0);
@@ -104,10 +154,10 @@ public class FinalStageState extends GameState {
         pauseState = new PauseState();
 
         cave = new Prop(tilemap, "/Props/cave.png");
-        cave.setPosition(1200, 162);
+        cave.setPosition(1200, 186);
 
         board = new Prop(tilemap, "/Props/sign.png");
-        board.setPosition(48, 188);
+        board.setPosition(48, 200);
 
         player = new Player(tilemap);
         player.setPosition(48, 32);
@@ -147,16 +197,11 @@ public class FinalStageState extends GameState {
 
     @Override
     public void update() {
-        if (player.intersects(board) && onReading) {
-            clock.stop();
-            return;
-        }
-
         if (eventFinish) {
             eventFinish();
         }
 
-        if (pause || screenStop)
+        if (pause || screenStop || onReading || onCracking)
             return;
         try {
             player.update();
@@ -244,7 +289,7 @@ public class FinalStageState extends GameState {
         for (int i = 0; i < RectScreens.size(); i++) {
             g.fill(RectScreens.get(i));
         }
-        if (player.getY() < 200 &&  !pause && !eventDead && !eventFinish && !blockedInput) {
+        if (player.getY() < 200 && !pause && !eventDead && !eventFinish && !blockedInput) {
             for (int i = 0; i < Thx.length; i++) {
                 if (i == 0) {
                     g.setFont(BigtitleFont);
@@ -266,10 +311,76 @@ public class FinalStageState extends GameState {
             }
         }
 
+        if (onReading) {
+            g.drawImage(bgBlack, null, null);
+            g.drawImage(chall, null, null);
+        }
+
+        if (onCracking) {
+            g.drawImage(bgBlack, null, null);
+            for (int i = 0; i < upButtons.length; i++) {
+                upButtons[i].draw(g);
+            }
+            for (int i = 0; i < downButtons.length; i++) {
+                downButtons[i].draw(g);
+            }
+            for (int i = 0; i < pads.length; i++) {
+                g.drawImage(pads[i], (i % 4) * 50 + 24 * (i % 4) + 18, 48 * (int) (i / 4) + 42, null);
+            }
+            for (int i = 0; i < digit.length; i++) {
+                g.drawImage(digit[i][idxDigit[i]], (i % 4) * 50 + 24 * (i % 4) + 34, 48 * (int) (i / 4) + 56, null);
+            }
+            // g.drawImage(chall, null, null);
+        }
     }
 
     @Override
     public void keyPressed(int k) {
+        if(k == KeyEvent.VK_ENTER && onCracking)
+        {
+            String code = "";
+            for (int i = 0; i < idxDigit.length; i++) {
+                code += idxDigit[i];
+            }
+            if(code.equals("133712341357"))
+            {
+                eventFinish = true;
+                blockedInput = true;
+                screenStop = true;
+            }
+            else
+            {
+                onCracking = false;
+                clock.start();
+                clock.reduceTime(10);
+            }
+            return;
+        }
+
+        if (k == KeyEvent.VK_ENTER && !onReading && player.intersects(board)) {
+            clock.stop();
+            onReading = true;
+            return;
+        }
+
+        if (k == KeyEvent.VK_ENTER && !onCracking && player.intersects(cave)) {
+            clock.stop();
+            onCracking = true;
+            return;
+        }
+
+        if (k == KeyEvent.VK_ESCAPE && onReading) {
+            onReading = false;
+            clock.start();
+            return;
+        }
+
+        if (k == KeyEvent.VK_ESCAPE && onCracking) {
+            onCracking = false;
+            clock.start();
+            return;
+        }
+
         if (k == KeyEvent.VK_ENTER && pause) {
             gsm.setState(GameStateManager.MENUSTATE);
             bgMusic.close();
@@ -285,7 +396,7 @@ public class FinalStageState extends GameState {
                 clock.start();
             }
         }
-        if ((blockedInput || player.getHealth() == 0) || pause)
+        if ((blockedInput || player.getHealth() == 0) || pause || onCracking || onReading)
             return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(true);
@@ -415,12 +526,30 @@ public class FinalStageState extends GameState {
 
     @Override
     public void mousePressed(MouseEvent k) {
+        for (int i = 0; i < upButtons.length; i++) {
+            if (upButtons[i].isMousePressed()) {
+                upButtons[i].setMousePressed(true);
+            }
 
+            if (downButtons[i].isMousePressed()) {
+                downButtons[i].setMousePressed(true);
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent k) {
+        for (int i = 0; i < upButtons.length; i++) {
+            if (inButton(k, upButtons[i])) {
+                if(++idxDigit[i] > 9) idxDigit[i] = 0;
+                upButtons[i].setMousePressed(false);
+            }
 
+            if (inButton(k, downButtons[i])) {
+                if(--idxDigit[i] < 0) idxDigit[i] = 9;
+                downButtons[i].setMousePressed(false);
+            }
+        }
     }
 
     @Override
@@ -433,4 +562,7 @@ public class FinalStageState extends GameState {
 
     }
 
+    private boolean inButton(MouseEvent e, Button b) {
+        return b.getBound().contains(e.getX() / GamePanel.SCALE, e.getY() / GamePanel.SCALE);
+    }
 }

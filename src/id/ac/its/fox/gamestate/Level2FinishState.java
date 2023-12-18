@@ -107,7 +107,7 @@ public class Level2FinishState extends GameState {
         }
         if (currentChoice == 1) {
             bgMusic.close();
-            gsm.setState(GameStateManager.LEVEL1STATE);
+            gsm.setState(GameStateManager.FINALSTAGESTATE);
         }
     }
 
@@ -148,6 +148,7 @@ public class Level2FinishState extends GameState {
 
     @Override
     public void mouseMoved(java.awt.event.MouseEvent k) {
+        return;
     }
 
     @Override

@@ -46,9 +46,4 @@ public class Button {
     public void setBound(Rectangle bound) {
         this.bound = bound;
     }
-
-    public void setBoundX(int x)
-    {
-        bound.x = x - VolumeSlider.VOLUME_BUTTON_WIDTH / 2;
-    }
 }
