@@ -72,7 +72,7 @@ public class Level1State extends GameState {
         pauseState = new PauseState();
 
         cave = new Prop(tilemap, "/Props/cave.png");
-        cave.setPosition(1620, 117);
+        cave.setPosition(1644, 140);
         player = new Player(tilemap);
         player.setPosition(48, 144);
         player.setHealth(player.getMaxHealth());

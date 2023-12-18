@@ -160,7 +160,7 @@ public class FinalStageState extends GameState {
         board.setPosition(48, 200);
 
         player = new Player(tilemap);
-        player.setPosition(1200, 32);
+        player.setPosition(48, 32);
         player.setHealth(SavedStats.getHealth());
         player.setLives(SavedStats.getLives());
 
