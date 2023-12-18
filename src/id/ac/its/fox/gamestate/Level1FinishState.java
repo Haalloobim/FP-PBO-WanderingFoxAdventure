@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.main.GamePanel;
 
 public class Level1FinishState extends GameState {
     private AudioPlayer bgMusic;
@@ -53,6 +54,10 @@ public class Level1FinishState extends GameState {
     @Override
     public void init() {
         bgMusic = new AudioPlayer("/Music/bgMenuHotel.wav");
+        if(GamePanel.isMuted)
+        {
+            bgMusic.volumeMute();
+        }
         bgMusic.bgplay();
     }
 
