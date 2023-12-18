@@ -29,13 +29,14 @@ public class FinalStageState extends GameState {
     private Background bgLevel1;
     private TileMap tilemap;
     private PauseState pauseState;
-
+    private boolean onReading;
     private ArrayList<Enemy> enemies;
     private ArrayList<Explosion> explosions;
 
     private HUD hud;
     private Clock clock;
     private Prop cave;
+    private Prop board;
 
     private boolean eventStart;
     private boolean eventDead;
@@ -95,6 +96,8 @@ public class FinalStageState extends GameState {
         tilemap.setPosition(0, 0);
         tilemap.setTween(0.15);
 
+        onReading = false;
+
         bgLevel1 = new Background("/Background/bglevel2.png", 3);
         bgLevel1.setVector(0, 0);
 
@@ -102,6 +105,9 @@ public class FinalStageState extends GameState {
 
         cave = new Prop(tilemap, "/Props/cave.png");
         cave.setPosition(1200, 162);
+
+        board = new Prop(tilemap, "/Props/sign.png");
+        board.setPosition(48, 188);
 
         player = new Player(tilemap);
         player.setPosition(48, 32);
@@ -141,6 +147,11 @@ public class FinalStageState extends GameState {
 
     @Override
     public void update() {
+        if (player.intersects(board) && onReading) {
+            clock.stop();
+            return;
+        }
+
         if (eventFinish) {
             eventFinish();
         }
@@ -179,7 +190,7 @@ public class FinalStageState extends GameState {
                 i--;
             }
         }
-        
+
         if (player.getX() > 1865 && player.getX() < 1890 && player.getY() > 267 && player.getY() < 278) {
             blockedInput = true;
             screenStop = true;
@@ -207,6 +218,7 @@ public class FinalStageState extends GameState {
         bgLevel1.draw(g);
         tilemap.draw(g);
         cave.draw(g);
+        board.draw(g);
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
@@ -258,7 +270,7 @@ public class FinalStageState extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if (k == KeyEvent.VK_ENTER) {
+        if (k == KeyEvent.VK_ENTER && pause) {
             gsm.setState(GameStateManager.MENUSTATE);
             bgMusic.close();
             pause = false;
