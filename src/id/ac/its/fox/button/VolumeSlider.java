@@ -88,6 +88,11 @@ public class VolumeSlider extends Button {
         setBoundX(sliderX);
     }
 
+    public void setBoundX(int x)
+    {
+        getBound().x = x - VolumeSlider.VOLUME_BUTTON_WIDTH / 2;
+    }
+
     public void setSoundVolume() {
         float volume = (float) ((sliderX - xmin) * (VOLUME_MAX - VOLUME_MIN)) / (xmax - xmin) + (float)(VOLUME_MIN);
         GamePanel.masterVolume = volume;

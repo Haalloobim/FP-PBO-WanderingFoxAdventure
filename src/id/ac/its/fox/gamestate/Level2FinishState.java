@@ -148,6 +148,7 @@ public class Level2FinishState extends GameState {
 
     @Override
     public void mouseMoved(java.awt.event.MouseEvent k) {
+        return;
     }
 
     @Override
