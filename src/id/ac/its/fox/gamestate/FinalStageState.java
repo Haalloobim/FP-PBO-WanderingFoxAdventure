@@ -232,7 +232,7 @@ public class FinalStageState extends GameState {
         for (int i = 0; i < RectScreens.size(); i++) {
             g.fill(RectScreens.get(i));
         }
-        if (player.getY() < 200) {
+        if (player.getY() < 200 &&  !pause && !eventDead && !eventFinish && !blockedInput) {
             for (int i = 0; i < Thx.length; i++) {
                 if (i == 0) {
                     g.setFont(BigtitleFont);
@@ -331,7 +331,7 @@ public class FinalStageState extends GameState {
         }
 
         if (eventCount > COMEVENTBEGIN && eventCount < COMEVENTEND) {
-            if (eventCount == 30)
+            if (eventCount == 45)
                 blockedInput = false;
             RectScreens.get(0).height -= 4; // mid to top
             RectScreens.get(1).width -= 6; // mid to left
