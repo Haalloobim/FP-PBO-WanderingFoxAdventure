@@ -106,7 +106,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
         gsm.mousePressed(e);
     }
 
@@ -130,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
+        // System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
         gsm.mouseMoved(e);
     }
 }

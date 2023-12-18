@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.button.Button;
 import id.ac.its.fox.button.VolumeButton;
+import id.ac.its.fox.button.VolumeSlider;
 import id.ac.its.fox.main.GamePanel;
 
 import java.awt.event.KeyEvent;
@@ -19,6 +20,7 @@ public class OptionState extends GameState {
     private BufferedImage image;
     private Image bg;
     private VolumeButton volumeButton;
+    private VolumeSlider volumeSlider;
 
     public OptionState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -34,6 +36,7 @@ public class OptionState extends GameState {
             e.printStackTrace();
         }
         volumeButton = new VolumeButton(190, 83, 24, 24);
+        volumeSlider = new VolumeSlider(190, 166, 24, 24);
         bgMusic = new AudioPlayer("/Music/bgMenuHotel.wav");
         if (GamePanel.isMuted) {
             bgMusic.volumeMute();
@@ -44,6 +47,7 @@ public class OptionState extends GameState {
     @Override
     public void update() {
         volumeButton.update();
+        volumeSlider.update();
     }
 
     @Override
@@ -51,6 +55,7 @@ public class OptionState extends GameState {
         g.drawImage(bg, null, null);
         g.drawImage(image, 0, 0, null);
         volumeButton.draw(g);
+        volumeSlider.draw(g);
     }
 
     @Override
@@ -58,29 +63,40 @@ public class OptionState extends GameState {
         if (inButton(k, volumeButton)) {
             volumeButton.setMouseClicked(true);
         }
+        if (inButton(k, volumeSlider)) {
+            volumeSlider.setMouseClicked(true);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent k) {
         if (inButton(k, volumeButton)) {
-            if (volumeButton.isMouseClicked()) {
+            if (volumeButton.isMousePressed()) {
                 bgMusic.volumeMute();
                 volumeButton.setMuted(!volumeButton.isMuted());
             }
         }
+        volumeSlider.reset();
         volumeButton.reset();
     }
 
     @Override
     public void mouseMoved(MouseEvent k) {
         volumeButton.setMouseOver(false);
+        volumeSlider.setMouseOver(false);
         if (inButton(k, volumeButton)) {
             volumeButton.setMouseOver(true);
+        }
+        if (inButton(k, volumeSlider)) {
+            volumeSlider.setMouseOver(true);
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent k) {
+        if (volumeSlider.isMousePressed()) {
+            volumeSlider.slideX(k.getX());
+        }
     }
 
     @Override

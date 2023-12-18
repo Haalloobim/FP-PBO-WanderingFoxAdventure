@@ -46,4 +46,9 @@ public class Button {
     public void setBound(Rectangle bound) {
         this.bound = bound;
     }
+
+    public void setBoundX(int x)
+    {
+        bound.x = x - 56 / 2;
+    }
 }

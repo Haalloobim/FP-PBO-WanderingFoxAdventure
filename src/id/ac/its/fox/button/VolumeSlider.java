@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import id.ac.its.fox.main.GamePanel;
 
-public class VolumeButton extends Button {
+public class VolumeSlider extends Button {
     public static final int COL_NUM = 3;
     public static final int ROW_NUM = 2;
     private BufferedImage[][] button;
@@ -13,10 +13,12 @@ public class VolumeButton extends Button {
     private boolean isMouseOver;
     private boolean isMousePressed;
     private boolean isMuted;
+    private int sliderX;
+    private int xmin, xmax;
     private int row, col;
 
-    public VolumeButton(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public VolumeSlider(int x, int y, int width, int height) {
+        super(x + width/2, y, 56, height);
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Button/VolumeButton.png"));
             button = new BufferedImage[ROW_NUM][COL_NUM];
@@ -28,6 +30,9 @@ public class VolumeButton extends Button {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		xmin = x + 56 / 2;
+		xmax = x + width - 56 / 2;
+        sliderX = (int) ((xmin + xmax) / 2);
         isMousePressed = false;
         isMouseOver = false;
         isMuted = GamePanel.isMuted;
@@ -48,9 +53,8 @@ public class VolumeButton extends Button {
         }
     }
 
-    public void draw(Graphics g)
-    {
-        g.drawImage(button[row][col], this.getX(), this.getY(),null);
+    public void draw(Graphics g) {
+        g.drawImage(button[row][col], this.getX(), this.getY(), null);
     }
 
     public void setMouseClicked(boolean isMousePressed) {
@@ -81,5 +85,16 @@ public class VolumeButton extends Button {
     public void reset() {
         isMousePressed = false;
         isMouseOver = false;
+    }
+
+    public void slideX(int x) {
+        if (x < xmin) {
+            sliderX = xmin;
+        } else if (x > xmax) {
+            sliderX = xmax;
+        } else {
+            sliderX = x;
+        }
+        setBoundX(sliderX);
     }
 }
