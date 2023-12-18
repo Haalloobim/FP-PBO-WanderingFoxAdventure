@@ -31,7 +31,7 @@ public class AboutUsState extends GameState {
             "by",
             "Jericho Nathanael Chrisnanta - 5025221001",
             "Muhammad Bimatara Indianto - 5025221260",
-            "BACK"
+            "Press Enter to BACK"
     };
 
     public AboutUsState(GameStateManager gsm) {
@@ -79,7 +79,7 @@ public class AboutUsState extends GameState {
             } else {
                 g.setFont(titleFont);
                 g.setColor(Color.BLACK);
-                g.drawString(about[i], 145, 208);
+                g.drawString(about[i], 110, 208);
             }
         }
     }
