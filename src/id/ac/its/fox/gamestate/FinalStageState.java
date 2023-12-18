@@ -6,7 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import id.ac.its.fox.audio.AudioPlayer;
 import id.ac.its.fox.entity.Clock;
@@ -24,12 +28,13 @@ import id.ac.its.fox.tilemap.TileMap;
 
 @SuppressWarnings("unused")
 public class FinalStageState extends GameState {
+    private BufferedImage chall, bgBlack;
     private Player player;
     private AudioPlayer bgMusic;
     private Background bgLevel1;
     private TileMap tilemap;
     private PauseState pauseState;
-    private boolean onReading;
+    private boolean onReading, onCracking;
     private ArrayList<Enemy> enemies;
     private ArrayList<Explosion> explosions;
 
@@ -64,6 +69,8 @@ public class FinalStageState extends GameState {
     public FinalStageState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
+            chall = ImageIO.read(getClass().getResourceAsStream("/Chall/chall.png"));
+            bgBlack = ImageIO.read(getClass().getResourceAsStream("/Background/pause.png"));
             titleFont = new Font(
                     "Century Gothic",
                     Font.BOLD,
@@ -97,6 +104,7 @@ public class FinalStageState extends GameState {
         tilemap.setTween(0.15);
 
         onReading = false;
+        onCracking = false;
 
         bgLevel1 = new Background("/Background/bglevel2.png", 3);
         bgLevel1.setVector(0, 0);
@@ -104,10 +112,10 @@ public class FinalStageState extends GameState {
         pauseState = new PauseState();
 
         cave = new Prop(tilemap, "/Props/cave.png");
-        cave.setPosition(1200, 162);
+        cave.setPosition(1200, 186);
 
         board = new Prop(tilemap, "/Props/sign.png");
-        board.setPosition(48, 188);
+        board.setPosition(48, 200);
 
         player = new Player(tilemap);
         player.setPosition(48, 32);
@@ -147,16 +155,11 @@ public class FinalStageState extends GameState {
 
     @Override
     public void update() {
-        if (player.intersects(board) && onReading) {
-            clock.stop();
-            return;
-        }
-
         if (eventFinish) {
             eventFinish();
         }
 
-        if (pause || screenStop)
+        if (pause || screenStop || onReading || onCracking)
             return;
         try {
             player.update();
@@ -266,10 +269,43 @@ public class FinalStageState extends GameState {
             }
         }
 
+        if (onReading) {
+            g.drawImage(bgBlack, null, null);
+            g.drawImage(chall, null, null);
+        }
+
+        if (onCracking) {
+            g.drawImage(bgBlack, null, null);
+            g.drawImage(chall, null, null);
+        }
     }
 
     @Override
     public void keyPressed(int k) {
+        if (k == KeyEvent.VK_ENTER && !onReading && player.intersects(board)) {
+            clock.stop();
+            onReading = true;
+            return;
+        }
+
+        if (k == KeyEvent.VK_ENTER && !onCracking && player.intersects(cave)) {
+            clock.stop();
+            onCracking = true;
+            return;
+        }
+
+        if (k == KeyEvent.VK_ESCAPE && onReading) {
+            onReading = false;
+            clock.start();
+            return;
+        }
+
+        if (k == KeyEvent.VK_ESCAPE && onCracking) {
+            onCracking = false;
+            clock.start();
+            return;
+        }
+
         if (k == KeyEvent.VK_ENTER && pause) {
             gsm.setState(GameStateManager.MENUSTATE);
             bgMusic.close();
@@ -285,7 +321,7 @@ public class FinalStageState extends GameState {
                 clock.start();
             }
         }
-        if ((blockedInput || player.getHealth() == 0) || pause)
+        if ((blockedInput || player.getHealth() == 0) || pause || onCracking || onReading)
             return;
         if (k == KeyEvent.VK_LEFT)
             player.setLeft(true);

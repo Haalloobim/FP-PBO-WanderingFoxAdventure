@@ -216,6 +216,7 @@ public abstract class MapObject {
     }
 
     public void draw(Graphics2D g) {
+        // g.drawRect((int) (x + xmap - cwidth / 2), (int) (y + ymap - cheight / 2), cwidth, cheight);
         if (facingRight) {
             g.drawImage(
                     animation.getImage(),
