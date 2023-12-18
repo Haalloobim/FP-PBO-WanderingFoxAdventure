@@ -6,58 +6,54 @@ import javax.imageio.ImageIO;
 import id.ac.its.fox.main.GamePanel;
 
 public class VolumeSlider extends Button {
+    public static final int VOLUME_BUTTON_WIDTH = 24;
     public static final int COL_NUM = 3;
-    public static final int ROW_NUM = 2;
-    private BufferedImage[][] button;
+    private BufferedImage[] button;
     private BufferedImage image;
     private boolean isMouseOver;
     private boolean isMousePressed;
     private boolean isMuted;
     private int sliderX;
     private int xmin, xmax;
-    private int row, col;
+    private int col;
+    private BufferedImage slider;
 
     public VolumeSlider(int x, int y, int width, int height) {
-        super(x + width/2, y, 56, height);
+        super(x - VOLUME_BUTTON_WIDTH / 2, y, width, height);
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Button/VolumeButton.png"));
-            button = new BufferedImage[ROW_NUM][COL_NUM];
+            slider = ImageIO.read(getClass().getResourceAsStream("/Button/VolumeSlide.png"));
+            button = new BufferedImage[COL_NUM];
             for (int i = 0; i < button.length; i++) {
-                for (int j = 0; j < button[i].length; j++) {
-                    button[i][j] = image.getSubimage(j * width, i * height, width, height);
-                }
+                button[i] = image.getSubimage(i * width, 0, width, height);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-		xmin = x + 56 / 2;
-		xmax = x + width - 56 / 2;
-        sliderX = (int) ((xmin + xmax) / 2);
+        xmin = 110 + VOLUME_BUTTON_WIDTH / 2;
+        xmax = 200 + VOLUME_BUTTON_WIDTH / 2;
+        sliderX = x;
         isMousePressed = false;
         isMouseOver = false;
-        isMuted = GamePanel.isMuted;
+        col = 0;
     }
 
     public void update() {
-        if (isMuted) {
-            row = 1;
-        } else {
-            row = 0;
-        }
+        col = 0;
         if (isMouseOver) {
             col = 1;
-        } else if (isMousePressed) {
+        }
+        if (isMousePressed) {
             col = 2;
-        } else {
-            col = 0;
         }
     }
 
     public void draw(Graphics g) {
-        g.drawImage(button[row][col], this.getX(), this.getY(), null);
+        g.drawImage(slider, 112, 172, 108, 12,null);
+        g.drawImage(button[col], sliderX - VOLUME_BUTTON_WIDTH / 2, this.getY(), null);
     }
 
-    public void setMouseClicked(boolean isMousePressed) {
+    public void setMousePressed(boolean isMousePressed) {
         this.isMousePressed = isMousePressed;
     }
 
@@ -88,13 +84,14 @@ public class VolumeSlider extends Button {
     }
 
     public void slideX(int x) {
+        x /= GamePanel.SCALE;
         if (x < xmin) {
-            sliderX = xmin;
-        } else if (x > xmax) {
-            sliderX = xmax;
-        } else {
-            sliderX = x;
+            x = xmin;
         }
+        if (x > xmax) {
+            x = xmax;
+        }
+        sliderX = x;
         setBoundX(sliderX);
     }
 }

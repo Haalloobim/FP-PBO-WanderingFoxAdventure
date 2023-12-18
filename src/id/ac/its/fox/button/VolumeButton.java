@@ -39,21 +39,20 @@ public class VolumeButton extends Button {
         } else {
             row = 0;
         }
+        col = 0;
         if (isMouseOver) {
             col = 1;
-        } else if (isMousePressed) {
+        }
+        if (isMousePressed) {
             col = 2;
-        } else {
-            col = 0;
         }
     }
 
-    public void draw(Graphics g)
-    {
-        g.drawImage(button[row][col], this.getX(), this.getY(),null);
+    public void draw(Graphics g) {
+        g.drawImage(button[row][col], this.getX(), this.getY(), null);
     }
 
-    public void setMouseClicked(boolean isMousePressed) {
+    public void setMousePressed(boolean isMousePressed) {
         this.isMousePressed = isMousePressed;
     }
 
