@@ -61,6 +61,7 @@ public class MenuState extends GameState {
             bgMusic.volumeMute();
         }
         bgMusic.bgplay();
+        bgMusic.update();
     }
 
     @Override

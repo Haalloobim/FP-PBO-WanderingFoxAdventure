@@ -58,11 +58,13 @@ public class Level1FinishState extends GameState {
         {
             bgMusic.volumeMute();
         }
+        bgMusic.update();
         bgMusic.bgplay();
     }
 
     @Override
     public void update() {
+        bgMusic.update();
     }
 
     @Override

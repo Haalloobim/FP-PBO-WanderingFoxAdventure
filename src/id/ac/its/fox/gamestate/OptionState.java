@@ -46,6 +46,7 @@ public class OptionState extends GameState {
 
     @Override
     public void update() {
+        bgMusic.update();
         volumeButton.update();
         volumeSlider.update();
     }
@@ -65,7 +66,7 @@ public class OptionState extends GameState {
     @Override
     public void mousePressed(MouseEvent k) {
         if (inButton(k, volumeButton)) {
-        volumeButton.setMousePressed(true);
+            volumeButton.setMousePressed(true);
         }
         if (inButton(k, volumeSlider)) {
             volumeSlider.setMousePressed(true);
@@ -96,6 +97,16 @@ public class OptionState extends GameState {
         if (volumeButton.isMousePressed()) {
             bgMusic.volumeMute();
             volumeButton.setMuted(!volumeButton.isMuted());
+            volumeSlider.slideX((volumeSlider.getXmin()) * GamePanel.SCALE);
+            volumeSlider.setSoundVolume();
+        }
+        if (volumeSlider.isMousePressed()) {
+            volumeSlider.setSoundVolume();
+            if (GamePanel.masterVolume == VolumeSlider.VOLUME_MIN) {
+                volumeButton.setMuted(true);
+            } else {
+                volumeButton.setMuted(false);
+            }
         }
         volumeSlider.reset();
         volumeButton.reset();
@@ -104,7 +115,7 @@ public class OptionState extends GameState {
     @Override
     public void keyPressed(int k) {
         if (k == KeyEvent.VK_ESCAPE) {
-            bgMusic.clipStop();
+            bgMusic.close();
             gsm.setState(GameStateManager.MENUSTATE);
         }
         return;

@@ -13,6 +13,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
     public static final int HEIGHT = 240;
     public static final int SCALE = 3;
     public static boolean isMuted = false;
+    public static float masterVolume = -2.0f;
+
     private Thread thread;
     private boolean running;
     private int FPS = 60;

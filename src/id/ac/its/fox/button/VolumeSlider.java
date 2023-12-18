@@ -6,13 +6,14 @@ import javax.imageio.ImageIO;
 import id.ac.its.fox.main.GamePanel;
 
 public class VolumeSlider extends Button {
+    public static final int VOLUME_MAX = 6;
+    public static final int VOLUME_MIN = -50;
     public static final int VOLUME_BUTTON_WIDTH = 24;
     public static final int COL_NUM = 3;
     private BufferedImage[] button;
     private BufferedImage image;
     private boolean isMouseOver;
     private boolean isMousePressed;
-    private boolean isMuted;
     private int sliderX;
     private int xmin, xmax;
     private int col;
@@ -32,7 +33,8 @@ public class VolumeSlider extends Button {
         }
         xmin = 110 + VOLUME_BUTTON_WIDTH / 2;
         xmax = 200 + VOLUME_BUTTON_WIDTH / 2;
-        sliderX = x;
+        sliderX = (int)(GamePanel.masterVolume  - VOLUME_MIN) * (xmax - xmin) / (VOLUME_MAX - VOLUME_MIN) + xmin;
+        setBoundX(sliderX);
         isMousePressed = false;
         isMouseOver = false;
         col = 0;
@@ -61,21 +63,12 @@ public class VolumeSlider extends Button {
         this.isMouseOver = isMouseOver;
     }
 
-    public void setMuted(boolean mute) {
-        isMuted = mute;
-    }
-
     public boolean isMousePressed() {
         return isMousePressed;
     }
 
     public boolean isMouseOver() {
         return isMouseOver;
-    }
-
-    public boolean isMuted() {
-        GamePanel.isMuted = !isMuted;
-        return isMuted;
     }
 
     public void reset() {
@@ -93,5 +86,14 @@ public class VolumeSlider extends Button {
         }
         sliderX = x;
         setBoundX(sliderX);
+    }
+
+    public void setSoundVolume() {
+        float volume = (float) ((sliderX - xmin) * (VOLUME_MAX - VOLUME_MIN)) / (xmax - xmin) + (float)(VOLUME_MIN);
+        GamePanel.masterVolume = volume;
+    }
+
+    public int getXmin() {
+        return xmin;
     }
 }

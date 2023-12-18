@@ -58,8 +58,8 @@ public class Level1State extends GameState {
         if (GamePanel.isMuted) {
             bgMusic.volumeMute();
         }
+        bgMusic.update();
         bgMusic.bgplay();
-        bgMusic.volumeDown();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/Level_1.map");

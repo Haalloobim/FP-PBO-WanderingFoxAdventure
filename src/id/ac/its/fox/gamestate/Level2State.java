@@ -62,7 +62,7 @@ public class Level2State extends GameState {
             bgMusic.volumeMute();
         }
         bgMusic.bgplay();
-        bgMusic.volumeDown();
+        bgMusic.update();
         tilemap = new TileMap(16);
         tilemap.loadTiles("/Tileset/level1.png");
         tilemap.loadMap("/Maps/Level_2.map");

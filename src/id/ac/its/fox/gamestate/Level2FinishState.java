@@ -59,6 +59,7 @@ public class Level2FinishState extends GameState {
         if (GamePanel.isMuted) {
             bgMusic.volumeMute();
         }
+        bgMusic.update();
         bgMusic.bgplay();
     }
 
