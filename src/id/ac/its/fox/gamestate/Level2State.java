@@ -69,7 +69,7 @@ public class Level2State extends GameState {
         tilemap.setPosition(0, 0);
         tilemap.setTween(0.15);
 
-        bgLevel1 = new Background("/Background/bglvl2.png", 3);
+        bgLevel1 = new Background("/Background/bglevel2.png", 3);
         bgLevel1.setVector(0, 0);
 
         pauseState = new PauseState();

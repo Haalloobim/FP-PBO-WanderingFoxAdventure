@@ -1,7 +1,6 @@
 package id.ac.its.fox.gamestate;
 
 import id.ac.its.fox.audio.AudioPlayer;
-import id.ac.its.fox.button.VolumeButton;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.Prop;
@@ -76,8 +75,8 @@ public class Level1State extends GameState {
         cave.setPosition(1620, 117);
         player = new Player(tilemap);
         player.setPosition(48, 144);
-        player.setHealth(SavedStats.getHealth());
-        player.setLives(SavedStats.getLives());
+        player.setHealth(player.getMaxHealth());
+        player.setLives(player.getMaxLives());
 
         this.enemySpawned();
 
@@ -264,7 +263,7 @@ public class Level1State extends GameState {
             player.setGliding(true);
         if (k == KeyEvent.VK_R)
             player.setScratching();
-        if (k == KeyEvent.VK_F)
+        if (k == KeyEvent.VK_F && player.getClaw() != 0)
             player.setClawing();
 
     }
@@ -339,7 +338,6 @@ public class Level1State extends GameState {
             eventDead = blockedInput = false;
             eventCount = 0;
             player.loseLife();
-
             if (player.getLives() == 0) {
                 gsm.setState(GameStateManager.MENUSTATE);
                 bgMusic.close();

@@ -16,6 +16,7 @@ public class Player extends MapObject {
     private int health;
     private int maxHealth;
     private int lives;
+    private int getMaxLives;
     private int claw;
     private int maxClaw;
     private boolean dead;
@@ -66,7 +67,7 @@ public class Player extends MapObject {
         facingRight = true;
 
         health = maxHealth = 5;
-        lives = 3;
+        lives = getMaxLives = 3;
         claw = maxClaw = 5;
         doubleJump = false;
         alreadyDoubleJump = false;
@@ -135,6 +136,14 @@ public class Player extends MapObject {
 
     public void setLives(int lives) {
         this.lives = lives;
+    }
+
+    public int getMaxLives() {
+        return getMaxLives;
+    }
+
+    public void setMaxLives(int getMaxLives) {
+        this.getMaxLives = getMaxLives;
     }
 
     public void loseLife() {
