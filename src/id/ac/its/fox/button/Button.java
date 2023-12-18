@@ -49,6 +49,6 @@ public class Button {
 
     public void setBoundX(int x)
     {
-        bound.x = x - 56 / 2;
+        bound.x = x - VolumeSlider.VOLUME_BUTTON_WIDTH / 2;
     }
 }

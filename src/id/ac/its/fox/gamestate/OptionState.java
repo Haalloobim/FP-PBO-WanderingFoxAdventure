@@ -59,25 +59,17 @@ public class OptionState extends GameState {
     }
 
     @Override
-    public void mousePressed(MouseEvent k) {
-        if (inButton(k, volumeButton)) {
-            volumeButton.setMouseClicked(true);
-        }
-        if (inButton(k, volumeSlider)) {
-            volumeSlider.setMouseClicked(true);
-        }
+    public void mouseClicked(MouseEvent k) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent k) {
+    public void mousePressed(MouseEvent k) {
         if (inButton(k, volumeButton)) {
-            if (volumeButton.isMousePressed()) {
-                bgMusic.volumeMute();
-                volumeButton.setMuted(!volumeButton.isMuted());
-            }
+        volumeButton.setMousePressed(true);
         }
-        volumeSlider.reset();
-        volumeButton.reset();
+        if (inButton(k, volumeSlider)) {
+            volumeSlider.setMousePressed(true);
+        }
     }
 
     @Override
@@ -100,6 +92,16 @@ public class OptionState extends GameState {
     }
 
     @Override
+    public void mouseReleased(MouseEvent k) {
+        if (volumeButton.isMousePressed()) {
+            bgMusic.volumeMute();
+            volumeButton.setMuted(!volumeButton.isMuted());
+        }
+        volumeSlider.reset();
+        volumeButton.reset();
+    }
+
+    @Override
     public void keyPressed(int k) {
         if (k == KeyEvent.VK_ESCAPE) {
             bgMusic.clipStop();
@@ -115,9 +117,5 @@ public class OptionState extends GameState {
 
     private boolean inButton(MouseEvent e, Button b) {
         return b.getBound().contains(e.getX() / GamePanel.SCALE, e.getY() / GamePanel.SCALE);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent k) {
     }
 }
