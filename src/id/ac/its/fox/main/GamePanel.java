@@ -34,8 +34,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
         super.addNotify();
         if (thread == null) {
             thread = new Thread(this);
-            addMouseMotionListener(this);
-            addMouseListener(this);
             addKeyListener(this);
             thread.start();
         }
@@ -45,8 +43,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) image.getGraphics();
         running = true;
-
         gsm = new GameStateManager();
+        addMouseMotionListener(this);
+        addMouseListener(this);
     }
 
     public void run() {
@@ -129,7 +128,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
         gsm.mouseMoved(e);
     }
 }
