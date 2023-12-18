@@ -1,6 +1,7 @@
 package id.ac.its.fox.gamestate;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.button.VolumeButton;
 import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 import id.ac.its.fox.tilemap.Prop;
@@ -55,6 +56,9 @@ public class Level1State extends GameState {
     @Override
     public void init() {
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
+        if (GamePanel.isMuted) {
+            bgMusic.volumeMute();
+        }
         bgMusic.bgplay();
         bgMusic.volumeDown();
         tilemap = new TileMap(16);
@@ -335,7 +339,7 @@ public class Level1State extends GameState {
             eventDead = blockedInput = false;
             eventCount = 0;
             player.loseLife();
-            
+
             if (player.getLives() == 0) {
                 gsm.setState(GameStateManager.MENUSTATE);
                 bgMusic.close();
@@ -365,5 +369,25 @@ public class Level1State extends GameState {
             gsm.setState(GameStateManager.LEVEL1FINISHSTATE);
             bgMusic.close();
         }
+    }
+
+    @Override
+    public void mousePressed(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseReleased(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent k) {
     }
 }

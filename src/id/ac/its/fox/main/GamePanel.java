@@ -8,11 +8,11 @@ import javax.swing.JPanel;
 
 import id.ac.its.fox.gamestate.GameStateManager;
 
-public class GamePanel extends JPanel implements Runnable, KeyListener {
+public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
     public static final int WIDTH = 320;
     public static final int HEIGHT = 240;
     public static final int SCALE = 3;
-
+    public static boolean isMuted = false;
     private Thread thread;
     private boolean running;
     private int FPS = 60;
@@ -34,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         super.addNotify();
         if (thread == null) {
             thread = new Thread(this);
+            addMouseMotionListener(this);
+            addMouseListener(this);
             addKeyListener(this);
             thread.start();
         }
@@ -95,5 +97,40 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyReleased(KeyEvent key) {
         gsm.keyReleased(key.getKeyCode());
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        gsm.mouseClicked(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
+        gsm.mousePressed(e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        gsm.mouseReleased(e);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        gsm.mouseDragged(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        System.out.println(e.getX() / GamePanel.SCALE+ " " + e.getY() / GamePanel.SCALE);
+        gsm.mouseMoved(e);
     }
 }

@@ -1,5 +1,7 @@
 package id.ac.its.fox.gamestate;
 
+import java.awt.event.MouseEvent;
+
 public class GameStateManager {
     private GameState[] gameStates;
     private int currentState;
@@ -10,6 +12,7 @@ public class GameStateManager {
     public static final int LEVEL1FINISHSTATE = 3;
     public static final int LEVEL2STATE = 4;
     public static final int LEVEL2FINISHSTATE = 5;
+    public static final int OPTIONSTATE = 6;
 
     public GameStateManager() {
         gameStates = new GameState[10];
@@ -34,6 +37,8 @@ public class GameStateManager {
             gameStates[state] = new Level2State(this);
         if (state == LEVEL2FINISHSTATE)
             gameStates[state] = new Level2FinishState(this);
+        if (state == OPTIONSTATE)
+            gameStates[state] = new OptionState(this);
     }
 
     public void setState(int state) {
@@ -73,6 +78,46 @@ public class GameStateManager {
     public void keyReleased(int k) {
         try {
             gameStates[currentState].keyReleased(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mouseClicked(MouseEvent k) {
+        try {
+            gameStates[currentState].mouseClicked(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mousePressed(MouseEvent k) {
+        try {
+            gameStates[currentState].mousePressed(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mouseDragged(MouseEvent k) {
+        try {
+            gameStates[currentState].mouseDragged(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mouseMoved(MouseEvent k) {
+        try {
+            gameStates[currentState].mouseMoved(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mouseReleased(MouseEvent k) {
+        try {
+            gameStates[currentState].mouseReleased(k);
         } catch (Exception e) {
             e.printStackTrace();
         }

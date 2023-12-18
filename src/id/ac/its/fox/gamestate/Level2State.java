@@ -58,6 +58,9 @@ public class Level2State extends GameState {
     @Override
     public void init() {
         bgMusic = new AudioPlayer("/Music/hurryBG.wav");
+        if (GamePanel.isMuted) {
+            bgMusic.volumeMute();
+        }
         bgMusic.bgplay();
         bgMusic.volumeDown();
         tilemap = new TileMap(16);
@@ -99,7 +102,7 @@ public class Level2State extends GameState {
         enemies = new ArrayList<Enemy>();
         Rat rat;
         Spike spike;
-        
+
         rat = new Rat(tilemap);
         rat.setPosition(190, 147);
         enemies.add(rat);
@@ -127,9 +130,9 @@ public class Level2State extends GameState {
         createSpike(Spike.SPIKEBOTTOM, 1496, 247, 2);
     }
 
-    public void createSpike( int type, int x, int y, int total) {
+    public void createSpike(int type, int x, int y, int total) {
         for (int i = 0; i < total; i++) {
-            Spike spike; 
+            Spike spike;
             spike = new Spike(tilemap, type);
             spike.setPosition(x + i * 16, y);
             enemies.add(spike);
@@ -187,7 +190,6 @@ public class Level2State extends GameState {
             clock.stop();
             eventDead = true;
         }
-
 
         if (eventStart) {
             eventStart();
@@ -370,5 +372,25 @@ public class Level2State extends GameState {
             gsm.setState(GameStateManager.LEVEL2FINISHSTATE);
             bgMusic.close();
         }
+    }
+
+    @Override
+    public void mousePressed(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseReleased(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent k) {
     }
 }

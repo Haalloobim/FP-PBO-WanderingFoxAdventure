@@ -5,10 +5,12 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.main.GamePanel;
 
 public class AboutUsState extends GameState {
 
@@ -54,6 +56,9 @@ public class AboutUsState extends GameState {
     @Override
     public void init() {
         bgMusic = new AudioPlayer("/Music/about.wav");
+        if (GamePanel.isMuted) {
+            bgMusic.volumeMute();
+        }
         bgMusic.bgplay();
     }
 
@@ -90,4 +95,27 @@ public class AboutUsState extends GameState {
     public void keyReleased(int k) {
     }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        return;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        return;
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        return;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        return;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent k) {
+    }
 }

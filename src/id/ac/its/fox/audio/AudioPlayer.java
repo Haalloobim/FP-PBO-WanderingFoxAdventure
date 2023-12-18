@@ -90,4 +90,8 @@ public class AudioPlayer {
 			mute = false;
 		}
 	}
+
+	public boolean isMuted() {
+		return mute;
+	}
 }

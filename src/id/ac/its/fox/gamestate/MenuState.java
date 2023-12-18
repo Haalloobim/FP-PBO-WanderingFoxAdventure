@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 import id.ac.its.fox.audio.AudioPlayer;
+import id.ac.its.fox.main.GamePanel;
 import id.ac.its.fox.tilemap.Background;
 
 public class MenuState extends GameState {
@@ -56,6 +57,9 @@ public class MenuState extends GameState {
     @Override
     public void init() {
         bgMusic = new AudioPlayer("/Music/bgMenuHotel.wav");
+        if (GamePanel.isMuted) {
+            bgMusic.volumeMute();
+        }
         bgMusic.bgplay();
     }
 
@@ -81,14 +85,11 @@ public class MenuState extends GameState {
             }
             if (options[i].equals("Options")) {
                 g.drawString(options[i], 137, 170 + i * 15);
-            } 
-            else if (options[i].equals("About Us")){
+            } else if (options[i].equals("About Us")) {
                 g.drawString(options[i], 134, 170 + i * 15);
-            }
-            else if (options[i].equals("Quit")){
+            } else if (options[i].equals("Quit")) {
                 g.drawString(options[i], 147, 170 + i * 15);
-            }
-            else {
+            } else {
                 g.drawString(options[i], 147, 170 + i * 15);
             }
         }
@@ -101,7 +102,8 @@ public class MenuState extends GameState {
             gsm.setState(GameStateManager.LEVEL1STATE);
         }
         if (currentChoice == 1) {
-
+            bgMusic.close();
+            gsm.setState(GameStateManager.OPTIONSTATE);
         }
         if (currentChoice == 2) {
             bgMusic.close();
@@ -136,6 +138,26 @@ public class MenuState extends GameState {
 
     @Override
     public void keyReleased(int k) {
+    }
+
+    @Override
+    public void mousePressed(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseReleased(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent k) {
+    }
+
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent k) {
     }
 
 }
