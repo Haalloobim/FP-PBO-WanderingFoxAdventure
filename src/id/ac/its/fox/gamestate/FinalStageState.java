@@ -56,9 +56,9 @@ public class FinalStageState extends GameState {
     private String[] Thx = {
             "Haha.. You think its final stage?",
             " ",
-            "Its Over :\")",
-            "",
-            " Thank You so Much For Playing This Game"
+            "Its Puzzle Time!",
+            "btw..",
+            "Thank You so Much For Playing This Game :\")"
     };
 
     public FinalStageState(GameStateManager gsm) {
@@ -257,11 +257,11 @@ public class FinalStageState extends GameState {
                 } else if (i == 4) {
                     g.setFont(MedtitleFont);
                     g.setColor(Color.RED);
-                    g.drawString(Thx[i], 27, 70 + i * 15);
+                    g.drawString(Thx[i], 22, 70 + i * 15);
                 } else {
                     g.setFont(titleFont);
                     g.setColor(Color.WHITE);
-                    g.drawString(Thx[i], 15, 30 + i * 15);
+                    g.drawString(Thx[i], 160, 112);
                 }
             }
         }
