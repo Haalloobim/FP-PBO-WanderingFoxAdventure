@@ -1,5 +1,7 @@
 package id.ac.its.fox.gamestate;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -21,6 +23,7 @@ public class OptionState extends GameState {
     private Image bg;
     private VolumeButton volumeButton;
     private VolumeSlider volumeSlider;
+    private Font titleFont;
 
     public OptionState(GameStateManager gsm) {
         this.gsm = gsm;
@@ -32,6 +35,7 @@ public class OptionState extends GameState {
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/Background/OptionsPanel.png"));
             bg = new ImageIcon(getClass().getResource("/Background/bg1.gif")).getImage();
+            titleFont = new Font("Century Gothic", Font.BOLD, 11);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,6 +61,9 @@ public class OptionState extends GameState {
         g.drawImage(image, 0, 0, null);
         volumeButton.draw(g);
         volumeSlider.draw(g);
+        g.setFont(titleFont);
+                g.setColor(Color.BLACK);
+                g.drawString("Press Enter to BACK", 115, 208);
     }
 
     @Override
@@ -114,7 +121,7 @@ public class OptionState extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if (k == KeyEvent.VK_ESCAPE) {
+        if (k == KeyEvent.VK_ESCAPE || k == KeyEvent.VK_ENTER) {
             bgMusic.close();
             gsm.setState(GameStateManager.MENUSTATE);
         }
