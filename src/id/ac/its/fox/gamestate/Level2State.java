@@ -236,7 +236,7 @@ public class Level2State extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if (k == KeyEvent.VK_ENTER) {
+        if (k == KeyEvent.VK_ENTER && pause) {
             gsm.setState(GameStateManager.MENUSTATE);
             bgMusic.close();
             pause = false;
