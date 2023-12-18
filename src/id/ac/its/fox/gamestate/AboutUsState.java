@@ -6,7 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import id.ac.its.fox.audio.AudioPlayer;
@@ -15,19 +17,17 @@ import id.ac.its.fox.main.GamePanel;
 public class AboutUsState extends GameState {
 
     private Image bg;
+    private BufferedImage image;
     private AudioPlayer bgMusic, sfx;
-    private Color titleColor;
-    private String title = "About Us";
-    private Font titleFont, BigtitleFont;
+    private Font titleFont;
     private String[] about = {
             " ",
             " ",
             "Welcome to the enchanting world of",
             "Wandering Fox Adventure!",
             " ",
-            "Wandering Fox Adventure is a Platformers game",
-            "built for an OOP Final Project",
-            " ",
+            "Wandering Fox Adventure is a Platformers",
+            "game built for an OOP Final Project",
             "by",
             "Jericho Nathanael Chrisnanta - 5025221001",
             "Muhammad Bimatara Indianto - 5025221260",
@@ -39,15 +39,11 @@ public class AboutUsState extends GameState {
 
         try {
             bg = new ImageIcon(getClass().getResource("/Background/bg1.gif")).getImage();
-            titleColor = new Color(128, 0, 0);
+            image = ImageIO.read(getClass().getResourceAsStream("/Background/aboutus.png"));
             titleFont = new Font(
                     "Century Gothic",
                     Font.BOLD,
-                    12);
-            BigtitleFont = new Font(
-                    "Century Gothic",
-                    Font.BOLD,
-                    24);
+                    11);
         }
 
         catch (Exception e) {
@@ -74,21 +70,18 @@ public class AboutUsState extends GameState {
     @Override
     public void draw(Graphics2D g) {
         g.drawImage(bg, null, null);
+        g.drawImage(image, 0, 0, null);
         for (int i = 0; i < about.length; i++) {
             if (i != about.length - 1) {
                 g.setFont(titleFont);
-                g.setColor(Color.WHITE);
-                g.drawString(about[i], 15, 30 + i * 15);
+                g.setColor(Color.BLACK);
+                g.drawString(about[i], 45, 50 + i * 15);
             } else {
                 g.setFont(titleFont);
-                g.setColor(Color.RED);
-                g.drawString(about[i], 145, 215);
+                g.setColor(Color.BLACK);
+                g.drawString(about[i], 145, 208);
             }
         }
-
-        g.setFont(BigtitleFont);
-        g.setColor(Color.black);
-        g.drawString(title, 115, 30);
     }
 
     @Override
