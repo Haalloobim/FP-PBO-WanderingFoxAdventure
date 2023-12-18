@@ -342,7 +342,7 @@ public class FinalStageState extends GameState {
             for (int i = 0; i < idxDigit.length; i++) {
                 code += idxDigit[i];
             }
-            if(code.equals("000000000000"))
+            if(code.equals("133712341357"))
             {
                 eventFinish = true;
                 blockedInput = true;
