@@ -264,6 +264,27 @@ public class FinalStageState extends GameState {
         tilemap.draw(g);
         cave.draw(g);
         board.draw(g);
+        if (player.getY() < 200 && !pause && !eventDead && !eventFinish && !blockedInput) {
+            for (int i = 0; i < Thx.length; i++) {
+                if (i == 0) {
+                    g.setFont(BigtitleFont);
+                    g.setColor(Color.WHITE);
+                    g.drawString(Thx[i], 60, 70 + i * 15);
+                } else if (i == 2) {
+                    g.setFont(titleFont);
+                    g.setColor(Color.WHITE);
+                    g.drawString(Thx[i], 130, 60 + i * 15);
+                } else if (i == 4) {
+                    g.setFont(MedtitleFont);
+                    g.setColor(Color.RED);
+                    g.drawString(Thx[i], 22, 70 + i * 15);
+                } else {
+                    g.setFont(titleFont);
+                    g.setColor(Color.WHITE);
+                    g.drawString(Thx[i], 160, 112);
+                }
+            }
+        }
         player.draw(g);
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
@@ -289,34 +310,13 @@ public class FinalStageState extends GameState {
         for (int i = 0; i < RectScreens.size(); i++) {
             g.fill(RectScreens.get(i));
         }
-        if (player.getY() < 200 && !pause && !eventDead && !eventFinish && !blockedInput) {
-            for (int i = 0; i < Thx.length; i++) {
-                if (i == 0) {
-                    g.setFont(BigtitleFont);
-                    g.setColor(Color.WHITE);
-                    g.drawString(Thx[i], 60, 70 + i * 15);
-                } else if (i == 2) {
-                    g.setFont(titleFont);
-                    g.setColor(Color.WHITE);
-                    g.drawString(Thx[i], 135, 60 + i * 15);
-                } else if (i == 4) {
-                    g.setFont(MedtitleFont);
-                    g.setColor(Color.RED);
-                    g.drawString(Thx[i], 22, 70 + i * 15);
-                } else {
-                    g.setFont(titleFont);
-                    g.setColor(Color.WHITE);
-                    g.drawString(Thx[i], 160, 112);
-                }
-            }
-        }
 
         if (onReading) {
             g.drawImage(bgBlack, null, null);
             g.drawImage(chall, null, null);
         }
 
-        if (onCracking) {
+        if (onCracking && !blockedInput) {
             g.drawImage(bgBlack, null, null);
             for (int i = 0; i < upButtons.length; i++) {
                 upButtons[i].draw(g);
@@ -514,7 +514,7 @@ public class FinalStageState extends GameState {
             clock.stop();
             player.setHealth(SavedStats.getHealth());
             player.setLives(SavedStats.getLives());
-            gsm.setState(GameStateManager.LEVEL2FINISHSTATE);
+            gsm.setState(GameStateManager.FINALSTAGEFINISHSTATE);
             bgMusic.close();
         }
     }

@@ -14,6 +14,7 @@ public class GameStateManager {
     public static final int LEVEL2FINISHSTATE = 5;
     public static final int OPTIONSTATE = 6;
     public static final int FINALSTAGESTATE = 7;
+    public static final int FINALSTAGEFINISHSTATE = 8;
 
     public GameStateManager() {
         gameStates = new GameState[10];
@@ -42,6 +43,8 @@ public class GameStateManager {
             gameStates[state] = new OptionState(this);
         if (state == FINALSTAGESTATE)
             gameStates[state] = new FinalStageState(this);
+        if (state == FINALSTAGEFINISHSTATE)
+            gameStates[state] = new FinalStageFinishState(this);
     }
 
     public void setState(int state) {

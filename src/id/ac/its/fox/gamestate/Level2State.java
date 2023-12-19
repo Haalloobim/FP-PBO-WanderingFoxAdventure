@@ -78,7 +78,7 @@ public class Level2State extends GameState {
         cave.setPosition(1865, 267);
 
         player = new Player(tilemap);
-        player.setPosition(1865, 32);
+        player.setPosition(48, 32);
         player.setHealth(SavedStats.getHealth());
         player.setLives(SavedStats.getLives());
 
