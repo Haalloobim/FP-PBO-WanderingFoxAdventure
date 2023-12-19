@@ -12,10 +12,10 @@ Game platformer yang terinspirasi dari Super Mario Bros di mana tujuan dari game
 ![Menu Screen](./img/MainMenu.png)
 
 ## Level 1 Screen
-![Level 1 Screen](./img/lvl1)
+![Level 1 Screen](./img/lvl1.png)
 
 ## Level 2 Screen 
-![Level 2 Screen](./img/lvl2)
+![Level 2 Screen](./img/lvl2.png)
 
 ## Final Stage
 Try our game to find out the final stage
