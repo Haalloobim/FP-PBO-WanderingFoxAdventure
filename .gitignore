@@ -1,5 +1,3 @@
 *.dat
-/.vscode
-/bin/
 .project
 mapEditor.py

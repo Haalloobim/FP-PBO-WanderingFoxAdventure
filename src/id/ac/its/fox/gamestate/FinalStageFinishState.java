@@ -110,10 +110,12 @@ public class FinalStageFinishState extends GameState {
     public void select() {
         if (currentChoice == 0) {
             bgMusic.close();
+            mommy.close();
             gsm.setState(GameStateManager.MENUSTATE);
         }
         if (currentChoice == 1) {
             bgMusic.close();
+            mommy.close();
             gsm.setState(GameStateManager.LEVEL1STATE);
         }
     }
