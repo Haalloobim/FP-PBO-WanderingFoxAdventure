@@ -100,7 +100,7 @@ public class MenuState extends GameState {
     private void select() {
         if (currentChoice == 0) {
             bgMusic.close();
-            gsm.setState(GameStateManager.FINALSTAGESTATE);
+            gsm.setState(GameStateManager.LEVEL1STATE);
         }
         if (currentChoice == 1) {
             bgMusic.close();
