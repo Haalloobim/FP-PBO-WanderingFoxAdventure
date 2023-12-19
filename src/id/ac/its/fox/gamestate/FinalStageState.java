@@ -53,6 +53,7 @@ public class FinalStageState extends GameState {
     private Prop cave;
     private Prop board;
 
+    private BufferedImage buttonEnter;
     private boolean eventStart;
     private boolean eventDead;
     private boolean eventFinish = false;
@@ -79,6 +80,7 @@ public class FinalStageState extends GameState {
     public FinalStageState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
+            buttonEnter = ImageIO.read(getClass().getResourceAsStream("/Button/enter.png"));
             chall = ImageIO.read(getClass().getResourceAsStream("/Chall/chall.png"));
             bgBlack = ImageIO.read(getClass().getResourceAsStream("/Background/pause.png"));
             titleFont = new Font(
@@ -264,6 +266,8 @@ public class FinalStageState extends GameState {
         tilemap.draw(g);
         cave.draw(g);
         board.draw(g);
+        g.drawImage(buttonEnter,  40 + (int) tilemap.getx(), 172 + (int)tilemap.gety(), null);
+        g.drawImage(buttonEnter, 1192 + (int) tilemap.getx(), 142 + (int)tilemap.gety(), null);
         if (player.getY() < 200 && !pause && !eventDead && !eventFinish && !blockedInput) {
             for (int i = 0; i < Thx.length; i++) {
                 if (i == 0) {
