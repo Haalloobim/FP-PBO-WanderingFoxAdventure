@@ -521,7 +521,6 @@ public class FinalStageState extends GameState {
 
     @Override
     public void mouseClicked(MouseEvent k) {
-        System.out.println(k.getX() / 3 + " " + k.getY() / 3);
     }
 
     @Override

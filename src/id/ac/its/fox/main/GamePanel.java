@@ -102,17 +102,29 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        gsm.mouseClicked(e);
+        try {
+            gsm.mouseClicked(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        gsm.mousePressed(e);
+        try {
+            gsm.mousePressed(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        gsm.mouseReleased(e);
+        try {
+            gsm.mouseReleased(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -125,11 +137,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        gsm.mouseDragged(e);
+        try {
+            gsm.mouseDragged(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        gsm.mouseMoved(e);
+        try {
+            gsm.mouseMoved(e);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
