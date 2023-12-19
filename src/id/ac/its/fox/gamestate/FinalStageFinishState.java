@@ -14,11 +14,12 @@ import id.ac.its.fox.main.GamePanel;
 
 public class FinalStageFinishState extends GameState {
     private AudioPlayer bgMusic;
+    private AudioPlayer mommy;
     private Image FinishScreen;
     private int currentChoice = 0;
 
     private String[] strList = {
-            "Congratulations!!", 
+            "Congratulations!!",
             "You Finish The Game!",
             "Once again, Thank you so much",
             "For Playing Our Game!",
@@ -54,12 +55,19 @@ public class FinalStageFinishState extends GameState {
 
     @Override
     public void init() {
+        mommy = new AudioPlayer("/Music/Mommy.wav");
         bgMusic = new AudioPlayer("/Music/bgMenuHotel.wav");
         if (GamePanel.isMuted) {
             bgMusic.volumeMute();
         }
-        bgMusic.update();
-        bgMusic.bgplay();
+        mommy.update();
+        mommy.volumeUp();
+        mommy.volumeUp();
+        mommy.volumeUp();
+        mommy.volumeUp();
+        mommy.bgplay();
+        // bgMusic.update();
+        // bgMusic.bgplay();
     }
 
     @Override
@@ -158,4 +166,3 @@ public class FinalStageFinishState extends GameState {
     public void mouseClicked(java.awt.event.MouseEvent k) {
     }
 }
-
